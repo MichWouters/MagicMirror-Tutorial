@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MagicMirror.ConsoleApp
+﻿namespace MagicMirror.ConsoleApp
 {
     internal class Program
     {
