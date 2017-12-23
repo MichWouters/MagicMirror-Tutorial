@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MagicMirror.ConsoleApp.Models
+﻿namespace MagicMirror.ConsoleApp.Models
 {
     public class UserInformation
     {
