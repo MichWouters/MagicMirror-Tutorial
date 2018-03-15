@@ -11,7 +11,7 @@ namespace MagicMirror.ConsoleApp
 
         public void Run()
         {
-            GetInformation();
+            _userInformation = GetInformation();
             _weatherInformation = GetOfflineWeatherData();
             _trafficInformation = GetOfflineTrafficData();
 
@@ -19,7 +19,7 @@ namespace MagicMirror.ConsoleApp
             Console.ReadLine();
         }
 
-        private void GetInformation()
+        private UserInformation GetInformation()
         {
             Console.WriteLine("Please enter your name:");
             string name = Console.ReadLine();
@@ -36,7 +36,7 @@ namespace MagicMirror.ConsoleApp
             Console.WriteLine("Please enter your work address:");
             string workAddress = Console.ReadLine();
 
-            _userInformation = new UserInformation
+            var result =  new UserInformation
             {
                 Name = name,
                 Address = address,
@@ -44,6 +44,8 @@ namespace MagicMirror.ConsoleApp
                 Town = town,
                 WorkAddress = workAddress
             };
+
+            return result;
         }
 
         private WeatherInformation GetOfflineWeatherData()
