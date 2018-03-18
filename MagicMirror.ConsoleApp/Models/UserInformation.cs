@@ -1,4 +1,5 @@
-﻿namespace MagicMirror.ConsoleApp.Models
+using System;
+namespace MagicMirror.ConsoleApp.Models
 {
     public class UserInformation
     {

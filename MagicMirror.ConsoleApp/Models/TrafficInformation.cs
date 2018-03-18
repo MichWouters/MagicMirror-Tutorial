@@ -18,7 +18,6 @@ namespace MagicMirror.ConsoleApp.Models
             {
                 return DateTime.Now.AddMinutes(Minutes);
             }
-            private set { }
         }
     }
 }
