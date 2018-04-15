@@ -6,6 +6,6 @@ namespace MagicMirror.DataAccess.Repos
 {
     public interface IWeatherRepo
     {
-        Task<WeatherEntity> GetWeatherEntityAsync(string city);
+        Task<WeatherEntity> GetWeatherEntityByCityAsync(string city);
     }
 }

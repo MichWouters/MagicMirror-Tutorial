@@ -15,7 +15,7 @@ namespace MagicMirror.DataAccess.Repos
 
         private string _city;
 
-        public async Task<WeatherEntity> GetWeatherEntityAsync(string city)
+        public async Task<WeatherEntity> GetWeatherEntityByCityAsync(string city)
         {
             FillInputData(city);
             HttpResponseMessage response = await GetHttpResponseMessageAsync();
