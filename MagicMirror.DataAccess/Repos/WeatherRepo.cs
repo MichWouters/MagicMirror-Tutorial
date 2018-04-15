@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo
+    public class WeatherRepo : IWeatherRepo
     {
         private string _apiId;
         private string _apiUrl;
@@ -15,7 +15,7 @@ namespace MagicMirror.DataAccess.Repos
 
         private string _city;
 
-        public async Task<WeatherEntity> GetWeatherEntityByCityAsync(string city)
+        public async Task<WeatherEntity> GetApiData(string city)
         {
             FillInputData(city);
             HttpResponseMessage response = await GetResponseMessageAsync();
@@ -68,6 +68,11 @@ namespace MagicMirror.DataAccess.Repos
             {
                 throw new JsonSerializationException("Cannot convert json to entity", e);
             }
+        }
+
+        public Task<WeatherEntity> GetApiData()
+        {
+            throw new NotImplementedException();
         }
     }
 }
