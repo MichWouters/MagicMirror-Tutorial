@@ -15,10 +15,10 @@ namespace MagicMirror.DataAccess.Repos
 
         private string _city;
 
-        public async Task<WeatherEntity> GetApiData(string city)
+        public async Task<WeatherEntity> GetWeatherEntityAsync(string city)
         {
             FillInputData(city);
-            HttpResponseMessage response = await GetResponseMessageAsync();
+            HttpResponseMessage response = await GetHttpResponseMessageAsync();
             WeatherEntity entity = await GetEntityFromJsonAsync(response);
 
             return entity;
@@ -26,19 +26,23 @@ namespace MagicMirror.DataAccess.Repos
 
         private void FillInputData(string city)
         {
-            if (string.IsNullOrWhiteSpace(city)) { throw new ArgumentNullException("A home city has to be provided"); }
-
             _apiId = DataAccessConfig.OpenWeatherMapApiId;
             _apiUrl = DataAccessConfig.OpenWeatherMapApiUrl;
             _city = city;
 
-            if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
-            if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
+            ValidateInputData();
 
             _url = $"{_apiUrl}/weather?q={_city}&appId={_apiId}";
         }
 
-        private async Task<HttpResponseMessage> GetResponseMessageAsync()
+        private void ValidateInputData()
+        {
+            if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
+            if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
+            if (string.IsNullOrWhiteSpace(_city)) { throw new ArgumentNullException("A home city has to be provided"); }
+        }
+
+        private async Task<HttpResponseMessage> GetHttpResponseMessageAsync()
         {
             var client = new HttpClient();
 
@@ -68,11 +72,6 @@ namespace MagicMirror.DataAccess.Repos
             {
                 throw new JsonSerializationException("Cannot convert json to entity", e);
             }
-        }
-
-        public Task<WeatherEntity> GetApiData()
-        {
-            throw new NotImplementedException();
         }
     }
 }
