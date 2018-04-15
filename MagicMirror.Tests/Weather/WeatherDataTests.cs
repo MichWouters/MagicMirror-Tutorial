@@ -28,18 +28,5 @@ namespace MagicMirror.Tests.Weather
             Assert.NotNull(entity);
             Assert.Equal(city, entity.Name);
         }
-
-        [Fact]
-        public void FooBar()
-        {
-            // Arrange
-            var mockWeatherRepo = WeatherMocks.GetWeatherRepo();
-
-            // Act
-            var result = mockWeatherRepo.Object.Foo();
-
-            // Assert
-            Assert.Equal("bar", result);
-        }
     }
 }

@@ -73,10 +73,5 @@ namespace MagicMirror.DataAccess.Repos
                 throw new JsonSerializationException("Cannot convert json to entity", e);
             }
         }
-
-        public string Foo()
-        {
-            return "bar";
-        }
     }
 }
