@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess.Entities", "MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj", "{2DC0B1C4-2F41-4CA9-9B46-22884D82F5C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Tests", "MagicMirror.Tests\MagicMirror.Tests.csproj", "{28EFFF3F-356F-47DC-BBCB-35FD80CE8CFC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{2DC0B1C4-2F41-4CA9-9B46-22884D82F5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC0B1C4-2F41-4CA9-9B46-22884D82F5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC0B1C4-2F41-4CA9-9B46-22884D82F5C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28EFFF3F-356F-47DC-BBCB-35FD80CE8CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28EFFF3F-356F-47DC-BBCB-35FD80CE8CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28EFFF3F-356F-47DC-BBCB-35FD80CE8CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28EFFF3F-356F-47DC-BBCB-35FD80CE8CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

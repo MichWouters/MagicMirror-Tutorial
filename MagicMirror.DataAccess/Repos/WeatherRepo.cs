@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo : IWeatherRepo
+    public class WeatherRepo
     {
         private string _apiId;
         private string _apiUrl;
@@ -15,11 +15,11 @@ namespace MagicMirror.DataAccess.Repos
 
         private string _city;
 
-        public async Task<WeatherEntity> GetWeatherEntityByCityAsync(string city)
+        private async Task<WeatherEntity> GetWeatherEntityByCityAsync(string city)
         {
             FillInputData(city);
-            HttpResponseMessage response = await GetHttpResponseMessageAsync();
-            WeatherEntity entity = await GetEntityFromJsonAsync(response);
+            HttpResponseMessage message = await GetHttpResponseMessageAsync();
+            WeatherEntity entity = await GetEntityFromJsonAsync(message);
 
             return entity;
         }
@@ -30,12 +30,12 @@ namespace MagicMirror.DataAccess.Repos
             _apiUrl = DataAccessConfig.OpenWeatherMapApiUrl;
             _city = city;
 
-            ValidateInputData();
+            ValidateInput();
 
             _url = $"{_apiUrl}/weather?q={_city}&appId={_apiId}";
         }
 
-        private void ValidateInputData()
+        private void ValidateInput()
         {
             if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
             if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
@@ -59,18 +59,15 @@ namespace MagicMirror.DataAccess.Repos
         private async Task<WeatherEntity> GetEntityFromJsonAsync(HttpResponseMessage message)
         {
             string json = await message.Content.ReadAsStringAsync();
-            return JsonToEntity(json);
-        }
 
-        private WeatherEntity JsonToEntity(string json)
-        {
             try
             {
-                return JsonConvert.DeserializeObject<WeatherEntity>(json);
+                var result = JsonConvert.DeserializeObject<WeatherEntity>(json);
+                return result;
             }
             catch (Exception e)
             {
-                throw new JsonSerializationException("Cannot convert json to entity", e);
+                throw new JsonSerializationException("Cannot convert from entity", e);
             }
         }
     }
