@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Traffic;
+using Newtonsoft.Json;
 
 namespace MagicMirror.DataAccess.Repos
 {
@@ -15,7 +18,60 @@ namespace MagicMirror.DataAccess.Repos
 
         public async Task<TrafficEntity> GetTrafficInfoAsync(string start, string destination)
         {
-            throw new NotImplementedException();
+            FillInputData(start, destination);
+            HttpResponseMessage message = await GetHttpResponseMessageAsync();
+            TrafficEntity entity = await GetEntityFromJsonAsync(message);
+
+            return entity;
+        }
+
+        private void FillInputData(string start, string destination)
+        {
+            _apiId = DataAccessConfig.TrafficApiId;
+            _apiUrl = DataAccessConfig.TrafficApiUrl;
+            _start = start;
+            _destination = destination;
+
+            ValidateInput();
+
+            _url = $"{_apiUrl}/directions/json?origin={_start}&destination={_destination}&key={_apiId}";
+        }
+
+        private void ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
+            if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
+            if (string.IsNullOrWhiteSpace(_start)) { throw new ArgumentNullException("A start location has to be provided"); }
+            if (string.IsNullOrWhiteSpace(_destination)) { throw new ArgumentNullException("A destination has to be provided"); }
+        }
+
+        private async Task<HttpResponseMessage> GetHttpResponseMessageAsync()
+        {
+            var client = new HttpClient();
+
+            HttpResponseMessage message = await client.GetAsync(_url);
+
+            if (!message.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Cannot connect to api: {message.StatusCode} {message.ReasonPhrase}");
+            }
+
+            return message;
+        }
+
+        private async Task<TrafficEntity> GetEntityFromJsonAsync(HttpResponseMessage message)
+        {
+            string json = await message.Content.ReadAsStringAsync();
+
+            try
+            {
+                var result = JsonConvert.DeserializeObject<TrafficEntity>(json);
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new JsonSerializationException("Cannot convert from entity", e);
+            }
         }
     }
 }
