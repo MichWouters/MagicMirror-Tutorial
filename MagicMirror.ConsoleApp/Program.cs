@@ -7,10 +7,6 @@ namespace MagicMirror.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            // Dependency Injection
-            var services = new ServiceCollection();
-            services.AddTransient<IWeatherRepo, WeatherRepo>();
-
             var main = new Main();
             main.Run();
         }
