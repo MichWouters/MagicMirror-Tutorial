@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using MagicMirror.DataAccess.Configuration;
+﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Traffic;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {

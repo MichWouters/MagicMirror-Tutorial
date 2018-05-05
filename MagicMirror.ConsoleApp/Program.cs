@@ -1,7 +1,4 @@
-﻿using MagicMirror.DataAccess.Repos;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace MagicMirror.ConsoleApp
+﻿namespace MagicMirror.ConsoleApp
 {
     internal class Program
     {

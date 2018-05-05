@@ -36,7 +36,7 @@ namespace MagicMirror.ConsoleApp
             Console.WriteLine("Please enter your work address:");
             string workAddress = Console.ReadLine();
 
-            var result =  new UserInformation
+            var result = new UserInformation
             {
                 Name = name,
                 Address = address,
