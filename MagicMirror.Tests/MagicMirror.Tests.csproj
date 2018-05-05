@@ -13,4 +13,9 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
+    <ProjectReference Include="..\MagicMirror.DataAccess\MagicMirror.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
