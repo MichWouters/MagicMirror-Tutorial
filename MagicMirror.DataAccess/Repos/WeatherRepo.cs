@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo
+    public class WeatherRepo : IWeatherRepo
     {
         private string _apiId;
         private string _apiUrl;

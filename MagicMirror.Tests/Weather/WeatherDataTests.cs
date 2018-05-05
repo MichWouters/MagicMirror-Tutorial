@@ -1,6 +1,5 @@
 ﻿using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherDataTests
     {
-        private WeatherRepo _repo;
+        private IWeatherRepo _repo;
 
         public WeatherDataTests()
         {
