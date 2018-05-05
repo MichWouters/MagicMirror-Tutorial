@@ -1,5 +1,5 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MagicMirror.DataAccess.Entities.Weather;
 
 namespace MagicMirror.DataAccess.Repos
 {
