@@ -1,5 +1,7 @@
 ﻿using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -30,16 +32,25 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task Return_Object_Should_Be_WeatherEntity()
+        public async Task Not_Found_Should_Throw_HttpRequestException()
         {
             // Arrange
-            string city = "London";
+            string city = "gdrsgrdgdr";
 
             // Act
-            var entity = await _repo.GetWeatherEntityByCityAsync(city);
+            var ex = await Assert.ThrowsAsync<HttpRequestException>
+                (async () => await _repo.GetWeatherEntityByCityAsync(city));
+        }
 
-            // Assert
-            Assert.IsType<WeatherEntity>(entity);
+        [Fact]
+        public async Task No_Input_Should_Throw_ArgumentNullException()
+        {
+            // Arrange
+            string city = "";
+
+            // Act
+            var ex = await Assert.ThrowsAsync<ArgumentNullException>
+                (async () => await _repo.GetWeatherEntityByCityAsync(city));
         }
     }
 }
