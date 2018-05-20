@@ -34,7 +34,7 @@ namespace MagicMirror.DataAccess.Repos
 
             ValidateInput();
 
-            _url = $"{_apiUrl}/directions/json?origin={_start}&destination={_destination}&key={_apiId}";
+            _url = $"{_apiUrl}?origins={_start}&destinations={_destination}&key={_apiId}";
         }
 
         private void ValidateInput()

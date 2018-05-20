@@ -2,8 +2,9 @@
 {
     public class TrafficEntity
     {
-        public Geocoded_Waypoints[] Geocoded_waypoints { get; set; }
-        public Route[] Routes { get; set; }
+        public string[] Destination_addresses { get; set; }
+        public string[] Origin_addresses { get; set; }
+        public Row[] Rows { get; set; }
         public string Status { get; set; }
     }
 }

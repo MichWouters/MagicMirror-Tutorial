@@ -32,24 +32,39 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task Not_Found_Should_Throw_HttpRequestException()
+        public async Task Return_Type_Should_Be_WeatherEntity()
         {
             // Arrange
-            string city = "gdrsgrdgdr";
+            string city = "London";
 
             // Act
-            var ex = await Assert.ThrowsAsync<HttpRequestException>
-                (async () => await _repo.GetWeatherEntityByCityAsync(city));
+            var entity = await _repo.GetWeatherEntityByCityAsync(city);
+
+            // Assert
+            Assert.IsType<WeatherEntity>(entity);
         }
 
         [Fact]
-        public async Task No_Input_Should_Throw_ArgumentNullException()
+        public async Task No_Input_Should_Throw_ArgumentNull()
         {
             // Arrange
             string city = "";
 
             // Act
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>
+            var method = _repo.GetWeatherEntityByCityAsync(city);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await method);
+        }
+
+        [Fact]
+        public async Task No_City_Found_Should_Throw_HttpRequest()
+        {
+            // Arrange
+            string city = "FEIFJIEFUESFYU";
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<HttpRequestException>
                 (async () => await _repo.GetWeatherEntityByCityAsync(city));
         }
     }

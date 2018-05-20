@@ -18,19 +18,19 @@
             }
         }
 
+        public static string TrafficApiUrl
+        {
+            get
+            {
+                return "https://maps.googleapis.com/maps/api/distancematrix/json";
+            }
+        }
+
         public static string TrafficApiId
         {
             get
             {
                 return "AIzaSyBGoN7HTIWBLk6N9CqEqvJsV_KGFmwt8tw";
-            }
-        }
-
-        public static string TrafficApiUrl
-        {
-            get
-            {
-                return "https://maps.googleapis.com/maps/api";
             }
         }
     }
