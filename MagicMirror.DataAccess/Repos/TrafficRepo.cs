@@ -34,13 +34,14 @@ namespace MagicMirror.DataAccess.Repos
 
             ValidateInput();
 
-            _url = $"{_apiUrl}?origins={_start}&destinations={_destination}&key={_apiId}";
+            _url = $"{_apiUrl}?origins={start}&destinations={destination}&key={_apiId}";
         }
 
         private void ValidateInput()
         {
             if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
             if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
+
             if (string.IsNullOrWhiteSpace(_start)) { throw new ArgumentNullException("A start location has to be provided"); }
             if (string.IsNullOrWhiteSpace(_destination)) { throw new ArgumentNullException("A destination has to be provided"); }
         }
