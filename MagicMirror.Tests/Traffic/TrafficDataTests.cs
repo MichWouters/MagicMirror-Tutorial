@@ -2,6 +2,7 @@
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -34,15 +35,40 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
+        public async Task Return_Type_Should_Be_TrafficEntity()
+        {
+            // Arrange
+            string start = "London, UK";
+            string destination = "Brighton, UK";
+
+            // Act
+            var entity = await _repo.GetTrafficInfoAsync(start, destination);
+
+            // Assert
+            Assert.IsType<TrafficEntity>(entity);
+        }
+
+        [Fact]
         public async Task Empty_Input_Should_Throw_ArgumentNull()
         {
             // Arrange
-            TrafficEntity entity = null;
             string start = "";
             string destination = "Brighton, UK";
 
             // Act & Assert
             var ex = await Assert.ThrowsAsync<ArgumentNullException>
+                (async () => await _repo.GetTrafficInfoAsync(start, destination));
+        }
+
+        [Fact]
+        public async Task No_Traffic_Found_Should_Throw_HttpRequest()
+        {
+            // Arrange
+            string start = "FEIFJIEFUESFYU";
+            string destination = "FOOBAR";
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<HttpRequestException>
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
     }
