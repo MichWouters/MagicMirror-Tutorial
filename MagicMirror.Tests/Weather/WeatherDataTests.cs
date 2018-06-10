@@ -1,56 +1,75 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
+﻿using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.Tests.Weather
+namespace MagicMirror.Tests.Traffic
 {
-    public class WeatherDataTests
+    public class TrafficDataTests
     {
-        private IWeatherRepo _repo;
+        private ITrafficRepo _repo;
 
-        public WeatherDataTests()
+        public TrafficDataTests()
         {
-            _repo = new WeatherRepo();
+            _repo = new TrafficRepo();
         }
 
         [Fact]
-        public async Task Can_Retrieve_Weather_Data()
+        public async Task Can_Retrieve_Traffic_Data()
         {
             // Arrange
-            WeatherEntity entity = null;
-            string city = "London";
+            TrafficEntity entity = null;
+            string start = "London, UK";
+            string destination = "Brighton, UK";
 
             // Act
-            entity = await _repo.GetWeatherEntityByCityAsync(city);
+            entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.NotNull(entity);
-            Assert.Equal(city, entity.Name);
+            Assert.Equal("OK", entity.Status);
         }
 
         [Fact]
-        public async Task Not_Found_Should_Throw_HttpRequestException()
+        public async Task Return_Type_Should_Be_TrafficEntity()
         {
             // Arrange
-            string city = "gdrsgrdgdr";
+            string start = "London, UK";
+            string destination = "Brighton, UK";
 
             // Act
-            var ex = await Assert.ThrowsAsync<HttpRequestException>
-                (async () => await _repo.GetWeatherEntityByCityAsync(city));
+            var entity = await _repo.GetTrafficInfoAsync(start, destination);
+
+            // Assert
+            Assert.IsType<TrafficEntity>(entity);
         }
 
         [Fact]
-        public async Task No_Input_Should_Throw_ArgumentNullException()
+        public async Task Empty_Input_Should_Throw_ArgumentNull()
         {
             // Arrange
-            string city = "";
+            string start = "";
+            string destination = "Brighton, UK";
 
-            // Act
+            // Act & Assert
             var ex = await Assert.ThrowsAsync<ArgumentNullException>
-                (async () => await _repo.GetWeatherEntityByCityAsync(city));
+                (async () => await _repo.GetTrafficInfoAsync(start, destination));
+        }
+
+        [Fact]
+        public async Task No_Traffic_Found_Should_Throw_HttpRequest()
+        {
+            // Arrange
+            string start = "FEIFJIEFUESFYU";
+            string destination = "FOOBAR";
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<HttpRequestException>
+                (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
     }
 }
