@@ -3,6 +3,9 @@ using Xunit;
 using Moq;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Traffic;
+using System;
+using MagicMirror.Business.Models;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -26,9 +29,40 @@ namespace MagicMirror.Tests.Weather
         [Fact]
         public void Can_Map_From_Entity()
         {
-            var mockEntity = new Mock<WeatherEntity>();
-            mockEntity.Setup(x => x.Name).Returns(Location);
-            mockEntity.Setup(x => x.Main.Temp).Returns(Kelvin);
+            // Arrange
+            WeatherEntity entity = GetMockEntity();
+
+            // Act
+            WeatherModel model = _service.
+        }
+
+        private WeatherEntity GetMockEntity()
+        {
+            Main main = new Main
+            {
+                Temp = Kelvin
+            };
+
+            Sys sys = new Sys
+            {
+                Sunrise = Sunrise,
+                Sunset = Sunset
+            };
+
+            var weather = new DataAccess.Entities.Weather.Weather
+            {
+                Main = Weathertype
+            };
+
+            var weatherEntity = new WeatherEntity
+            {
+                Name = Location,
+                Main = main,
+                Sys = sys,
+                Weather = new[] { weather }
+            };
+
+            return weatherEntity;
         }
     }
 }
