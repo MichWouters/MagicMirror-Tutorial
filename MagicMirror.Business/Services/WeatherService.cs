@@ -5,7 +5,6 @@ using MagicMirror.Business.Models;
 using MagicMirror.Business.Services.Contracts;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
