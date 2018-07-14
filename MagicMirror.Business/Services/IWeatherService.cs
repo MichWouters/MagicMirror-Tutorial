@@ -1,7 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using System.Threading.Tasks;
 
-namespace MagicMirror.Business.Services.Contracts
+namespace MagicMirror.Business.Services
 {
     public interface IWeatherService
     {

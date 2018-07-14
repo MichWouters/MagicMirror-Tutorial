@@ -1,11 +1,8 @@
 ﻿using MagicMirror.Business.Services;
-using MagicMirror.Business.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Moq;
 using MagicMirror.DataAccess.Repos;
+using MagicMirror.DataAccess.Entities.Weather;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -24,6 +21,14 @@ namespace MagicMirror.Tests.Weather
         {
             var mockInterface = new Mock<IWeatherRepo>();
             _service = new WeatherService(mockInterface.Object);
+        }
+
+        [Fact]
+        public void Can_Map_From_Entity()
+        {
+            var mockEntity = new Mock<WeatherEntity>();
+            mockEntity.Setup(x => x.Name).Returns(Location);
+            mockEntity.Setup(x => x.Main.Temp).Returns(Kelvin);
         }
     }
 }
