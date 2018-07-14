@@ -1,10 +1,9 @@
-﻿using MagicMirror.Business.Models;
+﻿using AutoMapper;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services.Contracts;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -12,6 +11,7 @@ namespace MagicMirror.Business.Services
     public class WeatherService : IWeatherService
     {
         private IWeatherRepo _repo;
+        private IMapper Mapper;
 
         public WeatherService(IWeatherRepo repo)
         {
@@ -24,6 +24,11 @@ namespace MagicMirror.Business.Services
             WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
 
             throw new NotImplementedException();
+        }
+
+        public WeatherModel MapFromEntity(WeatherEntity entity)
+        {
+
         }
     }
 }

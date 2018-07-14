@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MagicMirror.Business.Enums;
 
 namespace MagicMirror.Business.Models
 {
