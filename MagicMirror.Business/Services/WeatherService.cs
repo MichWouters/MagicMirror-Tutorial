@@ -2,7 +2,6 @@
 using AutoMapper.Configuration;
 using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
-using MagicMirror.Business.Services.Contracts;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
