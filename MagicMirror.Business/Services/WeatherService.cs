@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
+using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services.Contracts;
 using MagicMirror.DataAccess.Entities.Weather;
@@ -17,18 +19,32 @@ namespace MagicMirror.Business.Services
         {
             // Dependency Injection
             _repo = repo;
+
+            // Configure AutoMapper
+            SetUpMapperConfiguration();
+        }
+
+        private void SetUpMapperConfiguration()
+        {
+            var baseMappings = new MapperConfigurationExpression();
+            baseMappings.AddProfile<AutoMapperConfiguration>();
+            var config = new MapperConfiguration(baseMappings);
+
+            Mapper = new Mapper(config);
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
+            var model = MapFromEntity(entity);
 
-            throw new NotImplementedException();
+            return model;
         }
 
         public WeatherModel MapFromEntity(WeatherEntity entity)
         {
-
+            var model = Mapper.Map<WeatherModel>(entity);
+            return model;
         }
     }
 }
