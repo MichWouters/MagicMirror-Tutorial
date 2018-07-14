@@ -5,6 +5,6 @@ namespace MagicMirror.Business.Services.Contracts
 {
     public interface IWeatherService
     {
-        Task<WeatherModel> GetWeatherModel(string city);
+        Task<WeatherModel> GetWeatherModelAsync(string city);
     }
 }
