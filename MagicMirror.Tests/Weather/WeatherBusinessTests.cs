@@ -1,9 +1,9 @@
-﻿using MagicMirror.Business.Services;
-using Xunit;
-using Moq;
-using MagicMirror.DataAccess.Repos;
+﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Repos;
+using Moq;
+using Xunit;
 
 namespace MagicMirror.Tests.Weather
 {
