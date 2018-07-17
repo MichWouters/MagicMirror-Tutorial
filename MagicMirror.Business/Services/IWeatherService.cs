@@ -1,13 +1,10 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface IWeatherService
+    public interface IWeatherService: IService<WeatherModel>
     {
         Task<WeatherModel> GetWeatherModelAsync(string city);
-
-        WeatherModel MapFromEntity(Entity entity);
     }
 }

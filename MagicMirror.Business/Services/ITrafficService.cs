@@ -1,13 +1,10 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface ITrafficService
+    public interface ITrafficService: IService<TrafficModel>
     {
         Task<TrafficModel> GetTrafficModelAsync(string origin, string destination);
-
-        TrafficModel MapFromEntity(Entity entity);
     }
 }
