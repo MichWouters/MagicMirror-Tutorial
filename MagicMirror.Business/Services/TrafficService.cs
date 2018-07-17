@@ -1,5 +1,5 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace MagicMirror.Business.Services
             throw new NotImplementedException();
         }
 
-        public TrafficModel MapFromEntity(TrafficEntity entity)
+        public TrafficModel MapFromEntity(Entity entity)
         {
             throw new NotImplementedException();
         }
