@@ -2,7 +2,7 @@
 using AutoMapper.Configuration;
 using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Entities;
 
 namespace MagicMirror.Business.Services
 {
@@ -25,7 +25,7 @@ namespace MagicMirror.Business.Services
             Mapper = new Mapper(config);
         }
 
-        public T MapFromEntity(WeatherEntity entity)
+        public T MapFromEntity(Entity entity)
         {
             var model = Mapper.Map<T>(entity);
             return model;
