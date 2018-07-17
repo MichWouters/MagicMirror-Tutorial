@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Moq;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Repos;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
+using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
