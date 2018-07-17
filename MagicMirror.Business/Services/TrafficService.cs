@@ -1,12 +1,11 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : ITrafficService
+    public class TrafficService : Service<TrafficModel>, ITrafficService
     {
         private ITrafficRepo _repo;
 
@@ -17,11 +16,6 @@ namespace MagicMirror.Business.Services
         }
 
         public Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TrafficModel MapFromEntity(Entity entity)
         {
             throw new NotImplementedException();
         }

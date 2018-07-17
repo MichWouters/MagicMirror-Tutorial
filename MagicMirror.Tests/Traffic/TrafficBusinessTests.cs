@@ -27,6 +27,20 @@ namespace MagicMirror.Tests.Traffic
         public void Can_Map_From_Entity()
         {
             // Arrange
+            TrafficEntity entity = GetMockEntity();
+
+            // Act
+            _model = _service.MapFromEntity(entity);
+
+            // Assert
+            Assert.Equal(Distance, _model.Distance);
+            Assert.Equal(Duration, _model.Duration);
+            Assert.Equal(Destination, _model.Destination);
+            Assert.Equal(Origin, _model.Origin);
+        }
+
+        private TrafficEntity GetMockEntity()
+        {
             var element = new Element
             {
                 Distance = new Distance { Value = Distance },
@@ -45,15 +59,7 @@ namespace MagicMirror.Tests.Traffic
                     }
                 }
             };
-
-            // Act
-            _model = _service.MapFromEntity(entity);
-
-            // Assert
-            Assert.Equal(Distance, _model.Distance);
-            Assert.Equal(Duration, _model.Duration);
-            Assert.Equal(Destination, _model.Destination);
-            Assert.Equal(Origin, _model.Origin);
+            return entity;
         }
     }
 }
