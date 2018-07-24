@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
     <ProjectReference Include="..\MagicMirror.DataAccess\MagicMirror.DataAccess.csproj" />
   </ItemGroup>
