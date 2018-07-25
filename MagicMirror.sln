@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess.Entities", "MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj", "{2DC0B1C4-2F41-4CA9-9B46-22884D82F5C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Tests", "MagicMirror.Tests\MagicMirror.Tests.csproj", "{C72D8EE3-6E53-4F9F-8FA7-E6BA10DBD1E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Tests", "MagicMirror.Tests\MagicMirror.Tests.csproj", "{C72D8EE3-6E53-4F9F-8FA7-E6BA10DBD1E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Business", "MagicMirror.Business\MagicMirror.Business.csproj", "{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C72D8EE3-6E53-4F9F-8FA7-E6BA10DBD1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72D8EE3-6E53-4F9F-8FA7-E6BA10DBD1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C72D8EE3-6E53-4F9F-8FA7-E6BA10DBD1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
