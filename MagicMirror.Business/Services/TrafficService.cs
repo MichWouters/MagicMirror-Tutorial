@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : Service<TrafficModel>, ITrafficService
+    public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
     {
         private ITrafficRepo _repo;
 
         public TrafficService(ITrafficRepo repo)
         {
             // Dependency Injection
-            _repo = repo;
+            _repo = new TrafficRepo();
         }
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)

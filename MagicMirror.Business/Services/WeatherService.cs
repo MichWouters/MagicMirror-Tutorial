@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : Service<WeatherModel>, IWeatherService
+    public class WeatherService : MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
         private IWeatherRepo _repo;
 
         public WeatherService(IWeatherRepo repo)
         {
             // Dependency Injection
-            _repo = repo;
+            _repo = new WeatherRepo();
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
