@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : Service<WeatherModel>, IWeatherService
+    public class WeatherService : MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
         private IWeatherRepo _repo;
 
@@ -18,7 +18,7 @@ namespace MagicMirror.Business.Services
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
-            var model = MapFromEntity(entity);
+            WeatherModel model = MapFromEntity(entity);
 
             return model;
         }
