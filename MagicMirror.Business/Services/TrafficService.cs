@@ -12,7 +12,7 @@ namespace MagicMirror.Business.Services
         public TrafficService(ITrafficRepo repo)
         {
             // Dependency Injection
-            _repo = new TrafficRepo();
+            _repo = repo;
         }
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)

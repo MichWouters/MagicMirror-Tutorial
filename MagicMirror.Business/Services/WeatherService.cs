@@ -12,7 +12,7 @@ namespace MagicMirror.Business.Services
         public WeatherService(IWeatherRepo repo)
         {
             // Dependency Injection
-            _repo = new WeatherRepo();
+            _repo = repo;
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
