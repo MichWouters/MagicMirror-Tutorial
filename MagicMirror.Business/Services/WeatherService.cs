@@ -18,7 +18,7 @@ namespace MagicMirror.Business.Services
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
-            var model = MapFromEntity(entity);
+            WeatherModel model = MapFromEntity(entity);
 
             return model;
         }
