@@ -1,15 +1,21 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
 using MagicMirror.Business.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Entities.Entities;
 
 namespace MagicMirror.Business.Services
 {
-    public abstract class MappableService
+    public abstract class MappableService<TEntity, TModel>
+        where TEntity : Entity
+        where TModel : Model
     {
         private IMapper mapper;
+
+        public MappableService()
+        {
+            SetUpMapperConfig();
+        }
 
         private void SetUpMapperConfig()
         {
@@ -20,9 +26,9 @@ namespace MagicMirror.Business.Services
             mapper = new Mapper(config);
         }
 
-        public WeatherModel MapFromEntity(WeatherEntity entity)
+        public TModel MapFromEntity(TEntity entity)
         {
-            var model = mapper.Map<WeatherModel>(entity);
+            var model = mapper.Map<TModel>(entity);
             return model;
         }
     }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.Business.Models;
+using Xunit;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -14,6 +11,7 @@ namespace MagicMirror.Tests.Weather
 
         // Mock values
         private const string Location = "London";
+
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
