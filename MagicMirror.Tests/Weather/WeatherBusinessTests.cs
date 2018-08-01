@@ -11,12 +11,13 @@ namespace MagicMirror.Tests.Weather
     {
         private IWeatherService _service;
 
+        // Mock values
         private const string Location = "London";
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
-        private const int Sunrise = 1531281435;
-        private const int Sunset = 1531340063;
+        private const int Sunrise = 1512345678;
+        private const int Sunset = 1587654321;
 
         public WeatherBusinessTests()
         {
