@@ -10,7 +10,7 @@ namespace MagicMirror.Business.Services
 {
     public class WeatherService : IWeatherService
     {
-        private IMapper mapper;
+        
         private IWeatherRepo _repo;
 
         public WeatherService()
@@ -27,19 +27,6 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        private void SetUpMapperConfig()
-        {
-            var baseMappings = new MapperConfigurationExpression();
-            baseMappings.AddProfile<AutoMapperConfiguration>();
-            var config = new MapperConfiguration(baseMappings);
-
-            mapper = new Mapper(config);
-        }
-
-        public WeatherModel MapFromEntity(WeatherEntity entity)
-        {
-            var model = mapper.Map<WeatherModel>(entity);
-            return model;
-        }
+        
     }
 }
