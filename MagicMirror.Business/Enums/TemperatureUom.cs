@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MagicMirror.Business.Enums
+﻿namespace MagicMirror.Business.Enums
 {
     public enum TemperatureUom
     {

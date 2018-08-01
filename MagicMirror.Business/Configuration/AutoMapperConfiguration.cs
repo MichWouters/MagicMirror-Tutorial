@@ -4,7 +4,7 @@ using MagicMirror.DataAccess.Entities.Weather;
 
 namespace MagicMirror.Business.Configuration
 {
-    public class AutoMapperConfiguration: Profile
+    public class AutoMapperConfiguration : Profile
     {
         public AutoMapperConfiguration()
         {

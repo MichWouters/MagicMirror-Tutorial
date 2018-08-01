@@ -1,9 +1,7 @@
 ﻿using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

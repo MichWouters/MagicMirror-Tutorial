@@ -1,7 +1,4 @@
 ﻿using MagicMirror.Business.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MagicMirror.Business.Models
 {
@@ -20,6 +17,5 @@ namespace MagicMirror.Business.Models
         public string Sunset { get; set; }
 
         public TemperatureUom TemperatureUom { get; set; }
-
     }
 }
