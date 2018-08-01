@@ -11,14 +11,6 @@ namespace MagicMirror.Tests.Weather
     {
         private IWeatherService _service;
 
-        // Mock values
-        private const string Location = "London";
-        private const float Kelvin = 295.15f;
-        private const string Weathertype = "Clear";
-        private const string Icon = "01d";
-        private const int Sunrise = 1531281435;
-        private const int Sunset = 1531340063;
-
         public WeatherBusinessTests()
         {
             _service = new WeatherService();
@@ -28,24 +20,24 @@ namespace MagicMirror.Tests.Weather
         {
             var main = new Main
             {
-                Temp = Kelvin
+                Temp = 295.15f
             };
 
             var sys = new Sys
             {
-                Sunrise = Sunrise,
-                Sunset = Sunset
+                Sunrise = 1512345678,
+                Sunset = 1587654321
             };
 
             var weather = new DataAccess.Entities.Weather.Weather
             {
-                Main = Weathertype,
-                Icon = Icon
+                Main = "Cloudy",
+                Icon = "01d"
             };
 
             var weatherEntity = new WeatherEntity
             {
-                Name = Location,
+                Name = "London",
                 Main = main,
                 Sys = sys,
                 Weather = new[] { weather }
