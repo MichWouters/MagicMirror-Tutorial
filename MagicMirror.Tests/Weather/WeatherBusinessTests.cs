@@ -4,6 +4,7 @@ using System.Text;
 using Xunit;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.Business.Models;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -22,6 +23,24 @@ namespace MagicMirror.Tests.Weather
         public WeatherBusinessTests()
         {
             _service = new WeatherService();
+        }
+
+        [Fact]
+        public void Can_Map_From_Entity()
+        {
+            // Arrange
+            WeatherEntity entity = GetMockEntity();
+
+            // Act
+            WeatherModel model = _service.MapFromEntity(entity);
+
+            // Assert
+            Assert.Equal(Location, model.Location);
+            Assert.Equal(Weathertype, model.WeatherType);
+            Assert.Equal(Kelvin, model.Temperature);
+            Assert.Equal(Sunrise.ToString(), model.Sunrise);
+            Assert.Equal(Sunset.ToString(), model.Sunset);
+            Assert.Equal(Icon, model.Icon);
         }
 
         private WeatherEntity GetMockEntity()
