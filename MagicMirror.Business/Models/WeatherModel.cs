@@ -16,6 +16,6 @@ namespace MagicMirror.Business.Models
 
         public string Sunset { get; set; }
 
-        public TemperatureUom GetTemperatureUom { get; set; }
+        public TemperatureUom TemperatureUom { get; set; }
     }
 }

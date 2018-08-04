@@ -6,15 +6,14 @@ using MagicMirror.DataAccess.Entities.Entities;
 
 namespace MagicMirror.Business.Services
 {
-    public abstract class MappableService<TEntity, TModel> 
+    public abstract class MappableService<TEntity, TModel>
         where TEntity : Entity
         where TModel : Model
     {
-        protected IMapper Mapper;
+        private IMapper mapper;
 
-        protected MappableService()
+        public MappableService()
         {
-            // Configure AutoMapper
             SetUpMapperConfig();
         }
 
@@ -24,12 +23,12 @@ namespace MagicMirror.Business.Services
             baseMappings.AddProfile<AutoMapperConfiguration>();
             var config = new MapperConfiguration(baseMappings);
 
-            Mapper = new Mapper(config);
+            mapper = new Mapper(config);
         }
 
         public TModel MapFromEntity(TEntity entity)
         {
-            var model = Mapper.Map<TModel>(entity);
+            var model = mapper.Map<TModel>(entity);
             return model;
         }
     }

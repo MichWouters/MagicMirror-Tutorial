@@ -2,7 +2,6 @@
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
-using Moq;
 using Xunit;
 
 namespace MagicMirror.Tests.Weather
@@ -11,17 +10,18 @@ namespace MagicMirror.Tests.Weather
     {
         private IWeatherService _service;
 
+        // Mock values
         private const string Location = "London";
-        private const double Kelvin = 295.15;
+
+        private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
-        private const int Sunrise = 1531281435;
-        private const int Sunset = 1531340063;
+        private const int Sunrise = 1512345678;
+        private const int Sunset = 1587654321;
 
         public WeatherBusinessTests()
         {
-            var mockInterface = new Mock<IWeatherRepo>();
-            _service = new WeatherService(mockInterface.Object);
+            _service = new WeatherService();
         }
 
         [Fact]
@@ -44,12 +44,14 @@ namespace MagicMirror.Tests.Weather
 
         private WeatherEntity GetMockEntity()
         {
-            Main main = new Main
+            var main = new Main
+
             {
                 Temp = Kelvin
             };
 
-            Sys sys = new Sys
+            var sys = new Sys
+
             {
                 Sunrise = Sunrise,
                 Sunset = Sunset

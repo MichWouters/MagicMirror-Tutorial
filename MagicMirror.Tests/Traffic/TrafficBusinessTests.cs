@@ -2,7 +2,6 @@
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
-using Moq;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
@@ -10,8 +9,7 @@ namespace MagicMirror.Tests.Traffic
     public class TrafficBusinessTests
     {
         private ITrafficService _service;
-        private TrafficModel _model;
-
+        // Mock Data
         private const int Duration = 42;
         private const int Distance = 76;
         private const string Origin = "London, Uk";
@@ -19,8 +17,7 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            var mockRepo = new Mock<ITrafficRepo>();
-            _service = new TrafficService(mockRepo.Object);
+            _service = new TrafficService();
         }
 
         [Fact]
@@ -30,13 +27,13 @@ namespace MagicMirror.Tests.Traffic
             TrafficEntity entity = GetMockEntity();
 
             // Act
-            _model = _service.MapFromEntity(entity);
+            TrafficModel model = _service.MapFromEntity(entity);
 
             // Assert
-            Assert.Equal(Distance, _model.Distance);
-            Assert.Equal(Duration, _model.Duration);
-            Assert.Equal(Destination, _model.Destination);
-            Assert.Equal(Origin, _model.Origin);
+            Assert.Equal(Distance, model.Distance);
+            Assert.Equal(Duration, model.Duration);
+            Assert.Equal(Destination, model.Destination);
+            Assert.Equal(Origin, model.Origin);
         }
 
         private TrafficEntity GetMockEntity()
@@ -44,7 +41,7 @@ namespace MagicMirror.Tests.Traffic
             var element = new Element
             {
                 Distance = new Distance { Value = Distance },
-                Duration = new Duration { Value = Duration }
+                Duration = new Duration { Value = Duration },
             };
 
             var entity = new TrafficEntity
@@ -55,7 +52,7 @@ namespace MagicMirror.Tests.Traffic
                 {
                     new Row
                     {
-                        Elements = new [] { element}
+                        Elements = new [] {element}
                     }
                 }
             };
