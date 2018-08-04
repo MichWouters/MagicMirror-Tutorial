@@ -20,7 +20,6 @@ namespace MagicMirror.Business.Services
             TrafficModel model = MapFromEntity(entity);
 
             return model;
-
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Weather
@@ -44,11 +45,13 @@ namespace MagicMirror.Tests.Weather
         private WeatherEntity GetMockEntity()
         {
             var main = new Main
+
             {
                 Temp = Kelvin
             };
 
             var sys = new Sys
+
             {
                 Sunrise = Sunrise,
                 Sunset = Sunset
