@@ -44,7 +44,7 @@ namespace MagicMirror.Tests.Traffic
             var element = new Element
             {
                 Distance = new Distance { Value = Distance },
-                Duration = new Duration { Value = Duration }
+                Duration = new Duration { Value = Duration },
             };
 
             var entity = new TrafficEntity
@@ -55,7 +55,7 @@ namespace MagicMirror.Tests.Traffic
                 {
                     new Row
                     {
-                        Elements = new [] { element }
+                        Elements = new [] {element}
                     }
                 }
             };
