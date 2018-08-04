@@ -1,9 +1,6 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
@@ -14,6 +11,7 @@ namespace MagicMirror.Tests.Traffic
 
         // Mock Data
         private const int Duration = 42;
+
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";

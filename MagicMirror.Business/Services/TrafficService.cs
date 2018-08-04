@@ -1,15 +1,25 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Traffic;
-using System;
+using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
     {
-        public Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
+        private ITrafficRepo _repo;
+
+        public TrafficService()
         {
-            throw new NotImplementedException();
+            _repo = new TrafficRepo();
+        }
+
+        public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
+        {
+            TrafficEntity entity = await _repo.GetTrafficInfoAsync(origin, destination);
+            TrafficModel model = MapFromEntity(entity);
+
+            return model;
         }
     }
 }
