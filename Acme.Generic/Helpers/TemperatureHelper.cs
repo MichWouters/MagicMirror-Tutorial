@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Acme.Generic.Helpers
 {
     public static class TemperatureHelper
     {
-        public static object KelvinToCelsius(double valueToConvert)
+        public static double KelvinToCelsius(double valueToConvert, int precision = 2)
         {
-            throw new NotImplementedException();
+            double converted = valueToConvert - 273.15;
+            return Math.Round(converted, precision);
         }
 
-        public static object CelsiusToKelvin(double valueToConvert)
+        public static double CelsiusToKelvin(double valueToConvert, int precision = 2)
         {
-            throw new NotImplementedException();
+            double converted = valueToConvert + 273.15;
+            return Math.Round(converted, precision);
         }
     }
 }
