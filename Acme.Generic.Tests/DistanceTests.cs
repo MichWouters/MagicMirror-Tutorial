@@ -26,7 +26,7 @@ namespace Acme.Generic.Tests
         }
 
         [Fact]
-        public void KiloMetres_To_Miles()
+        public void Kilometres_To_Miles()
         {
             // Arrange
             double[] inputs = { 1, 25, 37.33 };
@@ -35,7 +35,7 @@ namespace Acme.Generic.Tests
             for (int i = 0; i < inputs.Length; i++)
             {
                 // Act
-                double result = DistanceHelper.MilesToKilometers(inputs[i]);
+                double result = DistanceHelper.KilometersToMiles(inputs[i]);
 
                 // Assert
                 Assert.Equal(result, expectedValues[i]);
