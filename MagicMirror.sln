@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Tests", "MagicM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Business", "MagicMirror.Business\MagicMirror.Business.csproj", "{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.Generic", "Acme.Generic\Acme.Generic.csproj", "{7D549F87-B245-443E-9D45-A6E094D55ECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.Generic.Tests", "Acme.Generic.Tests\Acme.Generic.Tests.csproj", "{072A6CFA-33C1-451A-B76A-796E07A09B2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B18FF7A4-BCBE-41C3-901A-A4C9F84D26D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D549F87-B245-443E-9D45-A6E094D55ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D549F87-B245-443E-9D45-A6E094D55ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D549F87-B245-443E-9D45-A6E094D55ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D549F87-B245-443E-9D45-A6E094D55ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072A6CFA-33C1-451A-B76A-796E07A09B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072A6CFA-33C1-451A-B76A-796E07A09B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072A6CFA-33C1-451A-B76A-796E07A09B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072A6CFA-33C1-451A-B76A-796E07A09B2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
