@@ -1,7 +1,4 @@
 ﻿using Acme.Generic.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Acme.Generic.Tests
