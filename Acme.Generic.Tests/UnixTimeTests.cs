@@ -1,44 +1,41 @@
 ﻿using Acme.Generic.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace Acme.Generic.Tests
 {
     public class UnixTimeTests
     {
-        private int sunrise = 1534400420; //16 August 2018 06:20:20
-        private int sunset = 1534454400; // 16 August 2018 21:20:00
+        private int unixSunrise = 1535189400; // 25 August 2018 09:30:00
+        private int unixSunset = 1535232600; // 25 August 2018 21:30:00
+
+        private DateTime sunriseDateTime = new DateTime(2018, 8, 25, 9, 30, 0);
+        private DateTime sunsetDateTime = new DateTime(2018, 8, 25, 21, 30, 0);
 
         [Fact]
         public void Convert_From_Unix()
         {
-            // Arrange
-            DateTime expectedSunrise = new DateTime(2018, 8, 16, 6, 20, 20);
-            DateTime expectedSunset = new DateTime(2018, 8, 16, 21, 20, 00);
-
             // Act
-            DateTime convertedSunrise = UnixTimeHelper.ConvertFromUnixTimeStamp(sunrise);
-            DateTime convertedSunset = UnixTimeHelper.ConvertFromUnixTimeStamp(sunset);
+            DateTime convertedSunrise = DateTimeHelper.ConvertUnixTimeToGMTDateTime(unixSunrise);
+            DateTime convertedSunset = DateTimeHelper.ConvertUnixTimeToGMTDateTime(unixSunset);
 
             // Assert
-            Assert.Equal(expectedSunrise, convertedSunrise);
-            Assert.Equal(expectedSunset, convertedSunset);
+            Assert.Equal(sunriseDateTime, convertedSunrise);
+            Assert.Equal(sunsetDateTime, convertedSunset);
         }
 
         [Fact]
         public void Convert_To_Unix()
         {
-            // Arrange
-            DateTime sunriseDate = new DateTime(2018, 8, 16, 6, 20, 20);
-            DateTime sunsetDate = new DateTime(2018, 8, 16, 21, 20, 00);
-
             // Act
-            int convertedSunrise = UnixTimeHelper.ConvertToUnixTimeStamp(sunriseDate);
-            int convertedSunset = UnixTimeHelper.ConvertToUnixTimeStamp(sunsetDate);
+            int convertedSunrise = DateTimeHelper.ConvertGMTDateTimeToDateUnixTime(sunriseDateTime);
+            int convertedSunset = DateTimeHelper.ConvertGMTDateTimeToDateUnixTime(sunsetDateTime);
 
             // Assert
-            Assert.Equal(sunrise, convertedSunrise);
-            Assert.Equal(sunset, convertedSunset);
+            Assert.Equal(unixSunrise, convertedSunrise);
+            Assert.Equal(unixSunset, convertedSunset);
         }
     }
 }
