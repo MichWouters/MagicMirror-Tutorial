@@ -4,17 +4,19 @@ namespace Acme.Generic.Helpers
 {
     public static class DateTimeHelper
     {
-        private static DateTime baseUnixTime =
+        private static DateTime baseUnixDateTime =
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        public static DateTime ConvertUnixTimeToGMTDateTime(int timeStamp)
+        public static DateTime ConvertUnixTimeToGMTDateTime(int timestamp)
         {
-            throw new NotImplementedException();
+            DateTime result = baseUnixDateTime.AddSeconds(timestamp);
+            return result;
         }
 
-        public static int ConvertGMTDateTimeToUnixTime(DateTime date)
+        public static int ConvertGMTDateTimeToDateUnixTime(DateTime date)
         {
-            throw new NotImplementedException();
+            TimeSpan timeSpan = date - baseUnixDateTime;
+            return (int)timeSpan.TotalSeconds;
         }
     }
 }
