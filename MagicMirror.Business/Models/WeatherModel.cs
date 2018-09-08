@@ -1,5 +1,4 @@
-﻿using System;
-using Acme.Generic.Helpers;
+﻿using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
 
 namespace MagicMirror.Business.Models
@@ -50,6 +49,7 @@ namespace MagicMirror.Business.Models
                     else
                         result = Temperature;
                     break;
+
                 case TemperatureUom.Celsius:
                     if (targetUom == TemperatureUom.Kelvin)
                         result = TemperatureHelper.CelsiusToKelvin(Temperature);
@@ -58,6 +58,7 @@ namespace MagicMirror.Business.Models
                     else
                         result = Temperature;
                     break;
+
                 default:
                     break;
             }
@@ -69,7 +70,7 @@ namespace MagicMirror.Business.Models
         {
             string result = "";
 
-            if(int.TryParse(valueToConvert, out int parsed))
+            if (int.TryParse(valueToConvert, out int parsed))
             {
                 result = DateTimeHelper.ConvertUnixTimeToGMTDateTime(parsed)
                     .ToShortTimeString();
