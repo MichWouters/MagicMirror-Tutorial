@@ -41,9 +41,21 @@ namespace MagicMirror.Business.Models
             }
         }
 
-        private void ConvertTemperature()
+        private void ConvertTemperature(double degreesToConvert, TemperatureUom targetTemperatureUom)
         {
-            throw new NotImplementedException();
+            double result = 0;
+
+            switch (targetTemperatureUom)
+            {
+                case TemperatureUom.Kelvin:
+                    break;
+                case TemperatureUom.Fahrenheit:
+                    break;
+                case TemperatureUom.Celsius:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(TemperatureUom), TemperatureUom, null);
+            }
         }
     }
 }
