@@ -1,4 +1,5 @@
 ﻿using System;
+using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
 
 namespace MagicMirror.Business.Models
@@ -27,7 +28,17 @@ namespace MagicMirror.Business.Models
 
         private void ConvertUnixTimes()
         {
-            throw new NotImplementedException();
+            if (int.TryParse(Sunrise, out int sunrise))
+            {
+                Sunrise = DateTimeHelper.ConvertUnixTimeToGMTDateTime(sunrise)
+                    .ToShortTimeString();
+            }
+
+            if (int.TryParse(Sunset, out int sunset))
+            {
+                Sunset = DateTimeHelper.ConvertUnixTimeToGMTDateTime(sunset)
+                    .ToShortTimeString();
+            }
         }
 
         private void ConvertTemperature()
