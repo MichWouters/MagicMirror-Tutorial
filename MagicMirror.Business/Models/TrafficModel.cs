@@ -28,17 +28,13 @@ namespace MagicMirror.Business.Models
         {
             double result = 0;
 
-            switch (DistanceUom)
+            switch (targetUom)
             {
                 case DistanceUom.Imperial:
                     result = DistanceHelper.KilometersToMiles(Distance);
                     break;
-
                 case DistanceUom.Metric:
                     result = DistanceHelper.MilesToKilometers(Distance);
-                    break;
-
-                default:
                     break;
             }
 
