@@ -45,16 +45,34 @@ namespace MagicMirror.Business.Models
         {
             double result = 0;
 
-            switch (targetTemperatureUom)
+            switch (TemperatureUom)
             {
                 case TemperatureUom.Kelvin:
+                    if (targetTemperatureUom == TemperatureUom.Kelvin)
+                        result = degreesToConvert;
+                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
+                        result = TemperatureHelper.KelvinToFahrenheit(degreesToConvert);
+                    else if (targetTemperatureUom == TemperatureUom.Celsius)
+                        result = TemperatureHelper.KelvinToCelsius(degreesToConvert);
                     break;
                 case TemperatureUom.Fahrenheit:
+                    if (targetTemperatureUom == TemperatureUom.Kelvin)
+                        result = TemperatureHelper.FahrenheitToKelvin(degreesToConvert);
+                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
+                        result = degreesToConvert;
+                    else if (targetTemperatureUom == TemperatureUom.Celsius)
+                        result = TemperatureHelper.FahrenheitToCelsius(degreesToConvert);
                     break;
                 case TemperatureUom.Celsius:
+                    if (targetTemperatureUom == TemperatureUom.Kelvin)
+                        result = TemperatureHelper.CelsiusToKelvin(degreesToConvert);
+                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
+                        result = TemperatureHelper.CelsiusToFahrenheit(degreesToConvert);
+                    else if (targetTemperatureUom == TemperatureUom.Celsius)
+                        result = degreesToConvert;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(TemperatureUom), TemperatureUom, null);
+                    break;
             }
         }
     }
