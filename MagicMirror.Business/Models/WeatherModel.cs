@@ -74,6 +74,9 @@ namespace MagicMirror.Business.Models
                 default:
                     break;
             }
+
+            TemperatureUom = targetTemperatureUom;
+            Temperature = result;
         }
     }
 }
