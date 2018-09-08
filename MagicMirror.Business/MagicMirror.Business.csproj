@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj" />
     <ProjectReference Include="..\MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
     <ProjectReference Include="..\MagicMirror.DataAccess\MagicMirror.DataAccess.csproj" />
   </ItemGroup>

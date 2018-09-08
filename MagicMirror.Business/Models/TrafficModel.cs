@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Enums;
+﻿using Acme.Generic.Helpers;
+using MagicMirror.Business.Enums;
 using System;
 
 namespace MagicMirror.Business.Models
@@ -16,5 +17,33 @@ namespace MagicMirror.Business.Models
         public DateTime TimeOfArrival { get; set; }
 
         public DistanceUom DistanceUom { get; set; }
+
+        public override void ConvertValues()
+        {
+            TimeOfArrival = CalculateTimeOfArrival();
+            Distance = ConvertDistance(DistanceUom.Metric);
+        }
+
+        public double ConvertDistance(DistanceUom targetUom)
+        {
+            double result = 0;
+
+            switch (targetUom)
+            {
+                case DistanceUom.Imperial:
+                    result = DistanceHelper.KilometersToMiles(Distance);
+                    break;
+                case DistanceUom.Metric:
+                    result = DistanceHelper.MilesToKilometers(Distance);
+                    break;
+            }
+
+            return result;
+        }
+
+        public DateTime CalculateTimeOfArrival()
+        {
+            return DateTime.Now.AddMinutes(Duration);
+        }
     }
 }
