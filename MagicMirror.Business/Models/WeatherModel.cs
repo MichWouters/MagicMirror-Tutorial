@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Enums;
+﻿using System;
+using MagicMirror.Business.Enums;
 
 namespace MagicMirror.Business.Models
 {
@@ -17,5 +18,21 @@ namespace MagicMirror.Business.Models
         public string Sunset { get; set; }
 
         public TemperatureUom TemperatureUom { get; set; }
+
+        public override void ConvertValues()
+        {
+            ConvertUnixTimes();
+            ConvertTemperature();
+        }
+
+        private void ConvertUnixTimes()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ConvertTemperature()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
