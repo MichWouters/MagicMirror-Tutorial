@@ -22,61 +22,60 @@ namespace MagicMirror.Business.Models
 
         public override void ConvertValues()
         {
-            ConvertUnixTimes();
-            ConvertTemperature();
+            Sunrise = ConvertUnixTime(Sunrise);
+            Sunset = ConvertUnixTime(Sunset);
+            Temperature = ConvertTemperature(TemperatureUom.Celsius);
         }
 
-        private void ConvertUnixTimes()
-        {
-            if (int.TryParse(Sunrise, out int sunrise))
-            {
-                Sunrise = DateTimeHelper.ConvertUnixTimeToGMTDateTime(sunrise)
-                    .ToShortTimeString();
-            }
-
-            if (int.TryParse(Sunset, out int sunset))
-            {
-                Sunset = DateTimeHelper.ConvertUnixTimeToGMTDateTime(sunset)
-                    .ToShortTimeString();
-            }
-        }
-
-        private void ConvertTemperature(double degreesToConvert, TemperatureUom targetTemperatureUom)
+        public double ConvertTemperature(TemperatureUom targetUom)
         {
             double result = 0;
 
             switch (TemperatureUom)
             {
                 case TemperatureUom.Kelvin:
-                    if (targetTemperatureUom == TemperatureUom.Kelvin)
-                        result = degreesToConvert;
-                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
-                        result = TemperatureHelper.KelvinToFahrenheit(degreesToConvert);
-                    else if (targetTemperatureUom == TemperatureUom.Celsius)
-                        result = TemperatureHelper.KelvinToCelsius(degreesToConvert);
+                    if (targetUom == TemperatureUom.Celsius)
+                        result = TemperatureHelper.KelvinToCelsius(Temperature);
+                    else if (targetUom == TemperatureUom.Fahrenheit)
+                        result = TemperatureHelper.KelvinToFahrenheit(Temperature);
+                    else
+                        result = Temperature;
                     break;
+
                 case TemperatureUom.Fahrenheit:
-                    if (targetTemperatureUom == TemperatureUom.Kelvin)
-                        result = TemperatureHelper.FahrenheitToKelvin(degreesToConvert);
-                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
-                        result = degreesToConvert;
-                    else if (targetTemperatureUom == TemperatureUom.Celsius)
-                        result = TemperatureHelper.FahrenheitToCelsius(degreesToConvert);
+                    if (targetUom == TemperatureUom.Celsius)
+                        result = TemperatureHelper.FahrenheitToCelsius(Temperature);
+                    else if (targetUom == TemperatureUom.Kelvin)
+                        result = TemperatureHelper.FahrenheitToKelvin(Temperature);
+                    else
+                        result = Temperature;
                     break;
                 case TemperatureUom.Celsius:
-                    if (targetTemperatureUom == TemperatureUom.Kelvin)
-                        result = TemperatureHelper.CelsiusToKelvin(degreesToConvert);
-                    else if (targetTemperatureUom == TemperatureUom.Fahrenheit)
-                        result = TemperatureHelper.CelsiusToFahrenheit(degreesToConvert);
-                    else if (targetTemperatureUom == TemperatureUom.Celsius)
-                        result = degreesToConvert;
+                    if (targetUom == TemperatureUom.Kelvin)
+                        result = TemperatureHelper.CelsiusToKelvin(Temperature);
+                    else if (targetUom == TemperatureUom.Fahrenheit)
+                        result = TemperatureHelper.CelsiusToFahrenheit(Temperature);
+                    else
+                        result = Temperature;
                     break;
                 default:
                     break;
             }
 
-            TemperatureUom = targetTemperatureUom;
-            Temperature = result;
+            return result;
+        }
+
+        public string ConvertUnixTime(string valueToConvert)
+        {
+            string result = "";
+
+            if(int.TryParse(valueToConvert, out int parsed))
+            {
+                result = DateTimeHelper.ConvertUnixTimeToGMTDateTime(parsed)
+                    .ToShortTimeString();
+            }
+
+            return result;
         }
     }
 }
