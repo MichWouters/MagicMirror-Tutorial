@@ -1,4 +1,5 @@
-﻿using Acme.Generic.Helpers;
+﻿using Acme.Generic.Extensions;
+using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
 
 namespace MagicMirror.Business.Models
@@ -21,8 +22,8 @@ namespace MagicMirror.Business.Models
 
         public override void ConvertValues()
         {
-            Sunrise = ConvertUnixTime(Sunrise);
-            Sunset = ConvertUnixTime(Sunset);
+            Sunrise = Sunrise.ConvertUnixTime();
+            Sunset = Sunset.ConvertUnixTime();
             Temperature = ConvertTemperature(TemperatureUom.Celsius);
         }
 
@@ -62,21 +63,7 @@ namespace MagicMirror.Business.Models
                 default:
                     break;
             }
-
             return result;
-        }
-
-        public string ConvertUnixTime(string valueToConvert)
-        {
-            string result = "";
-
-            if (int.TryParse(valueToConvert, out int parsed))
-            {
-                result = DateTimeHelper.ConvertUnixTimeToGMTDateTime(parsed)
-                    .ToShortTimeString();
-            }
-
-            return result;
-        }
+        }  
     }
 }
