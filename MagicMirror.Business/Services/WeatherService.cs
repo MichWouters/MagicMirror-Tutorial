@@ -19,6 +19,7 @@ namespace MagicMirror.Business.Services
         {
             WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
             WeatherModel model = MapFromEntity(entity);
+            model.ConvertValues();
 
             return model;
         }

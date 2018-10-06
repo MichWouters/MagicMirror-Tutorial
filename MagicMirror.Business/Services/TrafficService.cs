@@ -18,6 +18,7 @@ namespace MagicMirror.Business.Services
         {
             TrafficEntity entity = await _repo.GetTrafficInfoAsync(origin, destination);
             TrafficModel model = MapFromEntity(entity);
+            model.ConvertValues();
 
             return model;
         }
