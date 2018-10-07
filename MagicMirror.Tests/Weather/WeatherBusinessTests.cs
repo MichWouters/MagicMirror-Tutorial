@@ -12,6 +12,7 @@ namespace MagicMirror.Tests.Weather
 
         // Mock values
         private const string Location = "London";
+
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
@@ -54,7 +55,6 @@ namespace MagicMirror.Tests.Weather
             Assert.Equal(22, celsius);
             Assert.Equal(71.6, fahrenheit);
             Assert.Equal(295.15f, kelvin);
-
         }
 
         [Fact]

@@ -64,6 +64,6 @@ namespace MagicMirror.Business.Models
                     break;
             }
             return result;
-        }  
+        }
     }
 }

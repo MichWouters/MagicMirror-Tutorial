@@ -28,14 +28,37 @@ namespace MagicMirror.Business.Models
         {
             double result = 0;
 
-            switch (targetUom)
+            if (DistanceUom == DistanceUom.Imperial)
             {
-                case DistanceUom.Imperial:
-                    result = DistanceHelper.KilometersToMiles(Distance);
-                    break;
-                case DistanceUom.Metric:
-                    result = DistanceHelper.MilesToKilometers(Distance);
-                    break;
+                switch (targetUom)
+                {
+                    case DistanceUom.Imperial:
+                        result = Distance;
+                        break;
+
+                    case DistanceUom.Metric:
+                        result = DistanceHelper.MilesToKilometers(Distance);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (targetUom)
+                {
+                    case DistanceUom.Imperial:
+                        result = DistanceHelper.KilometersToMiles(Distance);
+                        break;
+
+                    case DistanceUom.Metric:
+                        result = Distance;
+                        break;
+
+                    default:
+                        break;
+                }
             }
 
             return result;
