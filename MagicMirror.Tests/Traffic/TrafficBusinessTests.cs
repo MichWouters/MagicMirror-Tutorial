@@ -1,8 +1,8 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
-using Xunit;
 using System;
+using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -12,6 +12,7 @@ namespace MagicMirror.Tests.Traffic
 
         // Mock Data
         private const int Duration = 42;
+
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
@@ -24,7 +25,7 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public void Calculate_Values_Correctly()
         {
-            // Arrange 
+            // Arrange
             TrafficEntity entity = GetMockEntity();
             DateTime timeOfArrival = DateTime.Now.AddMinutes(Duration);
 
@@ -37,7 +38,6 @@ namespace MagicMirror.Tests.Traffic
             Assert.Equal(timeOfArrival.Hour, model.TimeOfArrival.Hour);
             Assert.Equal(timeOfArrival.Minute, model.TimeOfArrival.Minute);
         }
-
 
         [Fact]
         public void Can_Map_From_Entity()
