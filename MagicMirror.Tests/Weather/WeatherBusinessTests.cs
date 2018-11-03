@@ -54,7 +54,7 @@ namespace MagicMirror.Tests.Weather
             // Assert
             Assert.Equal(22, celsius);
             Assert.Equal(71.6, fahrenheit);
-            Assert.Equal(295.15f, kelvin);
+            Assert.Equal(295.15, kelvin);
         }
 
         [Fact]
