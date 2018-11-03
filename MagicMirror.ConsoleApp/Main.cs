@@ -1,20 +1,18 @@
-﻿using MagicMirror.ConsoleApp.Models;
+﻿using Acme.Generic.Helpers;
+using MagicMirror.Business.Models;
+using MagicMirror.ConsoleApp.Models;
 using System;
+using MagicMirror.Business.Enums;
 
 namespace MagicMirror.ConsoleApp
 {
     public class Main
     {
-        private UserInformation _userInformation;
-        private WeatherInformation _weatherInformation;
-        private TrafficInformation _trafficInformation;
+        private MainViewModel model;
 
         public void Run()
         {
-            _userInformation = GetInformation();
-            _weatherInformation = GetOfflineWeatherData();
-            _trafficInformation = GetOfflineTrafficData();
-
+            model = new MainViewModel();
             GenerateOutput();
             Console.ReadLine();
         }
@@ -48,55 +46,39 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
-        private WeatherInformation GetOfflineWeatherData()
+        private WeatherModel GetOfflineWeatherData()
         {
-            return new WeatherInformation
+            return new WeatherModel
             {
                 Location = "London",
                 Sunrise = "6:04",
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",
-                TemperatureUOM = "Celsius",
+                TemperatureUom =  TemperatureUom.Celsius
             };
         }
 
-        private TrafficInformation GetOfflineTrafficData()
+        private TrafficModel GetOfflineTrafficData()
         {
-            return new TrafficInformation
+            return new TrafficModel
             {
-                Minutes = 35,
+                Duration = 35,
                 Distance = 27,
-                DistanceUOM = "Kilometers",
+                DistanceUom = DistanceUom.Imperial,
                 Destination = "2 St Margaret St, London"
             };
         }
 
         private void GenerateOutput()
         {
-            Console.WriteLine($"Good {GetTimeOfDay()} {_userInformation.Name}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_weatherInformation.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {_weatherInformation.Temperature} degrees {_weatherInformation.TemperatureUOM}.");
-            Console.WriteLine($"The sun has risen at {_weatherInformation.Sunrise} and will set at approximately {_weatherInformation.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {_trafficInformation.Minutes} minutes. " +
-                $"If you leave now, you should arrive at approximately {_trafficInformation.TimeOfArrival.ToShortTimeString()}.");
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {model.User.Name}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.Weather.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {model.Weather.Temperature} degrees {model.Weather.TemperatureUom.ToString()}.");
+            Console.WriteLine($"The sun has risen at {model.Weather.Sunrise} and will set at approximately {model.Weather.Sunset}.");
+            Console.WriteLine($"Your trip to work will take about {model.Traffic.Duration} minutes. " +
+                $"If you leave now, you should arrive at approximately {model.Traffic.TimeOfArrival.ToShortTimeString()}.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
-        }
-
-        private string GetTimeOfDay()
-        {
-            var currentTime = DateTime.Now.TimeOfDay.Hours;
-
-            if (currentTime >= 0 && currentTime <= 11)
-                return "morning";
-            else if (currentTime <= 13)
-                return "day";
-            else if (currentTime <= 18)
-                return "afternoon";
-            else if (currentTime <= 22)
-                return "evening";
-            else
-                return "night";
         }
     }
 }
