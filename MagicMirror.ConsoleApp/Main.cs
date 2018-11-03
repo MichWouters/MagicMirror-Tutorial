@@ -20,8 +20,17 @@ namespace MagicMirror.ConsoleApp
             _trafficService = new TrafficService();
         }
 
-        public void Run()
+        public async Task RunAsync()
         {
+            model = new MainViewModel
+            {
+                User = GetInformation()
+            };
+
+            model.Weather = await GetWeatherModelAsync(model.User.Town);
+            model.Traffic = await GetTrafficModelAsync($"{model.User.Address}, {model.User.Town}",
+                model.User.WorkAddress);
+
             GenerateOutput();
             Console.ReadLine();
         }

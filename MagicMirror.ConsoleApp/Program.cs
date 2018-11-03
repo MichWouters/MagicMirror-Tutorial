@@ -2,10 +2,10 @@
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async void Main(string[] args)
         {
             var main = new Main();
-            main.RunAsync();
+            await main.RunAsync();
         }
     }
 }
