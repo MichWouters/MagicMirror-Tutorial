@@ -63,6 +63,10 @@ namespace MagicMirror.Business.Models
                 default:
                     break;
             }
+
+            this.Temperature = result;
+            this.TemperatureUom = targetUom;
+
             return result;
         }
     }

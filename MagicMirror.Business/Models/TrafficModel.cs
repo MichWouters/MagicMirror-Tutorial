@@ -61,6 +61,8 @@ namespace MagicMirror.Business.Models
                 }
             }
 
+            this.Distance = result;
+            this.DistanceUom = targetUom;
             return result;
         }
 
