@@ -3,18 +3,39 @@ using MagicMirror.Business.Models;
 using MagicMirror.ConsoleApp.Models;
 using System;
 using MagicMirror.Business.Enums;
+using MagicMirror.Business.Services;
+using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
     public class Main
     {
         private MainViewModel model;
+        private IWeatherService _weatherService;
+        private ITrafficService _trafficService;
+
+        public Main()
+        {
+            _weatherService = new WeatherService();
+            _trafficService = new TrafficService();
+        }
 
         public void Run()
         {
-            model = new MainViewModel();
             GenerateOutput();
             Console.ReadLine();
+        }
+
+        private async Task<WeatherModel> GetWeatherModelAsync(string city)
+        {
+            var model = await _weatherService.GetWeatherModelAsync(city);
+            return model;
+        }
+
+        private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
+        {
+            var model = await _trafficService.GetTrafficModelAsync(origin, destination);
+            return model;
         }
 
         private UserInformation GetInformation()
