@@ -1,5 +1,4 @@
-﻿using Acme.Generic.Helpers;
-using MagicMirror.Business.Enums;
+﻿using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -26,18 +25,9 @@ namespace MagicMirror.ConsoleApp
             WeatherModel weatherModel = await GetWeatherModelAsync(information.Town);
             TrafficModel trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
 
-            _model = new MainViewModel
-            {
-                UserName = information.Name,
-                TravelTime = DateTimeHelper.GetHoursAndMinutes(trafficModel.Duration),
-                Sunrise = weatherModel.Sunrise,
-                Sunset = weatherModel.Sunset,
-                Temperature = weatherModel.Temperature,
-                TemperatureUom = weatherModel.TemperatureUom.ToString(),
-                WeatherType = weatherModel.WeatherType,
-                TimeOfArrival = trafficModel.TimeOfArrival.ToShortTimeString(),
-                TimeOfDay = DateTimeHelper.GetTimeOfDay()
-            };
+            _model = AutoMapper.Mapper.Map(weatherModel, _model);
+            _model = AutoMapper.Mapper.Map(trafficModel, _model);
+            _model.UserName = information.Name;
 
             GenerateOutput();
             Console.ReadLine();
