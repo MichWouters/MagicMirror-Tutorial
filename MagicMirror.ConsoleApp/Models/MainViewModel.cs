@@ -1,13 +1,23 @@
-﻿using MagicMirror.Business.Models;
-
-namespace MagicMirror.ConsoleApp.Models
+﻿namespace MagicMirror.ConsoleApp.Models
 {
     public class MainViewModel
     {
-        public TrafficModel Traffic { get; set; }
+        public string UserName { get; set; }
 
-        public WeatherModel Weather { get; set; }
+        public string TravelTime{ get; set; }
 
-        public UserInformation User { get; set; }
+        public string Sunrise { get; set; }
+
+        public string Sunset { get; set; }
+
+        public double Temperature { get; set; }
+
+        public string TemperatureUom { get; set; }
+
+        public string WeatherType { get; set; }
+
+        public string TimeOfArrival { get; set; }
+
+        public string TimeOfDay { get; set; }
     }
 }

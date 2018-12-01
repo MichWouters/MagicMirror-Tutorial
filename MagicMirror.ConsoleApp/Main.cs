@@ -1,18 +1,18 @@
 ﻿using Acme.Generic.Helpers;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
 using System;
-using MagicMirror.Business.Enums;
-using MagicMirror.Business.Services;
 using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
     public class Main
     {
-        private MainViewModel model;
-        private IWeatherService _weatherService;
-        private ITrafficService _trafficService;
+        private MainViewModel _model;
+        private readonly IWeatherService _weatherService;
+        private readonly ITrafficService _trafficService;
 
         public Main()
         {
@@ -22,14 +22,22 @@ namespace MagicMirror.ConsoleApp
 
         public async Task RunAsync()
         {
-            model = new MainViewModel
-            {
-                User = GetInformation()
-            };
+            UserInformation information = GetInformation();
+            WeatherModel weatherModel = await GetWeatherModelAsync(information.Town);
+            TrafficModel trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
 
-            model.Weather = await GetWeatherModelAsync(model.User.Town);
-            model.Traffic = await GetTrafficModelAsync($"{model.User.Address}, {model.User.Town}",
-                model.User.WorkAddress);
+            _model = new MainViewModel
+            {
+                UserName = information.Name,
+                TravelTime = DateTimeHelper.GetHoursAndMinutes(trafficModel.Duration),
+                Sunrise = weatherModel.Sunrise,
+                Sunset = weatherModel.Sunset,
+                Temperature = weatherModel.Temperature,
+                TemperatureUom = weatherModel.TemperatureUom.ToString(),
+                WeatherType = weatherModel.WeatherType,
+                TimeOfArrival = trafficModel.TimeOfArrival.ToShortTimeString(),
+                TimeOfDay = DateTimeHelper.GetTimeOfDay()
+            };
 
             GenerateOutput();
             Console.ReadLine();
@@ -76,6 +84,19 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
+        private void GenerateOutput()
+        {
+            Console.WriteLine($"Good {_model.TimeOfDay} {_model.UserName}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
+            Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
+            Console.WriteLine($"Your trip to work will take about {_model.TravelTime}." +
+                $"If you leave now, you should arrive at approximately {_model.TimeOfArrival}.");
+            Console.WriteLine("Thank you, and have a very safe and productive day!");
+        }
+
+        #region Fallback Methods
+
         private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel
@@ -85,7 +106,7 @@ namespace MagicMirror.ConsoleApp
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",
-                TemperatureUom =  TemperatureUom.Celsius
+                TemperatureUom = TemperatureUom.Celsius
             };
         }
 
@@ -100,15 +121,6 @@ namespace MagicMirror.ConsoleApp
             };
         }
 
-        private void GenerateOutput()
-        {
-            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {model.User.Name}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.Weather.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {model.Weather.Temperature} degrees {model.Weather.TemperatureUom.ToString()}.");
-            Console.WriteLine($"The sun has risen at {model.Weather.Sunrise} and will set at approximately {model.Weather.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {DateTimeHelper.GetHoursAndMinutes(model.Traffic.Duration)}." +
-                $"If you leave now, you should arrive at approximately {model.Traffic.TimeOfArrival.ToShortTimeString()}.");
-            Console.WriteLine("Thank you, and have a very safe and productive day!");
-        }
+        #endregion Fallback Methods
     }
 }

@@ -35,11 +35,9 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = Distance;
                         break;
-
                     case DistanceUom.Metric:
                         result = DistanceHelper.MilesToKilometers(Distance);
                         break;
-
                     default:
                         break;
                 }
@@ -51,11 +49,9 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = DistanceHelper.KilometersToMiles(Distance);
                         break;
-
                     case DistanceUom.Metric:
                         result = Distance;
                         break;
-
                     default:
                         break;
                 }
