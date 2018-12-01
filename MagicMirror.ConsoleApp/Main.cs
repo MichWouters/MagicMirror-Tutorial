@@ -13,24 +13,36 @@ namespace MagicMirror.ConsoleApp
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
 
-        public Main()
+        public Main(IWeatherService weatherService, ITrafficService trafficService)
         {
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
+            _weatherService = weatherService;
+            _trafficService = trafficService;
+            _model = new MainViewModel();
         }
 
         public async Task RunAsync()
         {
-            UserInformation information = GetInformation();
-            WeatherModel weatherModel = await GetWeatherModelAsync(information.Town);
-            TrafficModel trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+            try
+            {
+                UserInformation information = GetInformation();
+                WeatherModel weatherModel = await GetWeatherModelAsync(information.Town);
+                TrafficModel trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}",
+                    information.WorkAddress);
 
-            _model = AutoMapper.Mapper.Map(weatherModel, _model);
-            _model = AutoMapper.Mapper.Map(trafficModel, _model);
-            _model.UserName = information.Name;
+                _model = AutoMapper.Mapper.Map(weatherModel, _model);
+                _model = AutoMapper.Mapper.Map(trafficModel, _model);
+                _model.UserName = information.Name;
 
-            GenerateOutput();
-            Console.ReadLine();
+                GenerateOutput();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                Console.ReadLine();
+            }
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)

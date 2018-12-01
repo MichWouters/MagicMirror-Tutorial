@@ -1,6 +1,8 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
 using System;
 using Xunit;
 
@@ -8,18 +10,18 @@ namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
-        private ITrafficService _service;
+        private readonly ITrafficService _service;
 
         // Mock Data
         private const int Duration = 42;
-
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
 
         public TrafficBusinessTests()
         {
-            _service = new TrafficService();
+            var mockRepo = new Mock<TrafficRepo>();
+            _service = new TrafficService(mockRepo.Object);
         }
 
         [Fact]

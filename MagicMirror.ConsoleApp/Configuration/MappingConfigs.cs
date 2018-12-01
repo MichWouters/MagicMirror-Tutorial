@@ -3,11 +3,11 @@ using MagicMirror.Business.Models;
 using MagicMirror.ConsoleApp.Converters;
 using MagicMirror.ConsoleApp.Models;
 
-namespace MagicMirror.Business.Configuration
+namespace MagicMirror.ConsoleApp.Configuration
 {
-    public class AutoMapperConfiguration : Profile
+    public static class MappingConfigs 
     {
-        public AutoMapperConfiguration()
+        public static void RegisterMaps()
         {
             Mapper.Initialize(config =>
             {

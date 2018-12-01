@@ -8,11 +8,11 @@ namespace MagicMirror.Business.Services
     public class WeatherService :
         MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
-        private IWeatherRepo _repo;
+        private readonly IWeatherRepo _repo;
 
-        public WeatherService()
+        public WeatherService(IWeatherRepo repo)
         {
-            _repo = new WeatherRepo();
+            _repo = repo;
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
