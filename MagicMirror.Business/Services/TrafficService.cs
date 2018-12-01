@@ -7,11 +7,11 @@ namespace MagicMirror.Business.Services
 {
     public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
     {
-        private ITrafficRepo _repo;
+        private readonly ITrafficRepo _repo;
 
-        public TrafficService()
+        public TrafficService(ITrafficRepo repo)
         {
-            _repo = new TrafficRepo();
+            _repo = repo;
         }
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)

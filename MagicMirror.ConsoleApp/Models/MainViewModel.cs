@@ -1,0 +1,23 @@
+﻿namespace MagicMirror.ConsoleApp.Models
+{
+    public class MainViewModel
+    {
+        public string UserName { get; set; }
+
+        public string TravelTime{ get; set; }
+
+        public string Sunrise { get; set; }
+
+        public string Sunset { get; set; }
+
+        public double Temperature { get; set; }
+
+        public string TemperatureUom { get; set; }
+
+        public string WeatherType { get; set; }
+
+        public string TimeOfArrival { get; set; }
+
+        public string TimeOfDay { get; set; }
+    }
+}
