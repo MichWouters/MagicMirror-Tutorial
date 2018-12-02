@@ -12,7 +12,8 @@ namespace MagicMirror.ConsoleApp.Configuration
             Mapper.Initialize(config =>
             {
                 config.CreateMap<WeatherModel, MainViewModel>()
-                    .ConvertUsing<WeatherModelConverter>();
+                    .ForMember(dest => dest.TemperatureUom, x => x.MapFrom(src => src.TemperatureUom.ToString()));
+                    
 
                 config.CreateMap<TrafficModel, MainViewModel>()
                     .ConvertUsing<TrafficModelConverter>();

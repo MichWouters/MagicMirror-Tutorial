@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Enums;
+﻿using Acme.Generic.Helpers;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -22,16 +23,33 @@ namespace MagicMirror.ConsoleApp
 
         public async Task RunAsync()
         {
+            UserInformation information = GetInformation();
+
             try
             {
-                UserInformation information = GetInformation();
-                WeatherModel weatherModel = await GetWeatherModelAsync(information.Town);
-                TrafficModel trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}",
-                    information.WorkAddress);
+                WeatherModel weatherModel;
+                TrafficModel trafficModel;
+
+                try
+                {
+                    weatherModel = await GetWeatherModelAsync(information.Town);
+                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}",
+                        information.WorkAddress);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error occurred while fetching data. Displaying offline data");
+                    Console.WriteLine(e.ToString());
+
+                    weatherModel = GetOfflineWeatherData();
+                    trafficModel = GetOfflineTrafficData();
+                }
 
                 _model = AutoMapper.Mapper.Map(weatherModel, _model);
                 _model = AutoMapper.Mapper.Map(trafficModel, _model);
+
                 _model.UserName = information.Name;
+                _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
 
                 GenerateOutput();
             }
@@ -47,12 +65,21 @@ namespace MagicMirror.ConsoleApp
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
+            if (string.IsNullOrEmpty(city))
+                throw new ArgumentNullException(nameof(city));
+
             var model = await _weatherService.GetWeatherModelAsync(city);
             return model;
         }
 
         private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
+            if (string.IsNullOrEmpty(origin))
+                throw new ArgumentNullException(nameof(origin));
+
+            if (string.IsNullOrEmpty(destination))
+                throw new ArgumentNullException(nameof(destination));
+
             var model = await _trafficService.GetTrafficModelAsync(origin, destination);
             return model;
         }

@@ -15,6 +15,7 @@ namespace MagicMirror.Tests.Traffic
 
         // Mock Data
         private const int Duration = 42;
+
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
