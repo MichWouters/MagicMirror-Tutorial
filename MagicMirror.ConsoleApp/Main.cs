@@ -44,7 +44,7 @@ namespace MagicMirror.ConsoleApp
             }
         }
 
-        private async Task<WeatherModel>GetWeatherModelAsync(string city)
+        private async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             if (string.IsNullOrEmpty(city))
             {
@@ -55,7 +55,7 @@ namespace MagicMirror.ConsoleApp
             return model;
         }
 
-        private async Task<TrafficModel>GetTrafficModelAsync(string origin, string destination)
+        private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
             if (string.IsNullOrEmpty(origin))
             {
