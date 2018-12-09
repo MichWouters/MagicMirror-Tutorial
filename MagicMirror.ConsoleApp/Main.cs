@@ -42,6 +42,8 @@ namespace MagicMirror.ConsoleApp
                 weatherModel = GetOfflineWeatherData();
                 trafficModel = GetOfflineTrafficData();
             }
+
+            // Todo: Map models to ViewModel
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
