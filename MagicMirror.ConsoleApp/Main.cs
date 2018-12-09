@@ -11,7 +11,6 @@ namespace MagicMirror.ConsoleApp
         private MainViewModel _model;
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
-
         public void Run()
         {
             GenerateOutput();
@@ -60,24 +59,24 @@ namespace MagicMirror.ConsoleApp
 
         private WeatherModel GetOfflineWeatherData()
         {
-            return new WeatherInformation
+            return new WeatherModel
             {
                 Location = "London",
                 Sunrise = "6:04",
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",
-                TemperatureUOM = "Celsius",
+                TemperatureUom = Business.Enums.TemperatureUom.Celsius
             };
         }
 
         private TrafficModel GetOfflineTrafficData()
         {
-            return new TrafficInformation
+            return new TrafficModel
             {
-                Minutes = 35,
+                Duration = 35,
                 Distance = 27,
-                DistanceUOM = "Kilometers",
+                DistanceUom = Business.Enums.DistanceUom.Metric,
                 Destination = "2 St Margaret St, London"
             };
         }
