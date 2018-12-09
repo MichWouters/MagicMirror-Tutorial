@@ -43,7 +43,12 @@ namespace MagicMirror.ConsoleApp
                 trafficModel = GetOfflineTrafficData();
             }
 
-            // Todo: Map models to ViewModel
+            // Map models to ViewModel
+            _model = AutoMapper.Mapper.Map(weatherModel, _model);
+            _model = AutoMapper.Mapper.Map(trafficModel, _model);
+
+            _model.UserName = information.Name;
+            _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)

@@ -21,7 +21,17 @@ namespace Acme.Generic.Helpers
 
         public static string GetHoursAndMinutes(int duration)
         {
-            throw new NotImplementedException();
+            int hours = duration / 60;
+            int minutes = duration % 60;
+
+            if (hours > 0)
+            {
+                return $"{hours} hours and {minutes} minutes";
+            }
+            else
+            {
+                return $"{minutes} minutes";
+            }
         }
 
         public static string GetTimeOfDay()
