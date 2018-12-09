@@ -1,14 +1,17 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
-        private ITrafficService _service;
+        private readonly ITrafficService _service;
 
         // Mock Data
         private const int Duration = 42;
@@ -18,19 +21,23 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            _service = new TrafficService();
+            var mockRepo = new Mock<ITrafficRepo>();
+            _service = new TrafficService(mockRepo.Object);
+
+            // Arrange
+            mockRepo.Setup(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
         }
 
         [Fact]
-        public void Calculate_Values_Correctly()
+        public async Task Calculate_Values_Correctly()
         {
             // Arrange
             TrafficEntity entity = GetMockEntity();
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
-            TrafficModel model = _service.MapFromEntity(entity);
-            model.ConvertValues();
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
 
             // Assert
             Assert.Equal(122.31, model.Distance);
@@ -39,16 +46,12 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
-        public void Can_Map_From_Entity()
+        public async Task Can_Map_From_Entity()
         {
-            // Arrange
-            TrafficEntity entity = GetMockEntity();
-
             // Act
-            TrafficModel model = _service.MapFromEntity(entity);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
 
             // Assert
-            Assert.Equal(Distance, model.Distance);
             Assert.Equal(Duration, model.Duration);
             Assert.Equal(Destination, model.Destination);
             Assert.Equal(Origin, model.Origin);

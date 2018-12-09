@@ -60,12 +60,10 @@ namespace MagicMirror.ConsoleApp
                 Console.WriteLine(e.ToString());
                 throw;
             }
-
             finally
             {
                 Console.ReadLine();
             }
-            
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
@@ -134,7 +132,6 @@ namespace MagicMirror.ConsoleApp
                               $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
-
         private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel
