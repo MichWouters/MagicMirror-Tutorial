@@ -15,7 +15,6 @@ namespace MagicMirror.Tests.Traffic
 
         // Mock Data
         private const int Duration = 42;
-
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
@@ -34,7 +33,8 @@ namespace MagicMirror.Tests.Traffic
         public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            DateTime timeOfArrival = DateTime.Now.AddMinutes(Duration);
+            TrafficEntity entity = GetMockEntity();
+            DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);

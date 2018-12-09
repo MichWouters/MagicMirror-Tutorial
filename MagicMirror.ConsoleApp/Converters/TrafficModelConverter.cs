@@ -5,14 +5,14 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Converters
 {
-    public class TrafficModelConverter: ITypeConverter<TrafficModel, MainViewModel>
+    public class TrafficModelConverter : ITypeConverter<TrafficModel, MainViewModel>
     {
-        public MainViewModel Convert(TrafficModel source, MainViewModel dest, ResolutionContext context)
+        public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {
-            dest.TravelTime = DateTimeHelper.GetHoursAndMinutes(source.Duration);
-            dest.TimeOfArrival = source.TimeOfArrival.ToShortTimeString();
+            destination.TimeOfArrival = source.TimeOfArrival.ToShortTimeString();
+            destination.TravelTime = DateTimeHelper.GetHoursAndMinutes(source.Duration);
 
-            return dest;
+            return destination;
         }
     }
 }

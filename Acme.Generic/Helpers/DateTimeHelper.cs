@@ -19,18 +19,19 @@ namespace Acme.Generic.Helpers
             return (int)timeSpan.TotalSeconds;
         }
 
-        public static string GetHoursAndMinutes(int minutes)
+        public static string GetHoursAndMinutes(int duration)
         {
-            int hours = minutes / 60;
-            int remainingMinutes = minutes % 60;
+            int totalMinutes = duration / 60;
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
 
             if (hours > 0)
             {
-                return $"{hours} hours and {remainingMinutes} minutes";
+                return $"{hours} hours and {minutes} minutes";
             }
             else
             {
-                return $"{remainingMinutes} minutes";
+                return $"{minutes} minutes";
             }
         }
 

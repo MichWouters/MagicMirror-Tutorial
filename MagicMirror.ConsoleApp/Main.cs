@@ -1,5 +1,4 @@
 ﻿using Acme.Generic.Helpers;
-using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -14,10 +13,11 @@ namespace MagicMirror.ConsoleApp
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
 
-        public Main(IWeatherService weatherService, ITrafficService trafficService)
+        public Main()
         {
-            _weatherService = weatherService;
-            _trafficService = trafficService;
+            // Bad practice! Prefer Dependency Injection whenever possible
+            _weatherService = new WeatherService();
+            _trafficService = new TrafficService();
             _model = new MainViewModel();
         }
 
@@ -25,37 +25,40 @@ namespace MagicMirror.ConsoleApp
         {
             UserInformation information = GetInformation();
 
+            WeatherModel weatherModel;
+            TrafficModel trafficModel;
+
             try
             {
-                WeatherModel weatherModel;
-                TrafficModel trafficModel;
-
                 try
                 {
                     weatherModel = await GetWeatherModelAsync(information.Town);
-                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}",
-                        information.WorkAddress);
+                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
+                        , information.WorkAddress);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error occurred while fetching data. Displaying offline data");
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine("Error occurred. Displaying offline data");
+                    Console.WriteLine(ex.ToString());
 
                     weatherModel = GetOfflineWeatherData();
                     trafficModel = GetOfflineTrafficData();
                 }
 
+                // Map models to ViewModel
                 _model = AutoMapper.Mapper.Map(weatherModel, _model);
                 _model = AutoMapper.Mapper.Map(trafficModel, _model);
 
                 _model.UserName = information.Name;
                 _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
 
+                // Display results
                 GenerateOutput();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                throw;
             }
             finally
             {
@@ -66,21 +69,27 @@ namespace MagicMirror.ConsoleApp
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             if (string.IsNullOrEmpty(city))
+            {
                 throw new ArgumentNullException(nameof(city));
+            }
 
-            var model = await _weatherService.GetWeatherModelAsync(city);
+            WeatherModel model = await _weatherService.GetWeatherModelAsync(city);
             return model;
         }
 
         private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
             if (string.IsNullOrEmpty(origin))
+            {
                 throw new ArgumentNullException(nameof(origin));
+            }
 
             if (string.IsNullOrEmpty(destination))
+            {
                 throw new ArgumentNullException(nameof(destination));
+            }
 
-            var model = await _trafficService.GetTrafficModelAsync(origin, destination);
+            TrafficModel model = await _trafficService.GetTrafficModelAsync(origin, destination);
             return model;
         }
 
@@ -115,17 +124,14 @@ namespace MagicMirror.ConsoleApp
 
         private void GenerateOutput()
         {
-            Console.WriteLine($"Good {_model.TimeOfDay} {_model.UserName}");
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {_model.UserName}");
             Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {_model.TravelTime}." +
-                $"If you leave now, you should arrive at approximately {_model.TimeOfArrival}.");
+            Console.WriteLine($"Your trip to work will take about {_model.TravelTime }. " +
+                              $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
-
-        #region Fallback Methods
-
         private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel
@@ -135,7 +141,7 @@ namespace MagicMirror.ConsoleApp
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",
-                TemperatureUom = TemperatureUom.Celsius
+                TemperatureUom = Business.Enums.TemperatureUom.Celsius
             };
         }
 
@@ -145,11 +151,9 @@ namespace MagicMirror.ConsoleApp
             {
                 Duration = 35,
                 Distance = 27,
-                DistanceUom = DistanceUom.Imperial,
+                DistanceUom = Business.Enums.DistanceUom.Metric,
                 Destination = "2 St Margaret St, London"
             };
         }
-
-        #endregion Fallback Methods
     }
 }
