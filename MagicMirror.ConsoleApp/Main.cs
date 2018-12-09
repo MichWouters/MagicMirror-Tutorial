@@ -1,20 +1,19 @@
-﻿using MagicMirror.ConsoleApp.Models;
+﻿using Acme.Generic.Helpers;
+using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using MagicMirror.ConsoleApp.Models;
 using System;
 
 namespace MagicMirror.ConsoleApp
 {
     public class Main
     {
-        private UserInformation _userInformation;
-        private WeatherInformation _weatherInformation;
-        private TrafficInformation _trafficInformation;
+        private MainViewModel _model;
+        private readonly IWeatherService _weatherService;
+        private readonly ITrafficService _trafficService;
 
         public void Run()
         {
-            _userInformation = GetInformation();
-            _weatherInformation = GetOfflineWeatherData();
-            _trafficInformation = GetOfflineTrafficData();
-
             GenerateOutput();
             Console.ReadLine();
         }
@@ -48,7 +47,18 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
-        private WeatherInformation GetOfflineWeatherData()
+        private void GenerateOutput()
+        {
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {_model.UserName}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
+            Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
+            Console.WriteLine($"Your trip to work will take about {_model.TravelTime } minutes. " +
+                              $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
+            Console.WriteLine("Thank you, and have a very safe and productive day!");
+        }
+
+        private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherInformation
             {
@@ -61,7 +71,7 @@ namespace MagicMirror.ConsoleApp
             };
         }
 
-        private TrafficInformation GetOfflineTrafficData()
+        private TrafficModel GetOfflineTrafficData()
         {
             return new TrafficInformation
             {
@@ -70,33 +80,6 @@ namespace MagicMirror.ConsoleApp
                 DistanceUOM = "Kilometers",
                 Destination = "2 St Margaret St, London"
             };
-        }
-
-        private void GenerateOutput()
-        {
-            Console.WriteLine($"Good {GetTimeOfDay()} {_userInformation.Name}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_weatherInformation.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {_weatherInformation.Temperature} degrees {_weatherInformation.TemperatureUOM}.");
-            Console.WriteLine($"The sun has risen at {_weatherInformation.Sunrise} and will set at approximately {_weatherInformation.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {_trafficInformation.Minutes} minutes. " +
-                $"If you leave now, you should arrive at approximately {_trafficInformation.TimeOfArrival.ToShortTimeString()}.");
-            Console.WriteLine("Thank you, and have a very safe and productive day!");
-        }
-
-        private string GetTimeOfDay()
-        {
-            var currentTime = DateTime.Now.TimeOfDay.Hours;
-
-            if (currentTime >= 0 && currentTime <= 11)
-                return "morning";
-            else if (currentTime <= 13)
-                return "day";
-            else if (currentTime <= 18)
-                return "afternoon";
-            else if (currentTime <= 22)
-                return "evening";
-            else
-                return "night";
         }
     }
 }
