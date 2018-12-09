@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MagicMirror.Business.Models;
+using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Configuration
 {
@@ -11,7 +10,11 @@ namespace MagicMirror.ConsoleApp.Configuration
         {
             Mapper.Initialize(config =>
             {
+                config.CreateMap<WeatherModel, MainViewModel>()
+                    .ForMember(dest => dest.TemperatureUom, x => x.MapFrom(src => src.TemperatureUom.ToString()));
 
+                config.CreateMap<TrafficModel, MainViewModel>()
+                     .ConvertUsing<TrafficModelConverter>();
             });
         }
     }

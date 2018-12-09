@@ -19,6 +19,11 @@ namespace Acme.Generic.Helpers
             return (int)timeSpan.TotalSeconds;
         }
 
+        public static string GetHoursAndMinutes(int duration)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string GetTimeOfDay()
         {
             var currentTime = DateTime.Now.TimeOfDay.Hours;
