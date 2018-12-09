@@ -2,10 +2,10 @@
 {
     internal class Program
     {
-        private static async System.Threading.Tasks.Task Main(string[] args)
+        private static void Main(string[] args)
         {
             var main = new Main();
-            await main.RunAsync();
+            main.RunAsync().GetAwaiter().GetResult();
         }
     }
 }

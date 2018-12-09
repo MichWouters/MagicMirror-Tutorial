@@ -23,7 +23,7 @@ namespace MagicMirror.ConsoleApp
 
         public async Task RunAsync()
         {
-            UserInformation information = new UserInformation();
+            UserInformation information = GetInformation();
 
             WeatherModel weatherModel;
             TrafficModel trafficModel;
