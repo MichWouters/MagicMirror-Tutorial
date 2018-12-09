@@ -9,7 +9,7 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherDataTests
     {
-        private readonly IWeatherRepo _repo;
+        private IWeatherRepo _repo;
 
         public WeatherDataTests()
         {
@@ -20,10 +20,11 @@ namespace MagicMirror.Tests.Weather
         public async Task Can_Retrieve_Weather_Data()
         {
             // Arrange
+            WeatherEntity entity = null;
             string city = "London";
 
             // Act
-            WeatherEntity entity = await _repo.GetWeatherEntityByCityAsync(city);
+            entity = await _repo.GetWeatherEntityByCityAsync(city);
 
             // Assert
             Assert.NotNull(entity);
@@ -63,7 +64,7 @@ namespace MagicMirror.Tests.Weather
             string city = "FEIFJIEFUESFYU";
 
             // Act & Assert
-            await Assert.ThrowsAsync<HttpRequestException>
+            var ex = await Assert.ThrowsAsync<HttpRequestException>
                 (async () => await _repo.GetWeatherEntityByCityAsync(city));
         }
     }

@@ -20,11 +20,12 @@ namespace MagicMirror.Tests.Traffic
         public async Task Can_Retrieve_Traffic_Data()
         {
             // Arrange
+            TrafficEntity entity = null;
             string start = "London, UK";
             string destination = "Brighton, UK";
 
             // Act
-            TrafficEntity entity = await _repo.GetTrafficInfoAsync(start, destination);
+            entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.NotNull(entity);
