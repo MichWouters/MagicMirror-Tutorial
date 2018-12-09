@@ -3,6 +3,7 @@ using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
@@ -11,10 +12,63 @@ namespace MagicMirror.ConsoleApp
         private MainViewModel _model;
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
-        public void Run()
+
+        public Main()
         {
-            GenerateOutput();
-            Console.ReadLine();
+            // Bad practice! Prefer Dependency Injection whenever possible
+            _weatherService = new WeatherService();
+            _trafficService = new TrafficService();
+            _model = new MainViewModel();
+        }
+
+        public async Task RunAsync()
+        {
+            UserInformation information = new UserInformation();
+
+            WeatherModel weatherModel;
+            TrafficModel trafficModel;
+
+            try
+            {
+                weatherModel = await GetWeatherModelAsync(information.Town);
+                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
+                    , information.WorkAddress);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occurred. Displaying offline data");
+                Console.WriteLine(ex.ToString());
+
+                weatherModel = GetOfflineWeatherData();
+                trafficModel = GetOfflineTrafficData();
+            }
+        }
+
+        private async Task<WeatherModel>GetWeatherModelAsync(string city)
+        {
+            if (string.IsNullOrEmpty(city))
+            {
+                throw new ArgumentNullException(nameof(city));
+            }
+
+            WeatherModel model = await _weatherService.GetWeatherModelAsync(city);
+            return model;
+        }
+
+        private async Task<TrafficModel>GetTrafficModelAsync(string origin, string destination)
+        {
+            if (string.IsNullOrEmpty(origin))
+            {
+                throw new ArgumentNullException(nameof(origin));
+            }
+
+            if (string.IsNullOrEmpty(destination))
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+
+            TrafficModel model = await _trafficService.GetTrafficModelAsync(origin, destination);
+            return model;
         }
 
         private UserInformation GetInformation()
