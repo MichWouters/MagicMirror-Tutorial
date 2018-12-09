@@ -30,25 +30,42 @@ namespace MagicMirror.ConsoleApp
 
             try
             {
-                weatherModel = await GetWeatherModelAsync(information.Town);
-                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
-                    , information.WorkAddress);
+                try
+                {
+                    weatherModel = await GetWeatherModelAsync(information.Town);
+                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
+                        , information.WorkAddress);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error occurred. Displaying offline data");
+                    Console.WriteLine(ex.ToString());
+
+                    weatherModel = GetOfflineWeatherData();
+                    trafficModel = GetOfflineTrafficData();
+                }
+
+                // Map models to ViewModel
+                _model = AutoMapper.Mapper.Map(weatherModel, _model);
+                _model = AutoMapper.Mapper.Map(trafficModel, _model);
+
+                _model.UserName = information.Name;
+                _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
+
+                // Display results
+                GenerateOutput();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("Error occurred. Displaying offline data");
-                Console.WriteLine(ex.ToString());
-
-                weatherModel = GetOfflineWeatherData();
-                trafficModel = GetOfflineTrafficData();
+                Console.WriteLine(e.ToString());
+                throw;
             }
 
-            // Map models to ViewModel
-            _model = AutoMapper.Mapper.Map(weatherModel, _model);
-            _model = AutoMapper.Mapper.Map(trafficModel, _model);
-
-            _model.UserName = information.Name;
-            _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
+            finally
+            {
+                Console.ReadLine();
+            }
+            
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
