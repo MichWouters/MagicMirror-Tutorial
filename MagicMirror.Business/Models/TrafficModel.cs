@@ -68,7 +68,7 @@ namespace MagicMirror.Business.Models
 
         public DateTime CalculateTimeOfArrival()
         {
-            return DateTime.Now.AddMinutes(Duration);
+            return DateTime.Now.AddSeconds(Duration);
         }
     }
 }
