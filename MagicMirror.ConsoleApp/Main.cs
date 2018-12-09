@@ -130,7 +130,7 @@ namespace MagicMirror.ConsoleApp
             Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {_model.TravelTime } minutes. " +
+            Console.WriteLine($"Your trip to work will take about {_model.TravelTime }. " +
                               $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
