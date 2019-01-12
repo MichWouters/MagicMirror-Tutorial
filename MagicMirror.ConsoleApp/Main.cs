@@ -41,8 +41,7 @@ namespace MagicMirror.ConsoleApp
                     Console.WriteLine("Error occurred. Displaying offline data");
                     Console.WriteLine(ex.ToString());
 
-                    weatherModel = GetOfflineWeatherData();
-                    trafficModel = GetOfflineTrafficData();
+                    throw;
                 }
 
                 // Todo: Map Models to ViewModel
