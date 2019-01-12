@@ -9,9 +9,6 @@ namespace MagicMirror.ConsoleApp.Configuration
     {
         public AutoMapperPresentationProfile()
         {
-            CreateMap<WeatherModel, MainViewModel>()
-                .ConvertUsing<WeatherModelToMainViewModelConverter>();
-
         }
     }
 }
