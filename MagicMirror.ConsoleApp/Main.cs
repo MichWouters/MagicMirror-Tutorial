@@ -45,15 +45,8 @@ namespace MagicMirror.ConsoleApp
                     trafficModel = GetOfflineTrafficData();
                 }
 
-                // Map models to ViewModel
-                _model = AutoMapper.Mapper.Map(weatherModel, _model);
-                _model = AutoMapper.Mapper.Map(trafficModel, _model);
+                // Todo: Map Models to ViewModel
 
-                _model.UserName = information.Name;
-                _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
-
-                // Display results
-                GenerateOutput();
             }
             catch (Exception e)
             {
@@ -132,6 +125,7 @@ namespace MagicMirror.ConsoleApp
                               $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
+
         private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel
