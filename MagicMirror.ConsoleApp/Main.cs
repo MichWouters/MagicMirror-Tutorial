@@ -1,4 +1,5 @@
 ﻿using Acme.Generic.Helpers;
+using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -12,12 +13,14 @@ namespace MagicMirror.ConsoleApp
         private MainViewModel _model;
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
+        private readonly IMapper _mapper;
 
-        public Main()
+        public Main(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
         {
-            // Bad practice! Prefer Dependency Injection whenever possible
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
+            _weatherService = weatherService;
+            _trafficService = trafficService;
+            _mapper = mapper;
+
             _model = new MainViewModel();
         }
 
