@@ -20,7 +20,7 @@ namespace MagicMirror.Business.Services
         protected void SetUpMapperConfig()
         {
             var baseMappings = new MapperConfigurationExpression();
-            baseMappings.AddProfile<AutoMapperConfiguration>();
+            baseMappings.AddProfile<AutoMapperBusinessProfile>();
             var config = new MapperConfiguration(baseMappings);
 
             _mapper = new Mapper(config);
