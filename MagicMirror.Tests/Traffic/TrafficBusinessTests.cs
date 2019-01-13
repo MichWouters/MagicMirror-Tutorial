@@ -41,7 +41,9 @@ namespace MagicMirror.Tests.Traffic
         public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            TrafficEntity entity = GetMockEntity();
+            _mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
@@ -52,22 +54,6 @@ namespace MagicMirror.Tests.Traffic
             Assert.Equal(122.31, model.Distance);
             Assert.Equal(timeOfArrival.Hour, model.TimeOfArrival.Hour);
             Assert.Equal(timeOfArrival.Minute, model.TimeOfArrival.Minute);
-        }
-
-        [Fact]
-        public async Task Can_Map_From_EntityAsync()
-        {
-            // Arrange
-            TrafficEntity entity = GetMockEntity();
-
-            // Act
-            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
-
-            // Assert
-            Assert.Equal(Distance, model.Distance);
-            Assert.Equal(Duration, model.Duration);
-            Assert.Equal(Destination, model.Destination);
-            Assert.Equal(Origin, model.Origin);
         }
 
         private TrafficEntity GetMockEntity()
