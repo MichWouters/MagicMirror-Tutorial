@@ -7,6 +7,7 @@ using System;
 using Xunit;
 using AutoMapper;
 using MagicMirror.Business.Configuration;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -37,14 +38,14 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
-        public void Calculate_Values_Correctly()
+        public async Task Calculate_Values_Correctly()
         {
             // Arrange
             TrafficEntity entity = GetMockEntity();
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
-            TrafficModel model = _service.MapFromEntity(entity);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
             model.ConvertValues();
 
             // Assert
@@ -54,13 +55,13 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
-        public void Can_Map_From_Entity()
+        public async Task Can_Map_From_EntityAsync()
         {
             // Arrange
             TrafficEntity entity = GetMockEntity();
 
             // Act
-            TrafficModel model = _service.MapFromEntity(entity);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
 
             // Assert
             Assert.Equal(Distance, model.Distance);

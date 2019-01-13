@@ -7,6 +7,7 @@ using Moq;
 using MagicMirror.DataAccess.Repos;
 using AutoMapper;
 using MagicMirror.Business.Configuration;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -39,13 +40,13 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public void Calculate_DateTimes_Correctly()
+        public async Task Calculate_DateTimes_Correctly()
         {
             // Arrange
             WeatherEntity entity = GetMockEntity();
 
             // Act
-            WeatherModel model = _service.MapFromEntity(entity);
+            WeatherModel model = await _service.GetWeatherModelAsync(Location);
             model.ConvertValues();
 
             // Assert
@@ -54,13 +55,13 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public void Calculate_Temperatures_Correctly()
+        public async Task Calculate_Temperatures_CorrectlyAsync()
         {
             // Arrange
             WeatherEntity entity = GetMockEntity();
 
             // Act
-            WeatherModel model = _service.MapFromEntity(entity);
+            WeatherModel model = await _service.GetWeatherModelAsync(Location);
             double celsius = model.ConvertTemperature(TemperatureUom.Celsius);
             double fahrenheit = model.ConvertTemperature(TemperatureUom.Fahrenheit);
             double kelvin = model.ConvertTemperature(TemperatureUom.Kelvin);
@@ -72,13 +73,13 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public void Can_Map_From_Entity()
+        public async Task Can_Map_From_EntityAsync()
         {
             // Arrange
             WeatherEntity entity = GetMockEntity();
 
             // Act
-            WeatherModel model = _service.MapFromEntity(entity);
+            WeatherModel model = await _service.GetWeatherModelAsync(Location);
 
             // Assert
             Assert.Equal(Location, model.Location);
