@@ -4,7 +4,7 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Converters
 {
-    public class TrafficModelToMainViewModelConverter : ITypeConverter<TrafficModel, MainViewModel>
+    public class TrafficModelToMainViewModel : ITypeConverter<TrafficModel, MainViewModel>
     {
         public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {

@@ -9,6 +9,11 @@ namespace MagicMirror.ConsoleApp.Configuration
     {
         public AutoMapperPresentationProfile()
         {
+            CreateMap<WeatherModel, MainViewModel>()
+                .ForMember(x => x.TemperatureUom, y => y.MapFrom(z => z.TemperatureUom.ToString()));
+
+            CreateMap<TrafficModel, MainViewModel>()
+                .ConvertUsing<TrafficModelToMainViewModel>();
         }
     }
 }
