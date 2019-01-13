@@ -1,4 +1,7 @@
-﻿namespace MagicMirror.ConsoleApp
+﻿using MagicMirror.Business.Configuration;
+using MagicMirror.ConsoleApp.Configuration;
+
+namespace MagicMirror.ConsoleApp
 {
     public class Program
     {
@@ -6,6 +9,15 @@
         {
             var main = new Main();
             main.RunAsync();
+        }
+
+        private static void RegisterAutoMapper()
+        {
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+                cfg.AddProfile<AutoMapperPresentationProfile>();
+            });
         }
     }
 }
