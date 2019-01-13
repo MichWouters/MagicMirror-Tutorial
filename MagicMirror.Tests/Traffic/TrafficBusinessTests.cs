@@ -1,25 +1,39 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
 using System;
 using Xunit;
+using AutoMapper;
+using MagicMirror.Business.Configuration;
 
 namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
+        private Mock<ITrafficRepo> _mockRepo;
         private ITrafficService _service;
 
         // Mock Data
         private const int Duration = 42;
-
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
 
         public TrafficBusinessTests()
         {
-            _service = new TrafficService();
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            // Initialize Service with Dependencies
+            _mockRepo = new Mock<ITrafficRepo>();
+            _service = new TrafficService(_mockRepo.Object, mapper);
         }
 
         [Fact]

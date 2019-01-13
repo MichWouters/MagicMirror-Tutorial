@@ -1,4 +1,7 @@
-﻿using MagicMirror.Business.Services;
+﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Services;
+using MagicMirror.ConsoleApp.Configuration;
 using MagicMirror.DataAccess.Repos;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,11 +11,37 @@ namespace MagicMirror.ConsoleApp
     {
         public static void Main(string[] args)
         {
-            // Initialize Automapper configuration
-            Configuration.AutoMapperConfiguration.RegisterMaps();
+            ServiceCollection services = new ServiceCollection();
+            RegisterServices(services);
+            RegisterAutoMapper();
 
-            var main = new Main();
-            main.RunAsync().GetAwaiter().GetResult();
+            ServiceProvider provider = services.BuildServiceProvider();
+            provider.GetService<Main>().RunAsync().GetAwaiter().GetResult();
+        }
+
+        private static void RegisterServices(ServiceCollection services)
+        {
+            // Add Services using Dependency Injection
+            services.AddTransient<ITrafficService, TrafficService>();
+            services.AddTransient<ITrafficRepo, TrafficRepo>();
+
+            services.AddTransient<IWeatherService, WeatherService>();
+            services.AddTransient<IWeatherRepo, WeatherRepo>();
+
+            // Register App
+            services.AddTransient<Main>();
+
+            // Register AutoMapper
+            services.AddAutoMapper();
+        }
+
+        private static void RegisterAutoMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+                cfg.AddProfile<AutoMapperPresentationProfile>();
+            });
         }
     }
 }

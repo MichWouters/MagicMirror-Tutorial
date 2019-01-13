@@ -1,4 +1,5 @@
 ﻿using Acme.Generic.Helpers;
+using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -12,12 +13,14 @@ namespace MagicMirror.ConsoleApp
         private MainViewModel _model;
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
+        private readonly IMapper _mapper;
 
-        public Main()
+        public Main(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
         {
-            // Bad practice! Prefer Dependency Injection whenever possible
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
+            _weatherService = weatherService;
+            _trafficService = trafficService;
+            _mapper = mapper;
+
             _model = new MainViewModel();
         }
 
@@ -39,21 +42,12 @@ namespace MagicMirror.ConsoleApp
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error occurred. Displaying offline data");
-                    Console.WriteLine(ex.ToString());
-
                     weatherModel = GetOfflineWeatherData();
                     trafficModel = GetOfflineTrafficData();
                 }
 
-                // Map models to ViewModel
-                _model = AutoMapper.Mapper.Map(weatherModel, _model);
-                _model = AutoMapper.Mapper.Map(trafficModel, _model);
+                // Todo: Map Models to ViewModel
 
-                _model.UserName = information.Name;
-                _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
-
-                // Display results
-                GenerateOutput();
             }
             catch (Exception e)
             {
@@ -132,6 +126,7 @@ namespace MagicMirror.ConsoleApp
                               $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
+
         private WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel

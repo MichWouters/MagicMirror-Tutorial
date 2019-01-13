@@ -10,9 +10,9 @@ namespace MagicMirror.Business.Services
     {
         private readonly IWeatherRepo _repo;
 
-        public WeatherService()
+        public WeatherService(IWeatherRepo repo)
         {
-            _repo = new WeatherRepo();
+            _repo = repo;
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)

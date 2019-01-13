@@ -5,9 +5,9 @@ using MagicMirror.DataAccess.Entities.Weather;
 
 namespace MagicMirror.Business.Configuration
 {
-    public class AutoMapperConfiguration : Profile
+    public class AutoMapperBusinessProfile : Profile
     {
-        public AutoMapperConfiguration()
+        public AutoMapperBusinessProfile()
         {
             CreateMap<WeatherEntity, WeatherModel>()
                 .ForMember(x => x.Location, y => y.MapFrom(z => z.Name))
