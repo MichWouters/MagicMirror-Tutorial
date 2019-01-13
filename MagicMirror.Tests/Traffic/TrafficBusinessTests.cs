@@ -27,7 +27,7 @@ namespace MagicMirror.Tests.Traffic
         {
             // Arrange
             TrafficEntity entity = GetMockEntity();
-            DateTime timeOfArrival = DateTime.Now.AddMinutes(Duration);
+            DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
             TrafficModel model = _service.MapFromEntity(entity);

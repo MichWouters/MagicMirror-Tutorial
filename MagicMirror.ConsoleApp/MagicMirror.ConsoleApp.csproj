@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MagicMirror.DataAccess\MagicMirror.DataAccess.csproj" />
+    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj" />
+    <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,5 +18,37 @@ namespace Acme.Generic.Helpers
             TimeSpan timeSpan = date - baseUnixDateTime;
             return (int)timeSpan.TotalSeconds;
         }
+
+        public static string GetHoursAndMinutes(int duration)
+        {
+            int totalMinutes = duration / 60;
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
+
+            if (hours > 0)
+            {
+                return $"{hours} hours and {minutes} minutes";
+            }
+            else
+            {
+                return $"{minutes} minutes";
+            }
+        }
+
+        public static string GetTimeOfDay()
+        {
+            var currentTime = DateTime.Now.TimeOfDay.Hours;
+
+            if (currentTime >= 0 && currentTime <= 11)
+                return "morning";
+            else if (currentTime <= 13)
+                return "day";
+            else if (currentTime <= 18)
+                return "afternoon";
+            else if (currentTime <= 22)
+                return "evening";
+            else
+                return "night";
+        }
     }
 }

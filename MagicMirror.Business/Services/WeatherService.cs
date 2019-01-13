@@ -8,7 +8,7 @@ namespace MagicMirror.Business.Services
     public class WeatherService :
         MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
-        private IWeatherRepo _repo;
+        private readonly IWeatherRepo _repo;
 
         public WeatherService()
         {
