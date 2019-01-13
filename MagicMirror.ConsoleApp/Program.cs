@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Configuration;
+﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Configuration;
 using MagicMirror.DataAccess.Repos;
@@ -31,12 +32,12 @@ namespace MagicMirror.ConsoleApp
             services.AddTransient<Main>();
 
             // Register AutoMapper
-
+            services.AddAutoMapper();
         }
 
         private static void RegisterAutoMapper()
         {
-            AutoMapper.Mapper.Initialize(cfg =>
+            Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile<AutoMapperBusinessProfile>();
                 cfg.AddProfile<AutoMapperPresentationProfile>();
