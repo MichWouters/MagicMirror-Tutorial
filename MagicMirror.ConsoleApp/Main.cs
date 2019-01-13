@@ -1,96 +1,22 @@
-﻿using Acme.Generic.Helpers;
-using MagicMirror.Business.Models;
-using MagicMirror.Business.Services;
-using MagicMirror.ConsoleApp.Models;
+﻿using MagicMirror.ConsoleApp.Models;
 using System;
-using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
     public class Main
     {
-        private MainViewModel _model;
-        private readonly IWeatherService _weatherService;
-        private readonly ITrafficService _trafficService;
+        private UserInformation _userInformation;
+        private WeatherInformation _weatherInformation;
+        private TrafficInformation _trafficInformation;
 
-        public Main()
+        public void Run()
         {
-            // Bad practice! Prefer Dependency Injection whenever possible
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
-            _model = new MainViewModel();
-        }
+            _userInformation = GetInformation();
+            _weatherInformation = GetOfflineWeatherData();
+            _trafficInformation = GetOfflineTrafficData();
 
-        public async Task RunAsync()
-        {
-            UserInformation information = GetInformation();
-
-            WeatherModel weatherModel;
-            TrafficModel trafficModel;
-
-            try
-            {
-                try
-                {
-                    weatherModel = await GetWeatherModelAsync(information.Town);
-                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
-                        , information.WorkAddress);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error occurred. Displaying offline data");
-                    Console.WriteLine(ex.ToString());
-
-                    weatherModel = GetOfflineWeatherData();
-                    trafficModel = GetOfflineTrafficData();
-                }
-
-                // Map models to ViewModel
-                _model = AutoMapper.Mapper.Map(weatherModel, _model);
-                _model = AutoMapper.Mapper.Map(trafficModel, _model);
-
-                _model.UserName = information.Name;
-                _model.TimeOfDay = DateTimeHelper.GetTimeOfDay();
-
-                // Display results
-                GenerateOutput();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                throw;
-            }
-            finally
-            {
-                Console.ReadLine();
-            }
-        }
-
-        private async Task<WeatherModel> GetWeatherModelAsync(string city)
-        {
-            if (string.IsNullOrEmpty(city))
-            {
-                throw new ArgumentNullException(nameof(city));
-            }
-
-            WeatherModel model = await _weatherService.GetWeatherModelAsync(city);
-            return model;
-        }
-
-        private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
-        {
-            if (string.IsNullOrEmpty(origin))
-            {
-                throw new ArgumentNullException(nameof(origin));
-            }
-
-            if (string.IsNullOrEmpty(destination))
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
-
-            TrafficModel model = await _trafficService.GetTrafficModelAsync(origin, destination);
-            return model;
+            GenerateOutput();
+            Console.ReadLine();
         }
 
         private UserInformation GetInformation()
@@ -122,38 +48,55 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
-        private void GenerateOutput()
+        private WeatherInformation GetOfflineWeatherData()
         {
-            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {_model.UserName}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
-            Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {_model.TravelTime }. " +
-                              $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
-            Console.WriteLine("Thank you, and have a very safe and productive day!");
-        }
-        private WeatherModel GetOfflineWeatherData()
-        {
-            return new WeatherModel
+            return new WeatherInformation
             {
                 Location = "London",
                 Sunrise = "6:04",
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",
-                TemperatureUom = Business.Enums.TemperatureUom.Celsius
+                TemperatureUOM = "Celsius",
             };
         }
 
-        private TrafficModel GetOfflineTrafficData()
+        private TrafficInformation GetOfflineTrafficData()
         {
-            return new TrafficModel
+            return new TrafficInformation
             {
-                Duration = 35,
+                Minutes = 35,
                 Distance = 27,
-                DistanceUom = Business.Enums.DistanceUom.Metric,
+                DistanceUOM = "Kilometers",
                 Destination = "2 St Margaret St, London"
             };
+        }
+
+        private void GenerateOutput()
+        {
+            Console.WriteLine($"Good {GetTimeOfDay()} {_userInformation.Name}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_weatherInformation.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {_weatherInformation.Temperature} degrees {_weatherInformation.TemperatureUOM}.");
+            Console.WriteLine($"The sun has risen at {_weatherInformation.Sunrise} and will set at approximately {_weatherInformation.Sunset}.");
+            Console.WriteLine($"Your trip to work will take about {_trafficInformation.Minutes} minutes. " +
+                $"If you leave now, you should arrive at approximately {_trafficInformation.TimeOfArrival.ToShortTimeString()}.");
+            Console.WriteLine("Thank you, and have a very safe and productive day!");
+        }
+
+        private string GetTimeOfDay()
+        {
+            var currentTime = DateTime.Now.TimeOfDay.Hours;
+
+            if (currentTime >= 0 && currentTime <= 11)
+                return "morning";
+            else if (currentTime <= 13)
+                return "day";
+            else if (currentTime <= 18)
+                return "afternoon";
+            else if (currentTime <= 22)
+                return "evening";
+            else
+                return "night";
         }
     }
 }
