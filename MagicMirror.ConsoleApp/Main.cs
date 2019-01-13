@@ -8,28 +8,46 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
-    public class MagicMirrorApp
+    public class Main
     {
-        // Services
+        private MainViewModel _model;
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
         private readonly IMapper _mapper;
 
-        public MagicMirrorApp(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
+        public Main(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
         {
             _weatherService = weatherService;
             _trafficService = trafficService;
             _mapper = mapper;
+
+            _model = new MainViewModel();
         }
 
         public async Task RunAsync()
         {
             UserInformation information = GetInformation();
 
+            WeatherModel weatherModel;
+            TrafficModel trafficModel;
+
             try
             {
-                MainViewModel model = await GenerateViewModel(information);
-                GenerateOutput(model);
+                try
+                {
+                    weatherModel = await GetWeatherModelAsync(information.Town);
+                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}"
+                        , information.WorkAddress);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error occurred. Displaying offline data");
+                    weatherModel = GetOfflineWeatherData();
+                    trafficModel = GetOfflineTrafficData();
+                }
+
+                // Todo: Map Models to ViewModel
+
             }
             catch (Exception e)
             {
@@ -40,34 +58,6 @@ namespace MagicMirror.ConsoleApp
             {
                 Console.ReadLine();
             }
-        }
-
-        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
-        {
-            var model = new MainViewModel();
-            WeatherModel weatherModel;
-            TrafficModel trafficModel;
-
-            try
-            {
-                weatherModel = await GetWeatherModelAsync(information.Town);
-                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error occurred. Displaying offline data");
-                Console.WriteLine(ex.ToString());
-
-                weatherModel = GetOfflineWeatherData();
-                trafficModel = GetOfflineTrafficData();
-            }
-
-            // Map models to ViewModel
-            model = _mapper.Map(weatherModel, model);
-            model = _mapper.Map(trafficModel, model);
-            model.UserName = information.Name;
-
-            return model;
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
@@ -126,14 +116,14 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
-        private void GenerateOutput(MainViewModel model)
+        private void GenerateOutput()
         {
-            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {model.UserName}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
-            Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
-            Console.WriteLine($"Your trip to work will take about {model.TravelTime }. " +
-                              $"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {_model.UserName}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
+            Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
+            Console.WriteLine($"Your trip to work is about {_model.Distance} {_model.DistanceUom} long and will take about {_model.TravelTime }. " +
+                              $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
 
@@ -142,7 +132,7 @@ namespace MagicMirror.ConsoleApp
             return new WeatherModel
             {
                 Location = "London",
-                Sunrise = "06:40",
+                Sunrise = "6:04",
                 Sunset = "18:36",
                 Temperature = 17,
                 WeatherType = "Sunny",

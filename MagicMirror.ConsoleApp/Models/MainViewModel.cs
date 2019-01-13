@@ -20,6 +20,8 @@
 
         public string TravelTime { get; set; }
 
-        public double Distance { get; set; }
+        public int Distance { get; set; }
+
+        public string DistanceUom { get; set; }
     }
 }
