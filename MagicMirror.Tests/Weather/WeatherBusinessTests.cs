@@ -3,11 +3,14 @@ using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
 using Xunit;
+using Moq;
+using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Tests.Weather
 {
     public class WeatherBusinessTests
     {
+        private Mock<IWeatherRepo> _mockRepo;
         private IWeatherService _service;
 
         // Mock values
@@ -20,7 +23,8 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
-            _service = new WeatherService();
+            _mockRepo = new Mock<IWeatherRepo>();
+            _service = new WeatherService(_mockRepo.Object);
         }
 
         [Fact]

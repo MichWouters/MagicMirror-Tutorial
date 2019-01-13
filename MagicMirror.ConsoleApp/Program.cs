@@ -26,7 +26,7 @@ namespace MagicMirror.ConsoleApp
             services.AddTransient<ITrafficRepo, TrafficRepo>();
 
             services.AddTransient<IWeatherService, WeatherService>();
-            services.AddTransient<IWeatherRepo, IWeatherRepo>();
+            services.AddTransient<IWeatherRepo, WeatherRepo>();
 
             // Register App
             services.AddTransient<Main>();
