@@ -5,6 +5,8 @@ using MagicMirror.DataAccess.Entities.Weather;
 using Xunit;
 using Moq;
 using MagicMirror.DataAccess.Repos;
+using AutoMapper;
+using MagicMirror.Business.Configuration;
 
 namespace MagicMirror.Tests.Weather
 {
@@ -23,8 +25,17 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            // Initialize Service with Dependencies
             _mockRepo = new Mock<IWeatherRepo>();
-            _service = new WeatherService(_mockRepo.Object);
+            _service = new WeatherService(_mockRepo.Object, mapper);
         }
 
         [Fact]

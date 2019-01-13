@@ -5,6 +5,8 @@ using MagicMirror.DataAccess.Repos;
 using Moq;
 using System;
 using Xunit;
+using AutoMapper;
+using MagicMirror.Business.Configuration;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -21,8 +23,17 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            // Initialize Service with Dependencies
             _mockRepo = new Mock<ITrafficRepo>();
-            _service = new TrafficService(_mockRepo.Object);
+            _service = new TrafficService(_mockRepo.Object, mapper);
         }
 
         [Fact]
