@@ -47,7 +47,7 @@ namespace MagicMirror.ConsoleApp
                 }
 
                 // Todo: Map Models to ViewModel
-
+                _model = _mapper.Map<MainViewModel>(trafficModel);
             }
             catch (Exception e)
             {
