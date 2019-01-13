@@ -8,6 +8,9 @@ namespace MagicMirror.ConsoleApp.Converters
     {
         public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {
+            // Converter classes cannot automap properties..
+
+            // But they do allow calculations to be performed at map-time.
             destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
             destination.TravelTime = GetHoursAndMinutes(source.Duration);
 
