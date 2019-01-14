@@ -7,6 +7,7 @@ using System;
 using Xunit;
 using AutoMapper;
 using MagicMirror.Business.Configuration;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -37,36 +38,22 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
-        public void Calculate_Values_Correctly()
+        public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            TrafficEntity entity = GetMockEntity();
+            _mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
-            TrafficModel model = _service.MapFromEntity(entity);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
             model.ConvertValues();
 
             // Assert
             Assert.Equal(122.31, model.Distance);
             Assert.Equal(timeOfArrival.Hour, model.TimeOfArrival.Hour);
             Assert.Equal(timeOfArrival.Minute, model.TimeOfArrival.Minute);
-        }
-
-        [Fact]
-        public void Can_Map_From_Entity()
-        {
-            // Arrange
-            TrafficEntity entity = GetMockEntity();
-
-            // Act
-            TrafficModel model = _service.MapFromEntity(entity);
-
-            // Assert
-            Assert.Equal(Distance, model.Distance);
-            Assert.Equal(Duration, model.Duration);
-            Assert.Equal(Destination, model.Destination);
-            Assert.Equal(Origin, model.Origin);
         }
 
         private TrafficEntity GetMockEntity()

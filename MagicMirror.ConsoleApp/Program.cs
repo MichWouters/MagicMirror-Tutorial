@@ -16,7 +16,7 @@ namespace MagicMirror.ConsoleApp
             RegisterAutoMapper();
 
             ServiceProvider provider = services.BuildServiceProvider();
-            provider.GetService<Main>().RunAsync().GetAwaiter().GetResult();
+            provider.GetService<MagicMirrorApp>().RunAsync().GetAwaiter().GetResult();
         }
 
         private static void RegisterServices(ServiceCollection services)
@@ -29,7 +29,7 @@ namespace MagicMirror.ConsoleApp
             services.AddTransient<IWeatherRepo, WeatherRepo>();
 
             // Register App
-            services.AddTransient<Main>();
+            services.AddTransient<MagicMirrorApp>();
 
             // Register AutoMapper
             services.AddAutoMapper();

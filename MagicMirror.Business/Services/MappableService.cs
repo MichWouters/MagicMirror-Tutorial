@@ -10,7 +10,7 @@ namespace MagicMirror.Business.Services
     {
         protected IMapper _mapper;
 
-        public TModel MapFromEntity(TEntity entity)
+        protected TModel MapFromEntity(TEntity entity)
         {
             var model = _mapper.Map<TModel>(entity);
             return model;

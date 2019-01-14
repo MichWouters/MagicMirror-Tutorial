@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using AutoMapper;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
@@ -9,9 +10,10 @@ namespace MagicMirror.Business.Services
     {
         private readonly ITrafficRepo _repo;
 
-        public TrafficService(ITrafficRepo repo)
+        public TrafficService(ITrafficRepo repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)

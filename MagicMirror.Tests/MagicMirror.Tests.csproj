@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj" />
+    <ProjectReference Include="..\MagicMirror.ConsoleApp\MagicMirror.ConsoleApp.csproj" />
     <ProjectReference Include="..\MagicMirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
     <ProjectReference Include="..\MagicMirror.DataAccess\MagicMirror.DataAccess.csproj" />
   </ItemGroup>

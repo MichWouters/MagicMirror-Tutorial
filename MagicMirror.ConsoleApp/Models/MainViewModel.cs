@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MagicMirror.ConsoleApp.Models
+﻿namespace MagicMirror.ConsoleApp.Models
 {
     public class MainViewModel
     {
@@ -23,5 +19,9 @@ namespace MagicMirror.ConsoleApp.Models
         public string TimeOfDay { get; set; }
 
         public string TravelTime { get; set; }
+
+        public double Distance { get; set; }
+
+        public string DistanceUom { get; set; }
     }
 }
