@@ -1,18 +1,11 @@
-﻿using MagicMirror.Business.Services;
-using MagicMirror.DataAccess.Repos;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace MagicMirror.ConsoleApp
+﻿namespace MagicMirror.ConsoleApp
 {
-    public class Program
+    internal class Program
     {
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            // Initialize Automapper configuration
-            Configuration.AutoMapperConfiguration.RegisterMaps();
-
             var main = new Main();
-            main.RunAsync().GetAwaiter().GetResult();
+            main.Run();
         }
     }
 }
