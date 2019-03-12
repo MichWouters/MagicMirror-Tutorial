@@ -31,6 +31,8 @@ namespace MagicMirror.ConsoleApp
             // Register App
             services.AddSingleton<MagicMirrorApp>();
 
+            // Register AutoMapper
+            services.AddAutoMapper();
         }
 
         private static void RegisterAutoMapper()
