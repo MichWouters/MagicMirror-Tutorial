@@ -1,4 +1,5 @@
 ﻿using Acme.Generic.Helpers;
+using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -11,8 +12,8 @@ namespace MagicMirror.ConsoleApp
     {
         // Services
         private readonly IWeatherService _weatherService;
-
         private readonly ITrafficService _trafficService;
+        private IMapper _mapper;
 
         public Main()
         {
@@ -60,11 +61,7 @@ namespace MagicMirror.ConsoleApp
                 trafficModel = GetOfflineTrafficData();
             }
 
-            // Map models to ViewModel
-            model = _mapper.Map(weatherModel, model);
-            model = _mapper.Map(trafficModel, model);
-            model.UserName = information.Name;
-
+            // TODO: Map models to ViewModel
             return model;
         }
 
