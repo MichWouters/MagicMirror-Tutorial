@@ -37,7 +37,7 @@ namespace MagicMirror.Tests.Weather
 
             // Initialize Service with Dependencies
             _mockRepo = new Mock<IWeatherRepo>();
-            _service = new WeatherService(_mockRepo.Object, mapper);
+            _service = new WeatherService();
         }
 
         [Fact]

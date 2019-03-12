@@ -5,7 +5,7 @@
         private static void Main(string[] args)
         {
             var main = new Main();
-            main.Run();
+            main.RunAsync();
         }
     }
 }

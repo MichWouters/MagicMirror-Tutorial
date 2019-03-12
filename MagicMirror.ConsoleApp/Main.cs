@@ -1,5 +1,4 @@
 ﻿using Acme.Generic.Helpers;
-using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -8,18 +7,17 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
-    public class MagicMirrorApp
+    public class Main
     {
         // Services
         private readonly IWeatherService _weatherService;
-        private readonly ITrafficService _trafficService;
-        private readonly IMapper _mapper;
 
-        public MagicMirrorApp(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
+        private readonly ITrafficService _trafficService;
+
+        public Main()
         {
-            _weatherService = weatherService;
-            _trafficService = trafficService;
-            _mapper = mapper;
+            _weatherService = new WeatherService();
+            _trafficService = new TrafficService();
         }
 
         public async Task RunAsync()
