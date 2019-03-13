@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Configuration;
-using MagicMirror.Business.Enums;
+﻿using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;

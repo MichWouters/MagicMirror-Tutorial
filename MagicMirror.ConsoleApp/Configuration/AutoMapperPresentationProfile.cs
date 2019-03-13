@@ -5,7 +5,7 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Configuration
 {
-    public class AutoMapperPresentationProfile: Profile
+    public class AutoMapperPresentationProfile : Profile
     {
         public AutoMapperPresentationProfile()
         {

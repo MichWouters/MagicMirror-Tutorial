@@ -12,6 +12,7 @@ namespace MagicMirror.ConsoleApp
     {
         // Services
         private readonly IWeatherService _weatherService;
+
         private readonly ITrafficService _trafficService;
         private readonly IMapper _mapper;
 

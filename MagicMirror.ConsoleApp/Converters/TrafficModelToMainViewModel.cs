@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.ConsoleApp.Models;

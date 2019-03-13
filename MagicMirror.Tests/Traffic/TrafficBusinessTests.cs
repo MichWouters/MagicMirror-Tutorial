@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Configuration;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
 using System;
