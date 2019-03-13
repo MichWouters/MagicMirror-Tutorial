@@ -13,7 +13,6 @@ namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
-        private Mock<ITrafficRepo> _mockRepo;
         private ITrafficService _service;
 
         // Mock Data
@@ -33,17 +32,14 @@ namespace MagicMirror.Tests.Traffic
             IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _mockRepo = new Mock<ITrafficRepo>();
-            _service = new TrafficService(_mockRepo.Object, mapper);
+            _service = new TrafficService();
         }
 
         [Fact]
         public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            _mockRepo.Setup(x => x.GetTrafficInfoAsync(
-                It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(GetMockEntity());
-
+            TrafficEntity entity = GetMockEntity();
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
