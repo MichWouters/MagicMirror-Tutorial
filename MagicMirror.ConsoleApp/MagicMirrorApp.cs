@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
-    public class Main
+    public class MagicMirrorApp
     {
         // Services
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
         private IMapper _mapper;
 
-        public Main()
+        public MagicMirrorApp()
         {
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
