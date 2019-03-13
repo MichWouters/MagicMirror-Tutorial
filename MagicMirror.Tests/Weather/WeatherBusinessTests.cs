@@ -23,14 +23,6 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
-            // Initialize AutoMapper for Unit Tests
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperBusinessProfile>();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
             // Initialize Service with Dependencies
             _service = new WeatherService();
         }
