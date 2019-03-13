@@ -13,7 +13,6 @@ namespace MagicMirror.ConsoleApp
         // Services
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
-        private IMapper _mapper;
 
         public Main()
         {
@@ -27,7 +26,26 @@ namespace MagicMirror.ConsoleApp
 
             try
             {
-                MainViewModel model = await GenerateViewModel(information);
+                var model = new MainViewModel();
+                WeatherModel weatherModel;
+                TrafficModel trafficModel;
+
+                try
+                {
+                    weatherModel = await GetWeatherModelAsync(information.Town);
+                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error occurred. Displaying offline data");
+                    Console.WriteLine(ex.ToString());
+
+                    weatherModel = GetOfflineWeatherData();
+                    trafficModel = GetOfflineTrafficData();
+                }
+
+                // TODO: Map models to ViewModel
+
                 GenerateOutput(model);
             }
             catch (Exception e)
@@ -39,30 +57,6 @@ namespace MagicMirror.ConsoleApp
             {
                 Console.ReadLine();
             }
-        }
-
-        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
-        {
-            var model = new MainViewModel();
-            WeatherModel weatherModel;
-            TrafficModel trafficModel;
-
-            try
-            {
-                weatherModel = await GetWeatherModelAsync(information.Town);
-                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error occurred. Displaying offline data");
-                Console.WriteLine(ex.ToString());
-
-                weatherModel = GetOfflineWeatherData();
-                trafficModel = GetOfflineTrafficData();
-            }
-
-            // TODO: Map models to ViewModel
-            return model;
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
