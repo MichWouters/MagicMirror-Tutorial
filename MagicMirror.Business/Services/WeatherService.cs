@@ -2,6 +2,7 @@
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace MagicMirror.Business.Services
 {
@@ -9,10 +10,12 @@ namespace MagicMirror.Business.Services
         MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
         private readonly IWeatherRepo _repo;
+        private readonly IMapper _mapper;
 
-        public WeatherService()
+        public WeatherService(IWeatherRepo repo, IMapper mapper)
         {
-            _repo = new WeatherRepo();
+            _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<WeatherModel> GetWeatherModelAsync(string city)
