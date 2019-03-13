@@ -34,7 +34,7 @@ namespace MagicMirror.Tests.Traffic
 
             // Initialize Service with Dependencies
             _mockRepo = new Mock<ITrafficRepo>();
-            _service = new TrafficService(_mockRepo.Object, mapper);
+            _service = new TrafficService();
         }
 
         [Fact]
