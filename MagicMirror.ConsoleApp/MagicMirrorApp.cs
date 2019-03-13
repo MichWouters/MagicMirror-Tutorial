@@ -28,29 +28,7 @@ namespace MagicMirror.ConsoleApp
 
             try
             {
-                var model = new MainViewModel();
-                WeatherModel weatherModel;
-                TrafficModel trafficModel;
-
-                try
-                {
-                    weatherModel = await GetWeatherModelAsync(information.Town);
-                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error occurred. Displaying offline data");
-                    Console.WriteLine(ex.ToString());
-
-                    weatherModel = GetOfflineWeatherData();
-                    trafficModel = GetOfflineTrafficData();
-                }
-
-                // Map models to ViewModel
-                model = _mapper.Map(weatherModel, model);
-                model = _mapper.Map(trafficModel, model);
-                model.UserName = information.Name;
-                 
+                MainViewModel model = await GenerateViewModel(information);
                 GenerateOutput(model);
             }
             catch (Exception e)
@@ -62,6 +40,34 @@ namespace MagicMirror.ConsoleApp
             {
                 Console.ReadLine();
             }
+        }
+
+        private async Task<MainViewModel> GenerateViewModel(UserInformation information)
+        {
+            var model = new MainViewModel();
+            WeatherModel weatherModel;
+            TrafficModel trafficModel;
+
+            try
+            {
+                weatherModel = await GetWeatherModelAsync(information.Town);
+                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occurred. Displaying offline data");
+                Console.WriteLine(ex.ToString());
+
+                weatherModel = GetOfflineWeatherData();
+                trafficModel = GetOfflineTrafficData();
+            }
+
+            // Map models to ViewModel
+            model = _mapper.Map(weatherModel, model);
+            model = _mapper.Map(trafficModel, model);
+            model.UserName = information.Name;
+
+            return model;
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
