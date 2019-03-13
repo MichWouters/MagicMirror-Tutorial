@@ -19,5 +19,13 @@ namespace Acme.Generic.Helpers
 
             return converted;
         }
+
+        public static double MetersToKilometers(double valueToConvert, int precision = 2)
+        {
+            double converted = valueToConvert / 1000;
+            converted = Math.Round(converted, precision);
+
+            return converted;
+        }
     }
 }
