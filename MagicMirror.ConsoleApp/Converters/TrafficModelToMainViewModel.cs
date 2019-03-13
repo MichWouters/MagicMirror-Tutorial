@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.ConsoleApp.Models;
@@ -33,18 +32,19 @@ namespace MagicMirror.ConsoleApp.Converters
             }
         }
 
-        private string GetHoursAndMinutes(int duration)
+        private string GetHoursAndMinutes(int seconds)
         {
-            int hours = duration / 60;
-            int minutes = duration % 60;
+            int minutes = seconds / 60;
+            int hours = minutes / 60;
+            int remainingMinutes = minutes % 60;
 
             if (hours > 0)
             {
-                return $"{hours} hours and {minutes} minutes";
+                return $"{hours} hours and {remainingMinutes} minutes";
             }
             else
             {
-                return $"{minutes} minutes";
+                return $"{remainingMinutes} minutes";
             }
         }
     }

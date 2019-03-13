@@ -1,8 +1,8 @@
-﻿using MagicMirror.Business.Models;
+﻿using AutoMapper;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
-using AutoMapper;
 
 namespace MagicMirror.Business.Services
 {
@@ -10,7 +10,6 @@ namespace MagicMirror.Business.Services
         MappableService<WeatherEntity, WeatherModel>, IWeatherService
     {
         private readonly IWeatherRepo _repo;
-        private readonly IMapper _mapper;
 
         public WeatherService(IWeatherRepo repo, IMapper mapper)
         {

@@ -36,7 +36,7 @@ namespace MagicMirror.Business.Models
                         result = Distance;
                         break;
                     case DistanceUom.Metric:
-                        result = DistanceHelper.MilesToKilometers(Distance);
+                        result = DistanceHelper.MilesToKilometers((Distance / 1000));
                         break;
                     default:
                         break;

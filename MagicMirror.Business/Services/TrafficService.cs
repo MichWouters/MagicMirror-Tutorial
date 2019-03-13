@@ -9,7 +9,6 @@ namespace MagicMirror.Business.Services
     public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
     {
         private readonly ITrafficRepo _repo;
-        private readonly IMapper _mapper;
 
         public TrafficService(ITrafficRepo repo, IMapper mapper)
         {
