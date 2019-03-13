@@ -1,13 +1,11 @@
-﻿using MagicMirror.Business.Models;
+﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
-using MagicMirror.DataAccess.Repos;
-using Moq;
 using System;
-using Xunit;
-using AutoMapper;
-using MagicMirror.Business.Configuration;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
