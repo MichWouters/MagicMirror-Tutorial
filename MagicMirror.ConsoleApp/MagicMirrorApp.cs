@@ -46,8 +46,11 @@ namespace MagicMirror.ConsoleApp
                     trafficModel = GetOfflineTrafficData();
                 }
 
-                // TODO: Map models to ViewModel
-                model = _mapper.Map()
+                // Map models to ViewModel
+                model = _mapper.Map(weatherModel, model);
+                model = _mapper.Map(trafficModel, model);
+                model.UserName = information.Name;
+                 
                 GenerateOutput(model);
             }
             catch (Exception e)
