@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
+using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 
@@ -8,9 +10,23 @@ namespace MagicMirror.Business.Services
         where TEntity : Entity
         where TModel : Model
     {
-        protected IMapper _mapper;
+        private IMapper _mapper;
 
-        protected TModel MapFromEntity(TEntity entity)
+        protected MappableService()
+        {
+            SetUpMapperConfig();
+        }
+
+        protected void SetUpMapperConfig()
+        {
+            var baseMappings = new MapperConfigurationExpression();
+            baseMappings.AddProfile<AutoMapperConfiguration>();
+            var config = new MapperConfiguration(baseMappings);
+
+            _mapper = new Mapper(config);
+        }
+
+        public TModel MapFromEntity(TEntity entity)
         {
             var model = _mapper.Map<TModel>(entity);
             return model;
