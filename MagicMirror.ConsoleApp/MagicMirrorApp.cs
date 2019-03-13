@@ -1,4 +1,5 @@
 ﻿using Acme.Generic.Helpers;
+using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -12,11 +13,13 @@ namespace MagicMirror.ConsoleApp
         // Services
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
+        private readonly IMapper _mapper;
 
-        public MagicMirrorApp(IWeatherService weatherService, ITrafficService trafficService)
+        public MagicMirrorApp(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
         {
             _weatherService = weatherService;
             _trafficService = trafficService;
+            _mapper = mapper;
         }
 
         public async Task RunAsync()
@@ -44,7 +47,7 @@ namespace MagicMirror.ConsoleApp
                 }
 
                 // TODO: Map models to ViewModel
-
+                model = _mapper.Map()
                 GenerateOutput(model);
             }
             catch (Exception e)
