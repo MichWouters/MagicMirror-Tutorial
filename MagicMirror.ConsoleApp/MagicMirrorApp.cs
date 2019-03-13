@@ -13,12 +13,13 @@ namespace MagicMirror.ConsoleApp
         // Services
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
-        public MagicMirrorApp()
+        public MagicMirrorApp(IWeatherService weatherService, ITrafficService trafficService, IMapper mapper)
         {
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
+            _weatherService = weatherService;
+            _trafficService = trafficService;
+            _mapper = mapper;
         }
 
         public async Task RunAsync()
