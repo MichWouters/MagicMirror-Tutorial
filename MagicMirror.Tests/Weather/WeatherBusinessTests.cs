@@ -13,12 +13,10 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherBusinessTests
     {
-        private Mock<IWeatherRepo> _mockRepo;
         private IWeatherService _service;
 
         // Mock values
         private const string Location = "London";
-
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
@@ -36,7 +34,6 @@ namespace MagicMirror.Tests.Weather
             IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _mockRepo = new Mock<IWeatherRepo>();
             _service = new WeatherService();
         }
 
@@ -44,8 +41,7 @@ namespace MagicMirror.Tests.Weather
         public async Task Calculate_DateTimes_Correctly()
         {
             // Arrange
-            _mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(
-                It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+            WeatherEntity entity = GetMockEntity();
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
@@ -59,8 +55,7 @@ namespace MagicMirror.Tests.Weather
         public async Task Calculate_Temperatures_CorrectlyAsync()
         {
             // Arrange
-            _mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(
-                It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+            WeatherEntity entity = GetMockEntity();
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
