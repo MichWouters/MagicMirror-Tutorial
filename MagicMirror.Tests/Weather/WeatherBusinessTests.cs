@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Configuration;
-using MagicMirror.Business.Enums;
+﻿using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.DataAccess.Repos;
-using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,14 +21,6 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
-            // Initialize AutoMapper for Unit Tests
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperBusinessProfile>();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
             // Initialize Service with Dependencies
             _service = new WeatherService();
         }

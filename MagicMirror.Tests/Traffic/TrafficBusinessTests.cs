@@ -1,13 +1,9 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
-using MagicMirror.DataAccess.Repos;
-using Moq;
 using System;
-using Xunit;
-using AutoMapper;
-using MagicMirror.Business.Configuration;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -23,14 +19,6 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            // Initialize AutoMapper for Unit Tests
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperBusinessProfile>();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
             // Initialize Service with Dependencies
             _service = new TrafficService();
         }
