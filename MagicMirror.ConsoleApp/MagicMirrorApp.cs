@@ -43,7 +43,7 @@ namespace MagicMirror.ConsoleApp
             }
         }
 
-        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
+        private async Task<MainViewModel> GenerateViewModel(UserInformation information)
         {
             var model = new MainViewModel();
             WeatherModel weatherModel;
