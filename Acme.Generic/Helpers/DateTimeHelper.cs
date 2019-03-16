@@ -34,5 +34,37 @@ namespace Acme.Generic.Helpers
             else
                 return "night";
         }
+
+        public static string SecondsToHoursAndMinutes(int seconds)
+        {
+            int totalMinutes = seconds / 60;
+
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
+
+            if (hours > 0)
+            {
+                return $"{hours} hours and {minutes} minutes";
+            }
+            else
+            {
+                return $"{minutes} minutes";
+            }
+        }
+
+        public static string MinutesToHoursAndMinutes(int minutes)
+        {
+            int hours = minutes / 60;
+            int remainingMinutes = minutes % 60;
+
+            if (hours > 0)
+            {
+                return $"{hours} hours and {remainingMinutes} minutes";
+            }
+            else
+            {
+                return $"{remainingMinutes} minutes";
+            }
+        }
     }
 }
