@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Acme.Generic.Helpers;
 using AutoMapper;
 using MagicMirror.Business.Enums;
@@ -7,7 +7,7 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Converters
 {
-    public class TrafficModelToMainViewModel : ITypeConverter<TrafficModel, MainViewModel>
+    public class TrafficModelToMainViewModelConverter : ITypeConverter<TrafficModel, MainViewModel>
     {
         public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {
@@ -33,6 +33,22 @@ namespace MagicMirror.ConsoleApp.Converters
             {
                 return "kilometers";
             }
-        } 
+        }
+
+        private string GetHoursAndMinutes(int seconds)
+        {
+            int minutes = seconds / 60;
+            int hours = minutes / 60;
+            int remainingMinutes = minutes % 60;
+
+            if (hours > 0)
+            {
+                return $"{hours} hours and {remainingMinutes} minutes";
+            }
+            else
+            {
+                return $"{remainingMinutes} minutes";
+            }
+        }
     }
 }

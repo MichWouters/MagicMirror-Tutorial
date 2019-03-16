@@ -5,7 +5,7 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Configuration
 {
-    public class AutoMapperPresentationProfile: Profile
+    public class AutoMapperPresentationProfile : Profile
     {
         public AutoMapperPresentationProfile()
         {
@@ -13,7 +13,7 @@ namespace MagicMirror.ConsoleApp.Configuration
                 .ForMember(x => x.TemperatureUom, y => y.MapFrom(z => z.TemperatureUom.ToString()));
 
             CreateMap<TrafficModel, MainViewModel>()
-                .ConvertUsing<TrafficModelToMainViewModel>();
+                .ConvertUsing<TrafficModelToMainViewModelConverter>();
         }
     }
 }

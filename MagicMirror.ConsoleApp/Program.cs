@@ -29,7 +29,7 @@ namespace MagicMirror.ConsoleApp
             services.AddTransient<IWeatherRepo, WeatherRepo>();
 
             // Register App
-            services.AddTransient<MagicMirrorApp>();
+            services.AddSingleton<MagicMirrorApp>();
 
             // Register AutoMapper
             services.AddAutoMapper();

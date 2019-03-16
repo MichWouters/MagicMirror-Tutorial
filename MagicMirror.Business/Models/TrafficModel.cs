@@ -18,9 +18,15 @@ namespace MagicMirror.Business.Models
 
         public DistanceUom DistanceUom { get; set; }
 
-        public override void ConvertValues()
+        public override void InitializeModel()
         {
             TimeOfArrival = CalculateTimeOfArrival();
+
+            if (DistanceUom == DistanceUom.Metric)
+            {
+                Distance = DistanceHelper.MetersToKilometers(Distance);
+            }
+
             Distance = ConvertDistance(DistanceUom.Metric);
         }
 
@@ -35,9 +41,11 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = Distance;
                         break;
+
                     case DistanceUom.Metric:
                         result = DistanceHelper.MilesToKilometers(Distance);
                         break;
+
                     default:
                         break;
                 }
@@ -49,16 +57,18 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = DistanceHelper.KilometersToMiles(Distance);
                         break;
+
                     case DistanceUom.Metric:
                         result = Distance;
                         break;
+
                     default:
                         break;
                 }
             }
 
-            this.Distance = result;
-            this.DistanceUom = targetUom;
+            Distance = result;
+            DistanceUom = targetUom;
             return result;
         }
 

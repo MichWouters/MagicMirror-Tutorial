@@ -27,13 +27,5 @@ namespace Acme.Generic.Helpers
 
             return converted;
         }
-
-        public static double MetersToMiles(double valueToConvert, int precision = 2)
-        {
-            double converted = valueToConvert * 0.00062137;
-            converted = Math.Round(converted, precision);
-
-            return converted;
-        }
     }
 }
