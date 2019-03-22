@@ -2,7 +2,7 @@
 {
     public enum DistanceUom
     {
-        Imperial = 0,
-        Metric = 1
+        Metric = 0,
+        Imperial = 1
     }
 }

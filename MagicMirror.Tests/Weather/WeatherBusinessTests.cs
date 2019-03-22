@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Configuration;
-using MagicMirror.Business.Enums;
+﻿using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.DataAccess.Repos;
-using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,12 +9,10 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherBusinessTests
     {
-        private Mock<IWeatherRepo> _mockRepo;
         private IWeatherService _service;
 
         // Mock values
         private const string Location = "London";
-
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
@@ -27,25 +21,15 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
-            // Initialize AutoMapper for Unit Tests
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperBusinessProfile>();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
             // Initialize Service with Dependencies
-            _mockRepo = new Mock<IWeatherRepo>();
-            _service = new WeatherService(_mockRepo.Object, mapper);
+            _service = new WeatherService();
         }
 
         [Fact]
         public async Task Calculate_DateTimes_Correctly()
         {
             // Arrange
-            _mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(
-                It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+            WeatherEntity entity = GetMockEntity();
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
@@ -59,8 +43,7 @@ namespace MagicMirror.Tests.Weather
         public async Task Calculate_Temperatures_CorrectlyAsync()
         {
             // Arrange
-            _mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(
-                It.IsAny<string>())).ReturnsAsync(GetMockEntity());
+            WeatherEntity entity = GetMockEntity();
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);

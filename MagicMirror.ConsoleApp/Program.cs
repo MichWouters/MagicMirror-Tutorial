@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Configuration;
-using MagicMirror.Business.Services;
-using MagicMirror.ConsoleApp.Configuration;
-using MagicMirror.DataAccess.Repos;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace MagicMirror.ConsoleApp
+﻿namespace MagicMirror.ConsoleApp
 {
-    public class Program
+    internal class Program
     {
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
             IServiceCollection services = new ServiceCollection();
             RegisterServices(services);
