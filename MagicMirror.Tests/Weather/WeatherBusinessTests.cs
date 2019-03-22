@@ -21,6 +21,7 @@ namespace MagicMirror.Tests.Weather
 
         public WeatherBusinessTests()
         {
+            // Initialize Service with Dependencies
             _service = new WeatherService();
         }
 

@@ -43,5 +43,14 @@ namespace MagicMirror.ConsoleApp
                 cfg.AddProfile<AutoMapperPresentationProfile>();
             });
         }
+
+        private static void RegisterAutoMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+                cfg.AddProfile<AutoMapperPresentationProfile>();
+            });
+        }
     }
 }
