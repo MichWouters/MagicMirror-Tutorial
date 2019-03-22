@@ -11,7 +11,7 @@ namespace MagicMirror.ConsoleApp
     {
         public static void Main(string[] args)
         {
-            ServiceCollection services = new ServiceCollection();
+            IServiceCollection services = new ServiceCollection();
             RegisterServices(services);
             RegisterAutoMapper();
 
@@ -19,7 +19,7 @@ namespace MagicMirror.ConsoleApp
             provider.GetService<MagicMirrorApp>().RunAsync().GetAwaiter().GetResult();
         }
 
-        private static void RegisterServices(ServiceCollection services)
+        private static void RegisterServices(IServiceCollection services)
         {
             // Add Services using Dependency Injection
             services.AddTransient<ITrafficService, TrafficService>();
