@@ -28,23 +28,39 @@ namespace MagicMirror.ConsoleApp
 
             try
             {
-                var model = new MainViewModel();
-                WeatherModel weatherModel;
-                TrafficModel trafficModel;
+                MainViewModel model = await GenerateViewModel(information);
+                GenerateOutput(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+            finally
+            {
+                Console.ReadLine();
+            }
+        }
 
-                try
-                {
-                    weatherModel = await GetWeatherModelAsync(information.Town);
-                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error occurred. Displaying offline data");
-                    Console.WriteLine(ex.ToString());
+        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
+        {
+            var model = new MainViewModel();
+            WeatherModel weatherModel;
+            TrafficModel trafficModel;
 
-                    weatherModel = GetOfflineWeatherData();
-                    trafficModel = GetOfflineTrafficData();
-                }
+            try
+            {
+                weatherModel = await GetWeatherModelAsync(information.Town);
+                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occurred. Displaying offline data");
+                Console.WriteLine(ex.ToString());
+
+                weatherModel = GetOfflineWeatherData();
+                trafficModel = GetOfflineTrafficData();
+            }
 
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
