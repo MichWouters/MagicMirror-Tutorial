@@ -1,5 +1,6 @@
 # MagicMirror-Tutorial
 Source code to go along with the Magic Mirror tutorial project "Learn C# by building an IOT Magic Mirror. 
+
 Online tutorials available here: https://www.youtube.com/playlist?list=PLi5N5AdsklLaWNAxsA5wrBJzptJlf8LjT
 
 ![alt text](https://github.com/MichWouters/MagicMirror-Tutorial/blob/master/magicmirror_mockup.jpg)
