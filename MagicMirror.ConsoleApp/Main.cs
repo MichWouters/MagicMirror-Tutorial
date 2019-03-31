@@ -13,55 +13,25 @@ namespace MagicMirror.ConsoleApp
         // Services
         private readonly IWeatherService _weatherService;
         private readonly ITrafficService _trafficService;
+        private readonly MainViewModel _model;
 
         public Main()
         {
+            // Bad Practice! Prefer Dependency Injection whenever possible
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+            _model = new MainViewModel();
         }
 
         public async Task RunAsync()
         {
-            UserInformation information = GetInformation();
-
-            try
-            {
-                var model = new MainViewModel();
-                WeatherModel weatherModel;
-                TrafficModel trafficModel;
-
-                try
-                {
-                    weatherModel = await GetWeatherModelAsync(information.Town);
-                    trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error occurred. Displaying offline data");
-                    Console.WriteLine(ex.ToString());
-
-                    weatherModel = GetOfflineWeatherData();
-                    trafficModel = GetOfflineTrafficData();
-                }
-
-                // TODO: Map models to ViewModel
-
-                GenerateOutput(model);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                throw;
-            }
-            finally
-            {
-                Console.ReadLine();
-            }
+            GenerateOutput();
+            Console.ReadLine();
         }
 
         private async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
-            if (string.IsNullOrEmpty(city))
+            if (string.IsNullOrWhiteSpace(city))
             {
                 throw new ArgumentNullException(nameof(city));
             }
@@ -72,12 +42,12 @@ namespace MagicMirror.ConsoleApp
 
         private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
-            if (string.IsNullOrEmpty(origin))
+            if (string.IsNullOrWhiteSpace(origin))
             {
                 throw new ArgumentNullException(nameof(origin));
             }
 
-            if (string.IsNullOrEmpty(destination))
+            if (string.IsNullOrWhiteSpace(destination))
             {
                 throw new ArgumentNullException(nameof(destination));
             }
@@ -115,15 +85,17 @@ namespace MagicMirror.ConsoleApp
             return result;
         }
 
-        private void GenerateOutput(MainViewModel model)
+        private void GenerateOutput()
         {
-            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {model.UserName}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.WeatherType}.");
-            Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
-            Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
-            Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }. " +
-                              $"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {_model.UserName}");
+            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {_model.WeatherType}.");
+            Console.WriteLine($"Current topside temperature is {_model.Temperature} degrees {_model.TemperatureUom}.");
+            Console.WriteLine($"The sun has risen at {_model.Sunrise} and will set at approximately {_model.Sunset}.");
+            Console.WriteLine($"Your trip to work is about {_model.Distance} {_model.DistanceUom} long and will take about {_model.TravelTime }. " +
+                              $"If you leave now, you should arrive at approximately { _model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
+
+            Console.ReadLine();
         }
 
         private WeatherModel GetOfflineWeatherData()
