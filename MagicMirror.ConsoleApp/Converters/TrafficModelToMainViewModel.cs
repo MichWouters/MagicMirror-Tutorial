@@ -1,4 +1,3 @@
-using System;
 using Acme.Generic.Helpers;
 using AutoMapper;
 using MagicMirror.Business.Enums;
@@ -18,8 +17,12 @@ namespace MagicMirror.ConsoleApp.Converters
             destination.DistanceUom = GetDistanceUomToString(source.DistanceUom);
             destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
             destination.TravelTime = DateTimeHelper.SecondsToHoursAndMinutes(source.Duration);
-            destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
 
+            if (source.DistanceUom == DistanceUom.Metric)
+            {
+                destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
+            }
+            
             return destination;
         }
 
@@ -32,22 +35,6 @@ namespace MagicMirror.ConsoleApp.Converters
             else
             {
                 return "kilometers";
-            }
-        }
-
-        private string GetHoursAndMinutes(int seconds)
-        {
-            int minutes = seconds / 60;
-            int hours = minutes / 60;
-            int remainingMinutes = minutes % 60;
-
-            if (hours > 0)
-            {
-                return $"{hours} hours and {remainingMinutes} minutes";
-            }
-            else
-            {
-                return $"{remainingMinutes} minutes";
             }
         }
     }

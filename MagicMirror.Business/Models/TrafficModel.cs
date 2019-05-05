@@ -21,16 +21,10 @@ namespace MagicMirror.Business.Models
         public override void InitializeModel()
         {
             TimeOfArrival = CalculateTimeOfArrival();
-
-            if (DistanceUom == DistanceUom.Metric)
-            {
-                Distance = DistanceHelper.MetersToKilometers(Distance);
-            }
-
             Distance = ConvertDistance(DistanceUom.Metric);
         }
 
-        public double ConvertDistance(DistanceUom targetUom)
+        private double ConvertDistance(DistanceUom targetUom)
         {
             double result = 0;
 
@@ -72,7 +66,7 @@ namespace MagicMirror.Business.Models
             return result;
         }
 
-        public DateTime CalculateTimeOfArrival()
+        private DateTime CalculateTimeOfArrival()
         {
             return DateTime.Now.AddSeconds(Duration);
         }

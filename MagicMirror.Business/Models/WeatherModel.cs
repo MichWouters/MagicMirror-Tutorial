@@ -27,7 +27,7 @@ namespace MagicMirror.Business.Models
             Temperature = ConvertTemperature(TemperatureUom.Celsius);
         }
 
-        public double ConvertTemperature(TemperatureUom targetUom)
+        private double ConvertTemperature(TemperatureUom targetUom)
         {
             double result = 0;
 
