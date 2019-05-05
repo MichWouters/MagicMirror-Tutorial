@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services

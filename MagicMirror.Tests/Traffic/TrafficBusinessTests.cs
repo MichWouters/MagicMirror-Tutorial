@@ -1,4 +1,6 @@
-﻿using MagicMirror.Business.Models;
+﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
 using System;
@@ -32,7 +34,7 @@ namespace MagicMirror.Tests.Traffic
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
-            model.ConvertValues();
+            model.InitializeModel();
 
             // Assert
             Assert.Equal(122.31, model.Distance);

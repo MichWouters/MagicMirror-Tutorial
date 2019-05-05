@@ -20,7 +20,7 @@ namespace MagicMirror.Business.Models
 
         public TemperatureUom TemperatureUom { get; set; }
 
-        public override void ConvertValues()
+        public override void InitializeModel()
         {
             Sunrise = Sunrise.ConvertUnixTime();
             Sunset = Sunset.ConvertUnixTime();
