@@ -24,7 +24,7 @@ namespace MagicMirror.Business.Models
             Distance = ConvertDistance(DistanceUom.Metric);
         }
 
-        private double ConvertDistance(DistanceUom targetUom)
+        public double ConvertDistance(DistanceUom targetUom)
         {
             double result = 0;
 
@@ -66,7 +66,7 @@ namespace MagicMirror.Business.Models
             return result;
         }
 
-        private DateTime CalculateTimeOfArrival()
+        public DateTime CalculateTimeOfArrival()
         {
             return DateTime.Now.AddSeconds(Duration);
         }
