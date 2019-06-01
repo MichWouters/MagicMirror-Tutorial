@@ -12,7 +12,6 @@ namespace MagicMirror.ConsoleApp
     {
         // Services
         private readonly IWeatherService _weatherService;
-
         private readonly ITrafficService _trafficService;
         private readonly IMapper _mapper;
 
@@ -43,7 +42,7 @@ namespace MagicMirror.ConsoleApp
             }
         }
 
-        private async Task<MainViewModel> GenerateViewModel(UserInformation information)
+        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
         {
             var model = new MainViewModel();
             WeatherModel weatherModel;

@@ -21,12 +21,6 @@ namespace MagicMirror.Business.Models
         public override void InitializeModel()
         {
             TimeOfArrival = CalculateTimeOfArrival();
-
-            if (DistanceUom == DistanceUom.Metric)
-            {
-                Distance = DistanceHelper.MetersToKilometers(Distance);
-            }
-
             Distance = ConvertDistance(DistanceUom.Metric);
         }
 
