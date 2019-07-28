@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
@@ -20,29 +21,34 @@ namespace MagicMirror.Tests.Weather
         private const float Kelvin = 295.15f;
         private const string Weathertype = "Clear";
         private const string Icon = "01d";
-        private const int Sunrise = 1512345678;
-        private const int Sunset = 1587654321;
-        private DateTime SunriseDateTime = new DateTime(2019, 6, 1, 6, 20, 0);
-        private DateTime SunsetDateTime = new DateTime(2019, 6, 1, 19, 15, 0);
+        private const int Sunrise = 1559370000;
+        private const int Sunset = 1559416500;
 
+        // Mock objects
         private Mock<IWeatherRepo> mockRepo;
-        private Mock<IMapper> mockMapper;
 
         public WeatherBusinessTests()
         {
             mockRepo = new Mock<IWeatherRepo>();
-            mockMapper = new Mock<IMapper>();
+            
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _service = new WeatherService(mockRepo.Object, mockMapper.Object);
+            _service = new WeatherService(mockRepo.Object, mapper);
         }
 
         [Fact]
         public async Task Calculate_DateTimes_Correctly()
         {
             // Arrange
-            mockMapper.Setup(x => x.Map<WeatherModel>(It.IsAny<WeatherEntity>()))
-                .Returns(GetMockModel());
+            mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
@@ -53,11 +59,11 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task Calculate_Temperatures_CorrectlyAsync()
+        public async Task Calculate_Temperatures_Correctly()
         {
             // Arrange
-            mockMapper.Setup(x => x.Map<WeatherModel>(It.IsAny<WeatherEntity>()))
-                .Returns(GetMockModel());
+            mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
 
             // Act
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
@@ -99,20 +105,6 @@ namespace MagicMirror.Tests.Weather
             };
 
             return weatherEntity;
-        }
-
-        private WeatherModel GetMockModel()
-        {
-            return new WeatherModel
-            {
-                Location = Location,
-                Sunrise = SunriseDateTime,
-                Sunset = SunsetDateTime,
-                Temperature = 22,
-                TemperatureUom = TemperatureUom.Celsius,
-                Icon = string.Empty,
-                WeatherType = "Sunny"
-            };
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
@@ -19,18 +21,26 @@ namespace MagicMirror.Tests.Traffic
         private const int Distance = 76;
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
+        private const DistanceUom distanceUom = DistanceUom.Imperial;
 
+        // Mock classes
         private Mock<ITrafficRepo> mockRepo;
-        private readonly Mock<IMapper> mockMapper;
 
         public TrafficBusinessTests()
         {
             // Setup mocking behaviour
             mockRepo = new Mock<ITrafficRepo>();
-            mockMapper = new Mock<IMapper>();
+
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _service = new TrafficService(mockRepo.Object, mockMapper.Object);
+            _service = new TrafficService(mockRepo.Object, mapper);
         }
 
         [Fact]
@@ -40,9 +50,6 @@ namespace MagicMirror.Tests.Traffic
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
             mockRepo.Setup(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(GetMockEntity());
-
-            mockMapper.Setup(x => x.Map<TrafficModel>(It.IsAny<TrafficEntity>()))
-                .Returns(GetMockMappedModel());
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
@@ -60,9 +67,6 @@ namespace MagicMirror.Tests.Traffic
             // Arrange
             mockRepo.Setup(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(GetMockEntity());
-
-            mockMapper.Setup(x => x.Map<TrafficModel>(It.IsAny<TrafficEntity>()))
-                .Returns(GetMockMappedModel());
 
             // Act
             var model = await _service.GetTrafficModelAsync("foo", "bar");
@@ -101,7 +105,7 @@ namespace MagicMirror.Tests.Traffic
             {
                 Destination = Destination,
                 Distance = Distance,
-                DistanceUom = Business.Enums.DistanceUom.Imperial,
+                DistanceUom = DistanceUom.Imperial,
                 Duration = Duration,
                 Origin = Origin,
                 TimeOfArrival = DateTime.Now.AddSeconds(Duration)

@@ -6,6 +6,11 @@ namespace MagicMirror.Business.Models
 {
     public class TrafficModel : Model
     {
+        public TrafficModel()
+        {
+            DistanceUom = DistanceUom.Imperial;
+        }
+
         public string Origin { get; set; }
 
         public string Destination { get; set; }
