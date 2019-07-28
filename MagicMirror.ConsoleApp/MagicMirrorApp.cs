@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleApp
 {
-    public class MagicMirrorApp
+    public class MagicMirrorApp : IMagicMirrorApp
     {
         // Services
         private readonly IWeatherService _weatherService;
@@ -60,12 +60,14 @@ namespace MagicMirror.ConsoleApp
 
                 weatherModel = GetOfflineWeatherData();
                 trafficModel = GetOfflineTrafficData();
+                model.IsOfflineData = true;
             }
 
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
             model = _mapper.Map(trafficModel, model);
-            model.UserName = information.Name;
+            model.UserName = information?.Name?? "Unknown user";
+            model.TimeOfDay = DateTimeHelper.GetTimeOfDay(DateTime.Now);
 
             return model;
         }
@@ -128,8 +130,8 @@ namespace MagicMirror.ConsoleApp
 
         private void GenerateOutput(MainViewModel model)
         {
-            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay()} {model.UserName}");
-            Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.WeatherType}.");
+            Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay(DateTime.Now)} {model.UserName}");
+            Console.WriteLine($"The current time is {model.TimeOfDay} and the outside weather is {model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
             Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }. " +
@@ -143,8 +145,8 @@ namespace MagicMirror.ConsoleApp
             {
                 Location = "London",
                 Temperature = 17,
-                Sunrise = "6:04",
-                Sunset = "18:36",
+                Sunrise = new DateTime(2019, 7, 28, 6, 4, 00),
+                Sunset = new DateTime(2019, 7, 28, 18, 36, 00),
                 WeatherType = "Sunny",
                 TemperatureUom = Business.Enums.TemperatureUom.Celsius
             };

@@ -15,14 +15,14 @@ namespace MagicMirror.ConsoleApp.Converters
 
             // But they do allow calculations to be performed at map-time.
             destination.DistanceUom = GetDistanceUomToString(source.DistanceUom);
-            destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
+            destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToString("HH:mm");
             destination.TravelTime = DateTimeHelper.SecondsToHoursAndMinutes(source.Duration);
 
             if (source.DistanceUom == DistanceUom.Metric)
             {
                 destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
             }
-            
+
             return destination;
         }
 

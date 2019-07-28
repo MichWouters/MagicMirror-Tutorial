@@ -10,7 +10,9 @@ namespace MagicMirror.ConsoleApp.Configuration
         public AutoMapperPresentationProfile()
         {
             CreateMap<WeatherModel, MainViewModel>()
-                .ForMember(x => x.TemperatureUom, y => y.MapFrom(z => z.TemperatureUom.ToString()));
+                .ForMember(x => x.TemperatureUom, y => y.MapFrom(z => z.TemperatureUom.ToString()))
+                .ForMember(x => x.Sunrise, y => y.MapFrom(z => z.Sunrise.ToString("HH:mm")))
+                .ForMember(x => x.Sunset, y => y.MapFrom(z => z.Sunset.ToString("HH:mm")));
 
             CreateMap<TrafficModel, MainViewModel>()
                 .ConvertUsing<TrafficModelToMainViewModelConverter>();

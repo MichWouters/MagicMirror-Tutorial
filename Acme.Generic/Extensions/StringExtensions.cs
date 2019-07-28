@@ -12,7 +12,7 @@ namespace Acme.Generic.Extensions
             {
                 result = DateTimeHelper.ConvertUnixTimeToGMTDateTime(parsed)
                     .ToLocalTime()
-                    .ToShortTimeString();
+                    .ToString("HH:mm");
             }
 
             return result;

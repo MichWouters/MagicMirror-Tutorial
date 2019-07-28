@@ -19,9 +19,9 @@ namespace Acme.Generic.Helpers
             return (int)timeSpan.TotalSeconds;
         }
 
-        public static string GetTimeOfDay()
+        public static string GetTimeOfDay(DateTime dateTime)
         {
-            var currentTime = DateTime.Now.TimeOfDay.Hours;
+            int currentTime = dateTime.TimeOfDay.Hours;
 
             if (currentTime >= 0 && currentTime <= 11)
                 return "morning";

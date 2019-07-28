@@ -4,6 +4,8 @@
     {
         public string UserName { get; set; }
 
+        public string Location { get; set; }
+
         public double Temperature { get; set; }
 
         public string TemperatureUom { get; set; }
@@ -23,5 +25,7 @@
         public double Distance { get; set; }
 
         public string DistanceUom { get; set; }
+
+        public bool IsOfflineData { get; internal set; }
     }
 }

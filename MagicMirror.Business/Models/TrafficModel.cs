@@ -20,7 +20,7 @@ namespace MagicMirror.Business.Models
 
         public override void InitializeModel()
         {
-            TimeOfArrival = CalculateTimeOfArrival();
+            TimeOfArrival = CalculateTimeOfArrival(Duration);
             Distance = ConvertDistance(DistanceUom.Metric);
         }
 
@@ -35,11 +35,9 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = Distance;
                         break;
-
                     case DistanceUom.Metric:
                         result = DistanceHelper.MilesToKilometers(Distance);
                         break;
-
                     default:
                         break;
                 }
@@ -51,11 +49,9 @@ namespace MagicMirror.Business.Models
                     case DistanceUom.Imperial:
                         result = DistanceHelper.KilometersToMiles(Distance);
                         break;
-
                     case DistanceUom.Metric:
                         result = Distance;
                         break;
-
                     default:
                         break;
                 }
@@ -66,9 +62,9 @@ namespace MagicMirror.Business.Models
             return result;
         }
 
-        public DateTime CalculateTimeOfArrival()
+        public DateTime CalculateTimeOfArrival(int seconds)
         {
-            return DateTime.Now.AddSeconds(Duration);
+            return DateTime.Now.AddSeconds(seconds);
         }
     }
 }
