@@ -131,7 +131,7 @@ namespace MagicMirror.ConsoleApp
         private void GenerateOutput(MainViewModel model)
         {
             Console.WriteLine($"Good {DateTimeHelper.GetTimeOfDay(DateTime.Now)} {model.UserName}");
-            Console.WriteLine($"The current time is {model.TimeOfDay} and the outside weather is {model.WeatherType}.");
+            Console.WriteLine($"The current time is {DateTime.Now.ToString("HH:mm")} and the outside weather is {model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
             Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }. " +
