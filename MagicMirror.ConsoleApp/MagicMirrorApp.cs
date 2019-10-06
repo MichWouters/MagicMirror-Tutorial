@@ -143,8 +143,8 @@ namespace MagicMirror.ConsoleApp
             {
                 Location = "London",
                 Temperature = 17,
-                Sunrise = new DateTime(0, 0, 0, 6, 4, 0),
-                Sunset = new DateTime(0, 0, 0, 18, 36, 0),
+                Sunrise = "6:04",
+                Sunset = "18:36",
                 WeatherType = "Sunny",
                 TemperatureUom = Business.Enums.TemperatureUom.Celsius
             };

@@ -1,5 +1,4 @@
-﻿using Acme.Generic.Helpers;
-using AutoMapper;
+﻿using AutoMapper;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Entities.Weather;
@@ -13,8 +12,8 @@ namespace MagicMirror.Business.Configuration
             CreateMap<WeatherEntity, WeatherModel>()
                 .ForMember(x => x.Location, y => y.MapFrom(z => z.Name))
                 .ForMember(x => x.Temperature, y => y.MapFrom(z => z.Main.Temp))
-                .ForMember(x => x.Sunrise, y => y.MapFrom(z => DateTimeHelper.ConvertUnixTimeToGMTDateTime(z.Sys.Sunrise)))
-                .ForMember(x => x.Sunset, y => y.MapFrom(z => DateTimeHelper.ConvertUnixTimeToGMTDateTime(z.Sys.Sunset)))
+                .ForMember(x => x.Sunrise, y => y.MapFrom(z => z.Sys.Sunrise))
+                .ForMember(x => x.Sunset, y => y.MapFrom(z => z.Sys.Sunset))
                 .ForMember(x => x.WeatherType, y => y.MapFrom(z => z.Weather[0].Main))
                 .ForMember(x => x.Icon, y => y.MapFrom(z => z.Weather[0].Icon));
 

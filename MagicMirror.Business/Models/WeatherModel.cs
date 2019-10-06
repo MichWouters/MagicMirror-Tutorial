@@ -1,7 +1,6 @@
 ﻿using Acme.Generic.Extensions;
 using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
-using System;
 
 namespace MagicMirror.Business.Models
 {
@@ -15,20 +14,16 @@ namespace MagicMirror.Business.Models
 
         public string WeatherType { get; set; }
 
-        public DateTime Sunrise { get; set; }
+        public string Sunrise { get; set; }
 
-        public DateTime Sunset { get; set; }
+        public string Sunset { get; set; }
 
         public TemperatureUom TemperatureUom { get; set; }
 
-        public WeatherModel()
-        {
-            Temperature = ConvertTemperature(TemperatureUom.Celsius);
-            InitializeModel();
-        }
-
         public override void InitializeModel()
         {
+            Sunrise = Sunrise.ConvertUnixTime();
+            Sunset = Sunset.ConvertUnixTime();
             Temperature = ConvertTemperature(TemperatureUom.Celsius);
         }
 

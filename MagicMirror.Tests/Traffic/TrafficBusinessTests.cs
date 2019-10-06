@@ -6,8 +6,6 @@ using MagicMirror.DataAccess.Entities.Traffic;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using Moq;
-using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -21,23 +19,10 @@ namespace MagicMirror.Tests.Traffic
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
 
-        // Mock objects
-        private Mock<ITrafficRepo> mockRepo;
-
         public TrafficBusinessTests()
         {
-            mockRepo = new Mock<ITrafficRepo>();
-
-            // Initialize AutoMapper for Unit Tests
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperBusinessProfile>();
-            });
-
-            IMapper mapper = config.CreateMapper();
-
             // Initialize Service with Dependencies
-            _service = new TrafficService(mockRepo.Object, mapper);
+            _service = new TrafficService();
         }
 
         [Fact]
