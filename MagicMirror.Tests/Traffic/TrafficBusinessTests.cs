@@ -49,7 +49,7 @@ namespace MagicMirror.Tests.Traffic
                 It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(GetMockEntity());
 
-            DateTime timeOfArrival = DateTime.Now.AddMinutes(Duration);
+            DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);

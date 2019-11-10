@@ -1,4 +1,5 @@
-﻿using Acme.Generic.Helpers;
+﻿using Acme.Generic.Enums;
+using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
 using System;
 
@@ -20,15 +21,15 @@ namespace MagicMirror.Business.Models
 
         public override void InitializeModel()
         {
-            TimeOfArrival = CalculateTimeOfArrival();
-            Distance = ConvertDistance(DistanceUom.Metric);
+            TimeOfArrival = DateTimeHelper.CalculateTimeOfArrival(Duration, DateTime.Now, TimeInterval.Seconds);
+            Distance = ConvertDistance(Distance, DistanceUom.Imperial, DistanceUom.Metric);
         }
 
-        public double ConvertDistance(DistanceUom targetUom)
+        public double ConvertDistance(double distance, DistanceUom sourceUom, DistanceUom targetUom)
         {
             double result = 0;
 
-            if (DistanceUom == DistanceUom.Imperial)
+            if (sourceUom == DistanceUom.Imperial)
             {
                 switch (targetUom)
                 {
@@ -37,7 +38,7 @@ namespace MagicMirror.Business.Models
                         break;
 
                     case DistanceUom.Metric:
-                        result = DistanceHelper.MilesToKilometers(Distance);
+                        result = DistanceHelper.MilesToKilometers(distance);
                         break;
 
                     default:
@@ -49,7 +50,7 @@ namespace MagicMirror.Business.Models
                 switch (targetUom)
                 {
                     case DistanceUom.Imperial:
-                        result = DistanceHelper.KilometersToMiles(Distance);
+                        result = DistanceHelper.KilometersToMiles(distance);
                         break;
 
                     case DistanceUom.Metric:
@@ -64,11 +65,6 @@ namespace MagicMirror.Business.Models
             Distance = result;
             DistanceUom = targetUom;
             return result;
-        }
-
-        public DateTime CalculateTimeOfArrival()
-        {
-            return DateTime.Now.AddSeconds(Duration);
         }
     }
 }
