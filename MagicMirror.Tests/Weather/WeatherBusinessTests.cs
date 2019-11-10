@@ -53,8 +53,10 @@ namespace MagicMirror.Tests.Weather
             WeatherModel model = await _service.GetWeatherModelAsync(Location);
 
             // Assert
-            Assert.Equal("1:01", model.Sunrise);
-            Assert.Equal("17:05", model.Sunset);
+            Assert.Equal(0, model.Sunrise.Hour);
+            Assert.Equal(1, model.Sunrise.Minute);
+            Assert.Equal(15, model.Sunset.Hour);
+            Assert.Equal(5, model.Sunset.Minute);
         }
 
         [Fact]
