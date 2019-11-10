@@ -1,5 +1,4 @@
-﻿using Acme.Generic.Extensions;
-using Acme.Generic.Helpers;
+﻿using Acme.Generic.Helpers;
 using MagicMirror.Business.Enums;
 using System;
 

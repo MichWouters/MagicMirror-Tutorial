@@ -60,6 +60,20 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
+        public async Task Repo_GetEntity_Called_Once()
+        {
+            // Arrange
+            mockRepo.Setup(x => x.GetWeatherEntityByCityAsync(It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
+
+            // Act
+            WeatherModel model = await _service.GetWeatherModelAsync(Location);
+
+            // Assert
+            mockRepo.Verify(x => x.GetWeatherEntityByCityAsync(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
         public async Task Calculate_Temperatures_CorrectlyAsync()
         {
             // Arrange
