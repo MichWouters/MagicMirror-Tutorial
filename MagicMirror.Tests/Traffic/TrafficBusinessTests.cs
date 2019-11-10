@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using Moq;
-using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Tests.Traffic
 {
@@ -44,17 +45,35 @@ namespace MagicMirror.Tests.Traffic
         public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            TrafficEntity entity = GetMockEntity();
-            DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
+            mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
+
+            DateTime timeOfArrival = DateTime.Now.AddMinutes(Duration);
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
-            model.InitializeModel();
 
             // Assert
             Assert.Equal(122.31, model.Distance);
+            Assert.Equal(DistanceUom.Metric, model.DistanceUom);
             Assert.Equal(timeOfArrival.Hour, model.TimeOfArrival.Hour);
             Assert.Equal(timeOfArrival.Minute, model.TimeOfArrival.Minute);
+        }
+
+        [Fact]
+        public async Task Repo_GetEntity_Called_Once()
+        {
+            // Arrange
+            mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
+
+            // Act
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
+
+            // Assert
+            mockRepo.Verify(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         private TrafficEntity GetMockEntity()
