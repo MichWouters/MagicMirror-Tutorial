@@ -16,8 +16,6 @@
 
         public string TimeOfArrival { get; set; }
 
-        public string TimeOfDay { get; set; }
-
         public string TravelTime { get; set; }
 
         public double Distance { get; set; }

@@ -132,8 +132,8 @@ namespace MagicMirror.ConsoleApp
             Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
-            Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }. " +
-                              $"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
+            Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }.");
+            Console.WriteLine($"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
 
@@ -154,10 +154,10 @@ namespace MagicMirror.ConsoleApp
         {
             return new TrafficModel
             {
-                Duration = 35,
-                Distance = 27,
+                Duration = 35 * 60,
+                Distance = 27500,
                 DistanceUom = Business.Enums.DistanceUom.Metric,
-                Destination = "2 St Margaret St, London"
+                Destination = "2 St Margaret St, London",
             };
         }
     }
