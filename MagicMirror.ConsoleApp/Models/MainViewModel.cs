@@ -21,5 +21,7 @@
         public double Distance { get; set; }
 
         public string DistanceUom { get; set; }
+
+        public bool IsOfflineData { get; set; }
     }
 }

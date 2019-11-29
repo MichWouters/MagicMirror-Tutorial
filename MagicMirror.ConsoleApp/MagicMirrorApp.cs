@@ -1,5 +1,6 @@
 ﻿using Acme.Generic.Helpers;
 using AutoMapper;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -60,12 +61,13 @@ namespace MagicMirror.ConsoleApp
 
                 weatherModel = GetOfflineWeatherData();
                 trafficModel = GetOfflineTrafficData();
+                model.IsOfflineData = true;
             }
 
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
             model = _mapper.Map(trafficModel, model);
-            model.UserName = information.Name;
+            model.UserName = information?.Name ?? "Anonymous";
 
             return model;
         }
@@ -146,7 +148,7 @@ namespace MagicMirror.ConsoleApp
                 Sunrise = new DateTime(2019, 10, 10, 6, 4, 0),
                 Sunset = new DateTime(2019, 10, 10, 18, 36, 0),
                 WeatherType = "Sunny",
-                TemperatureUom = Business.Enums.TemperatureUom.Celsius
+                TemperatureUom = TemperatureUom.Celsius,
             };
         }
 
@@ -156,8 +158,9 @@ namespace MagicMirror.ConsoleApp
             {
                 Duration = 35 * 60,
                 Distance = 27500,
-                DistanceUom = Business.Enums.DistanceUom.Metric,
+                DistanceUom = DistanceUom.Metric,
                 Destination = "2 St Margaret St, London",
+                TimeOfArrival = DateTime.Now.AddMinutes(35),
             };
         }
     }
