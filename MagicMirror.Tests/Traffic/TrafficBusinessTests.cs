@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Repos;
+using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,27 +22,58 @@ namespace MagicMirror.Tests.Traffic
         private const string Origin = "London, Uk";
         private const string Destination = "Leeds, Uk";
 
+        // Mock objects
+        private Mock<ITrafficRepo> mockRepo;
+
         public TrafficBusinessTests()
         {
+            mockRepo = new Mock<ITrafficRepo>();
+
+            // Initialize AutoMapper for Unit Tests
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
             // Initialize Service with Dependencies
-            _service = new TrafficService();
+            _service = new TrafficService(mockRepo.Object, mapper);
         }
 
         [Fact]
         public async Task Calculate_Values_Correctly()
         {
             // Arrange
-            TrafficEntity entity = GetMockEntity();
+            mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
+
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
             TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
-            model.InitializeModel();
 
             // Assert
             Assert.Equal(122.31, model.Distance);
+            Assert.Equal(DistanceUom.Metric, model.DistanceUom);
             Assert.Equal(timeOfArrival.Hour, model.TimeOfArrival.Hour);
             Assert.Equal(timeOfArrival.Minute, model.TimeOfArrival.Minute);
+        }
+
+        [Fact]
+        public async Task Repo_GetEntity_Called_Once()
+        {
+            // Arrange
+            mockRepo.Setup(x => x.GetTrafficInfoAsync(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(GetMockEntity());
+
+            // Act
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
+
+            // Assert
+            mockRepo.Verify(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         private TrafficEntity GetMockEntity()

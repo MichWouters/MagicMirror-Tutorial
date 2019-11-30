@@ -4,6 +4,7 @@ using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Configuration;
 using MagicMirror.DataAccess.Repos;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace MagicMirror.ConsoleApp
 {
@@ -32,7 +33,7 @@ namespace MagicMirror.ConsoleApp
             services.AddSingleton<MagicMirrorApp>();
 
             // Register AutoMapper
-            services.AddAutoMapper();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         private static void RegisterAutoMapper()

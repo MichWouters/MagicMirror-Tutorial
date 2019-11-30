@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acme.Generic.Enums;
+using System;
 
 namespace Acme.Generic.Helpers
 {
@@ -6,6 +7,29 @@ namespace Acme.Generic.Helpers
     {
         private static DateTime baseUnixDateTime =
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static DateTime CalculateTimeOfArrival(int duration, DateTime dateTime, TimeInterval timeInterval)
+        {
+            DateTime result;
+
+            switch (timeInterval)
+            {
+                case TimeInterval.Seconds:
+                    result = dateTime.AddSeconds(duration);
+                    break;
+                case TimeInterval.Minutes:
+                    result = dateTime.AddMinutes(duration);
+                    break;
+                case TimeInterval.Hours:
+                    result = dateTime.AddHours(duration);
+                    break;
+                default:
+                    result = DateTime.Now;
+                    break;
+            }
+
+            return result;
+        }
 
         public static DateTime ConvertUnixTimeToGMTDateTime(int timestamp)
         {

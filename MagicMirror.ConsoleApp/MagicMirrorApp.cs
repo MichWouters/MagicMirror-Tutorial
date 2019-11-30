@@ -1,5 +1,6 @@
 ﻿using Acme.Generic.Helpers;
 using AutoMapper;
+using MagicMirror.Business.Enums;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Models;
@@ -60,12 +61,13 @@ namespace MagicMirror.ConsoleApp
 
                 weatherModel = GetOfflineWeatherData();
                 trafficModel = GetOfflineTrafficData();
+                model.IsOfflineData = true;
             }
 
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
             model = _mapper.Map(trafficModel, model);
-            model.UserName = information.Name;
+            model.UserName = information?.Name ?? "Anonymous";
 
             return model;
         }
@@ -132,8 +134,8 @@ namespace MagicMirror.ConsoleApp
             Console.WriteLine($"The current time is {DateTime.Now.ToShortTimeString()} and the outside weather is {model.WeatherType}.");
             Console.WriteLine($"Current topside temperature is {model.Temperature} degrees {model.TemperatureUom}.");
             Console.WriteLine($"The sun has risen at {model.Sunrise} and will set at approximately {model.Sunset}.");
-            Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }. " +
-                              $"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
+            Console.WriteLine($"Your trip to work is about {model.Distance} {model.DistanceUom} long and will take about {model.TravelTime }.");
+            Console.WriteLine($"If you leave now, you should arrive at approximately { model.TimeOfArrival }.");
             Console.WriteLine("Thank you, and have a very safe and productive day!");
         }
 
@@ -143,10 +145,10 @@ namespace MagicMirror.ConsoleApp
             {
                 Location = "London",
                 Temperature = 17,
-                Sunrise = "6:04",
-                Sunset = "18:36",
+                Sunrise = new DateTime(2019, 10, 10, 6, 4, 0),
+                Sunset = new DateTime(2019, 10, 10, 18, 36, 0),
                 WeatherType = "Sunny",
-                TemperatureUom = Business.Enums.TemperatureUom.Celsius
+                TemperatureUom = TemperatureUom.Celsius,
             };
         }
 
@@ -154,10 +156,11 @@ namespace MagicMirror.ConsoleApp
         {
             return new TrafficModel
             {
-                Duration = 35,
-                Distance = 27,
-                DistanceUom = Business.Enums.DistanceUom.Metric,
-                Destination = "2 St Margaret St, London"
+                Duration = 35 * 60,
+                Distance = 27500,
+                DistanceUom = DistanceUom.Metric,
+                Destination = "2 St Margaret St, London",
+                TimeOfArrival = DateTime.Now.AddMinutes(35),
             };
         }
     }
