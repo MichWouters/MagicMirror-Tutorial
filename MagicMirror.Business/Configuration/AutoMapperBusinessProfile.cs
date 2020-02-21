@@ -20,9 +20,13 @@ namespace MagicMirror.Business.Configuration
 
             CreateMap<GoogleMapsTrafficEntity, TrafficModel>()
                 .ForMember(x => x.Destination, y => y.MapFrom(z => z.Destination_addresses[0]))
-                .ForMember(x => x.Origin, y => y.MapFrom(z => z.Origin_addresses[0]))
-                .ForMember(x => x.Distance, y => y.MapFrom(z => z.Rows[0].Elements[0].Distance.Value))
+                .ForMember(x => x.DistanceUom, y => y.MapFrom(z => Enums.DistanceUom.Metric))
                 .ForMember(x => x.Duration, y => y.MapFrom(z => z.Rows[0].Elements[0].Duration.Value));
+
+            CreateMap<OpenMapTrafficEntity, TrafficModel>()
+                .ForMember(x => x.Distance, y => y.MapFrom(z => z.Route.Distance))
+                .ForMember(x => x.DistanceUom, y => y.MapFrom(z => Enums.DistanceUom.Imperial))
+                .ForMember(x => x.Duration, y => y.MapFrom(z => z.Route.Time));
         }
     }
 }

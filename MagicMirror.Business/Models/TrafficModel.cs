@@ -22,7 +22,7 @@ namespace MagicMirror.Business.Models
         public override void InitializeModel()
         {
             TimeOfArrival = DateTimeHelper.CalculateTimeOfArrival(Duration, DateTime.Now, TimeInterval.Seconds);
-            Distance = ConvertDistance(Distance, DistanceUom.Imperial, DistanceUom.Metric);
+            Distance = ConvertDistance(Distance, this.DistanceUom, DistanceUom.Metric);
         }
 
         public double ConvertDistance(double distance, DistanceUom sourceUom, DistanceUom targetUom)

@@ -20,6 +20,9 @@ namespace MagicMirror.Business.Services
         {
             var entity = await _repo.GetTrafficInfoAsync(origin, destination);
             var model = MapFromEntity(entity);
+
+            model.Origin = origin;
+            model.Destination = destination;
             model.InitializeModel();
 
             return model;
