@@ -1,4 +1,4 @@
-﻿using MagicMirror.DataAccess.Entities.Entities;
+﻿using MagicMirror.DataAccess.Entities;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;

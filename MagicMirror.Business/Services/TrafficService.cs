@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
+    public class TrafficService : MappableService<GoogleMapsTrafficEntity, TrafficModel>, ITrafficService
     {
         private readonly ITrafficRepo _repo;
 

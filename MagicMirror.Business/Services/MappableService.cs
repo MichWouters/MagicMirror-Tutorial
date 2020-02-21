@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
+using MagicMirror.DataAccess.Entities;
 
 namespace MagicMirror.Business.Services
 {
