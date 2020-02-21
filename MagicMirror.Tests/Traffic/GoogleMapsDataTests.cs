@@ -9,7 +9,7 @@ namespace MagicMirror.Tests.Traffic
 {
     public class GoogleMapsDataTests
     {
-        private ITrafficRepo _repo;
+        private ITrafficRepo<GoogleMapsTrafficEntity> _repo;
 
         public GoogleMapsDataTests()
         {
@@ -25,7 +25,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "Brighton, UK";
 
             // Act
-            entity = await _repo.GetTrafficInfoAsync(start, destination);
+            entity = (GoogleMapsTrafficEntity)await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.NotNull(entity);
@@ -40,7 +40,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "Brighton, UK";
 
             // Act
-            var entity = await _repo.GetTrafficInfoAsync(start, destination);
+            var entity = (GoogleMapsTrafficEntity) await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.IsType<GoogleMapsTrafficEntity>(entity);

@@ -1,10 +1,10 @@
-﻿using MagicMirror.DataAccess.Entities.Traffic;
+﻿using MagicMirror.DataAccess.Entities;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public interface ITrafficRepo
+    public interface ITrafficRepo<T> where T: TrafficEntity
     {
-        Task<TrafficEntity> GetTrafficInfoAsync(string start, string destination);
+        Task<T> GetTrafficInfoAsync(string start, string destination);
     }
 }

@@ -2,6 +2,7 @@
 using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Services;
 using MagicMirror.ConsoleApp.Configuration;
+using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -24,8 +25,7 @@ namespace MagicMirror.ConsoleApp
         {
             // Add Services using Dependency Injection
             services.AddTransient<ITrafficService, TrafficService>();
-            services.AddTransient<ITrafficRepo, GoogleMapsRepo>();
-
+            services.AddTransient<ITrafficRepo<OpenMapTrafficEntity>, OpenTrafficMapRepo>();
             services.AddTransient<IWeatherService, WeatherService>();
             services.AddTransient<IWeatherRepo, WeatherRepo>();
 

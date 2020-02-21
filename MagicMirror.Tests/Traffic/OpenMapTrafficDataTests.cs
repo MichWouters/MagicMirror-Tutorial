@@ -7,11 +7,11 @@ namespace MagicMirror.Tests.Traffic
 {
     public class OpenMapTrafficDataTests
     {
-        private ITrafficRepo _repo;
+        private ITrafficRepo<OpenMapTrafficEntity> _repo;
 
         public OpenMapTrafficDataTests()
         {
-            _repo = new OpenMapRepo();
+            _repo = new OpenTrafficMapRepo();
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace MagicMirror.Tests.Traffic
 
             // Assert
             Assert.NotNull(entity);
-            Assert.Equal("OK", entity.Status);
+            Assert.NotNull(entity.Route);
         }
     }
 }
