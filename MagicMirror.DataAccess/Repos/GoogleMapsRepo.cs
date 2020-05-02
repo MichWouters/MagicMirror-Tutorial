@@ -17,7 +17,12 @@ namespace MagicMirror.DataAccess.Repos
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
             GoogleMapsTrafficEntity entity = await GetEntityFromJsonAsync(message);
 
-            if (entity.Rows[0].Elements[0].Distance == null)
+            if (entity.Status == "REQUEST_DENIED")
+            {
+                throw new HttpRequestException("No subscribtion set up on Google Maps Api for current user");
+            }
+
+            if (entity?.Rows[0]?.Elements[0]?.Distance == null )
             {
                 throw new HttpRequestException("Unable to retrieve traffic information");
             }
