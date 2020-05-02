@@ -18,7 +18,7 @@
             }
         }
 
-        public static string TrafficApiUrl
+        public static string GoogleMapsApiUrl
         {
             get
             {
@@ -26,11 +26,27 @@
             }
         }
 
-        public static string TrafficApiId
+        public static string GoogleMapsApiId
         {
             get
             {
                 return "AIzaSyBGoN7HTIWBLk6N9CqEqvJsV_KGFmwt8tw";
+            }
+        }
+
+        public static string OpenMapApiTrafficUrl
+        {
+            get
+            {
+                return "http://open.mapquestapi.com/directions/v2/route";
+            }
+        }
+
+        public static string OpenMapApiId
+        {
+            get
+            {
+                return "TIAP8yKgs5dGdT6ny1HsV19vt3YrrrGd";
             }
         }
     }

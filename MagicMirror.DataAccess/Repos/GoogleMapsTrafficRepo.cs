@@ -27,8 +27,8 @@ namespace MagicMirror.DataAccess.Repos
 
         private void FillInputData(string start, string destination)
         {
-            _apiId = DataAccessConfig.TrafficApiId;
-            _apiUrl = DataAccessConfig.TrafficApiUrl;
+            _apiId = DataAccessConfig.GoogleMapsApiId;
+            _apiUrl = DataAccessConfig.GoogleMapsApiUrl;
             _start = start;
             _destination = destination;
 
