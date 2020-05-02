@@ -2,7 +2,7 @@
 
 namespace MagicMirror.DataAccess.Entities.Traffic
 {
-    public class GoogleMapsTrafficEntity : Entity
+    public class GoogleMapsTrafficEntity : TrafficEntity
     {
         public string[] Destination_addresses { get; set; }
 

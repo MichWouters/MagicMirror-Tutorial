@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.DataAccess.Entities.Entities
 {
-    public abstract class Entity
+    public abstract class TrafficEntity : Entity
     {
     }
 }
