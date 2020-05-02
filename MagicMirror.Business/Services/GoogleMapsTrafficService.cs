@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : MappableService<GoogleMapsTrafficEntity, TrafficModel>, ITrafficService
+    public class GoogleMapsTrafficService : MappableService<GoogleMapsTrafficEntity, TrafficModel>, ITrafficService
     {
-        private readonly ITrafficRepo _repo;
+        private readonly ITrafficRepo<GoogleMapsTrafficEntity> _repo;
 
-        public TrafficService(ITrafficRepo repo, IMapper mapper)
+        public GoogleMapsTrafficService(IGoogleMapsRepo repo, IMapper mapper)
         {
             _repo = repo;
-            _mapper = mapper;
+            Mapper = mapper;
         }
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
             GoogleMapsTrafficEntity entity = await _repo.GetTrafficInfoAsync(origin, destination);
             TrafficModel model = MapFromEntity(entity);
+            
+            model.Origin = origin;
+            model.Destination = destination;
             model.InitializeModel();
 
             return model;

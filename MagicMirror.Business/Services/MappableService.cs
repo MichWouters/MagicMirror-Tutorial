@@ -8,11 +8,11 @@ namespace MagicMirror.Business.Services
         where TEntity : Entity
         where TModel : Model
     {
-        protected IMapper _mapper;
+        protected IMapper Mapper;
 
         protected TModel MapFromEntity(TEntity entity)
         {
-            var model = _mapper.Map<TModel>(entity);
+            var model = Mapper.Map<TModel>(entity);
             return model;
         }
     }
