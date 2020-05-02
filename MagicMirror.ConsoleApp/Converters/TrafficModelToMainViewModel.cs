@@ -6,9 +6,9 @@ using MagicMirror.ConsoleApp.Models;
 
 namespace MagicMirror.ConsoleApp.Converters
 {
-    public class TrafficModelToMainViewModelConverter : ITypeConverter<GoogleMapsTrafficModel, MainViewModel>
+    public class TrafficModelToMainViewModelConverter : ITypeConverter<TrafficModel, MainViewModel>
     {
-        public MainViewModel Convert(GoogleMapsTrafficModel source, MainViewModel destination, ResolutionContext context)
+        public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {
             // Converter classes cannot automap properties...
             destination.Distance = source.Distance;

@@ -52,7 +52,7 @@ namespace MagicMirror.Tests.Traffic
             DateTime timeOfArrival = DateTime.Now.AddSeconds(Duration);
 
             // Act
-            GoogleMapsTrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
 
             // Assert
             Assert.Equal(122.31, model.Distance);
@@ -70,7 +70,7 @@ namespace MagicMirror.Tests.Traffic
                 .ReturnsAsync(GetMockEntity());
 
             // Act
-            GoogleMapsTrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
+            TrafficModel model = await _service.GetTrafficModelAsync(Origin, Destination);
 
             // Assert
             mockRepo.Verify(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);

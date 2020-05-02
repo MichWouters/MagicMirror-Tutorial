@@ -5,6 +5,6 @@ namespace MagicMirror.Business.Services
 {
     public interface ITrafficService
     {
-        Task<GoogleMapsTrafficModel> GetTrafficModelAsync(string origin, string destination);
+        Task<TrafficModel> GetTrafficModelAsync(string origin, string destination);
     }
 }

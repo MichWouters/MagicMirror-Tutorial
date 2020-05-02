@@ -154,9 +154,9 @@ namespace MagicMirror.Tests.Console
             };
         }
 
-        private GoogleMapsTrafficModel GetMockTrafficModel()
+        private TrafficModel GetMockTrafficModel()
         {
-            return new GoogleMapsTrafficModel
+            return new TrafficModel
             {
                 Destination = "London",
                 Distance = 47,
