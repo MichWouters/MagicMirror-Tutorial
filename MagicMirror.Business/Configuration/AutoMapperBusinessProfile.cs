@@ -28,10 +28,9 @@ namespace MagicMirror.Business.Configuration
                 .ForMember(x => x.Duration, y => y.MapFrom(z => z.Rows[0].Elements[0].Duration.Value));
 
 
-            CreateMap<OpenMapTraffic, TrafficModel>()
+            CreateMap<OpenMapTrafficEntity, TrafficModel>()
                 .ForMember(x => x.Distance, y => y.MapFrom(z => z.Route.Distance))
                 .ForMember(x => x.DistanceUom, y => y.MapFrom(z => Enums.DistanceUom.Imperial))
-                .ForMember(x => x., y => y.MapFrom(z => Enums.DistanceUom.Imperial))
                 .ForMember(x => x.Duration, y => y.MapFrom(z => z.Route.Time));
         }   
     }
