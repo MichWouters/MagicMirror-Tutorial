@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class GoogleMapsTrafficRepo : Repository<GoogleMapsTrafficEntity>, ITrafficRepo
+    public class GoogleMapsRepo : Repository<GoogleMapsTrafficEntity>, ITrafficRepo<GoogleMapsTrafficEntity>
     {
         private string _start;
         private string _destination;
 
         public async Task<GoogleMapsTrafficEntity> GetTrafficInfoAsync(string start, string destination)
         {
-            FillInputData(start, destination);
+            Url = GenerateApiEndpoint(start, destination);
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
             GoogleMapsTrafficEntity entity = await GetEntityFromJsonAsync(message);
 
@@ -25,16 +25,17 @@ namespace MagicMirror.DataAccess.Repos
             return entity;
         }
 
-        private void FillInputData(string start, string destination)
+
+        protected override string GenerateApiEndpoint(string start, string destination)
         {
-            _apiId = DataAccessConfig.GoogleMapsApiId;
-            _apiUrl = DataAccessConfig.GoogleMapsApiUrl;
+            ApiId = DataAccessConfig.GoogleMapsApiId;
+            ApiUrl = DataAccessConfig.GoogleMapsApiUrl;
             _start = start;
             _destination = destination;
 
             ValidateInput();
 
-            _url = $"{_apiUrl}?origins={start}&destinations={destination}&key={_apiId}";
+            return $"{ApiUrl}?origins={start}&destinations={destination}&key={ApiId}";
         }
 
         protected override void ValidateInput()
