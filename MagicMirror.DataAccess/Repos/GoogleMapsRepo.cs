@@ -19,7 +19,7 @@ namespace MagicMirror.DataAccess.Repos
 
             if (entity.Status == "REQUEST_DENIED")
             {
-                throw new HttpRequestException("No subscribtion set up on Google Maps Api for current user");
+                throw new HttpRequestException("No subscribtion set up on Google Maps Api exists for current user");
             }
 
             if (entity?.Rows[0]?.Elements[0]?.Distance == null )
