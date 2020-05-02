@@ -13,14 +13,14 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficDataTests()
         {
-            _repo = new TrafficRepo();
+            _repo = new GoogleMapsTrafficRepo();
         }
 
-        [Fact]
+        [Fact(Skip = "No longer using Google Maps")]
         public async Task Can_Retrieve_Traffic_Data()
         {
             // Arrange
-            TrafficEntity entity = null;
+            GoogleMapsTrafficEntity entity = null;
             string start = "London, UK";
             string destination = "Brighton, UK";
 
@@ -32,7 +32,7 @@ namespace MagicMirror.Tests.Traffic
             Assert.Equal("OK", entity.Status);
         }
 
-        [Fact]
+        [Fact(Skip = "No longer using Google Maps")]
         public async Task Return_Type_Should_Be_TrafficEntity()
         {
             // Arrange
@@ -43,10 +43,10 @@ namespace MagicMirror.Tests.Traffic
             var entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
-            Assert.IsType<TrafficEntity>(entity);
+            Assert.IsType<GoogleMapsTrafficEntity>(entity);
         }
 
-        [Fact]
+        [Fact(Skip = "No longer using Google Maps")]
         public async Task Empty_Input_Should_Throw_ArgumentNull()
         {
             // Arrange
@@ -58,7 +58,7 @@ namespace MagicMirror.Tests.Traffic
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
 
-        [Fact]
+        [Fact(Skip = "No longer using Google Maps")]
         public async Task No_Traffic_Found_Should_Throw_HttpRequest()
         {
             // Arrange

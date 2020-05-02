@@ -14,7 +14,7 @@ namespace MagicMirror.ConsoleApp.Configuration
                 .ForMember(x => x.Sunrise, y => y.MapFrom(z => z.Sunrise.ToLocalTime().ToString("HH:mm")))
                 .ForMember(x => x.Sunset, y => y.MapFrom(z => z.Sunset.ToLocalTime().ToString("HH:mm")));
 
-            CreateMap<TrafficModel, MainViewModel>()
+            CreateMap<GoogleMapsTrafficModel, MainViewModel>()
                 .ConvertUsing<TrafficModelToMainViewModelConverter>();
         }
     }

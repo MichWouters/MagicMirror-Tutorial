@@ -47,12 +47,12 @@ namespace MagicMirror.ConsoleApp
         {
             var model = new MainViewModel();
             WeatherModel weatherModel;
-            TrafficModel trafficModel;
+            GoogleMapsTrafficModel googleMapsTrafficModel;
 
             try
             {
                 weatherModel = await GetWeatherModelAsync(information.Town);
-                trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+                googleMapsTrafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
             }
             catch (Exception ex)
             {
@@ -60,13 +60,13 @@ namespace MagicMirror.ConsoleApp
                 Console.WriteLine(ex.ToString());
 
                 weatherModel = GetOfflineWeatherData();
-                trafficModel = GetOfflineTrafficData();
+                googleMapsTrafficModel = GetOfflineTrafficData();
                 model.IsOfflineData = true;
             }
 
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
-            model = _mapper.Map(trafficModel, model);
+            model = _mapper.Map(googleMapsTrafficModel, model);
             model.UserName = information?.Name ?? "Anonymous";
 
             return model;
@@ -83,7 +83,7 @@ namespace MagicMirror.ConsoleApp
             return model;
         }
 
-        private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
+        private async Task<GoogleMapsTrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
             if (string.IsNullOrEmpty(origin))
             {
@@ -95,7 +95,7 @@ namespace MagicMirror.ConsoleApp
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            TrafficModel model = await _trafficService.GetTrafficModelAsync(origin, destination);
+            GoogleMapsTrafficModel model = await _trafficService.GetTrafficModelAsync(origin, destination);
             return model;
         }
 
@@ -152,9 +152,9 @@ namespace MagicMirror.ConsoleApp
             };
         }
 
-        private TrafficModel GetOfflineTrafficData()
+        private GoogleMapsTrafficModel GetOfflineTrafficData()
         {
-            return new TrafficModel
+            return new GoogleMapsTrafficModel
             {
                 Duration = 35 * 60,
                 Distance = 27500,

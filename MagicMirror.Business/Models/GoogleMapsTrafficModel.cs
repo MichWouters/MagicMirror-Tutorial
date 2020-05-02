@@ -5,7 +5,7 @@ using System;
 
 namespace MagicMirror.Business.Models
 {
-    public class TrafficModel : Model
+    public class GoogleMapsTrafficModel : Model
     {
         public string Origin { get; set; }
 
