@@ -9,7 +9,7 @@ namespace MagicMirror.Tests.Traffic
 {
     public class GoogleMapsDataTests
     {
-        private ITrafficRepo<GoogleMapsTrafficEntity> _repo;
+        private readonly ITrafficRepo<GoogleMapsTrafficEntity> _repo;
 
         public GoogleMapsDataTests()
         {
@@ -20,12 +20,11 @@ namespace MagicMirror.Tests.Traffic
         public async Task Can_Retrieve_Traffic_Data()
         {
             // Arrange
-            GoogleMapsTrafficEntity entity = null;
             string start = "London, UK";
             string destination = "Brighton, UK";
 
             // Act
-            entity = (GoogleMapsTrafficEntity)await _repo.GetTrafficInfoAsync(start, destination);
+            GoogleMapsTrafficEntity entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.NotNull(entity);
@@ -40,7 +39,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "Brighton, UK";
 
             // Act
-            var entity = (GoogleMapsTrafficEntity) await _repo.GetTrafficInfoAsync(start, destination);
+            GoogleMapsTrafficEntity entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.IsType<GoogleMapsTrafficEntity>(entity);
@@ -54,7 +53,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "Brighton, UK";
 
             // Act & Assert
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>
+            ArgumentNullException ex = await Assert.ThrowsAsync<ArgumentNullException>
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
 
@@ -66,7 +65,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "FOOBAR";
 
             // Act & Assert
-            var ex = await Assert.ThrowsAsync<HttpRequestException>
+            HttpRequestException ex = await Assert.ThrowsAsync<HttpRequestException>
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
     }
