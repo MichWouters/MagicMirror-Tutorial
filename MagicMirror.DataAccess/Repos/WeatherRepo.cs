@@ -12,28 +12,28 @@ namespace MagicMirror.DataAccess.Repos
 
         public async Task<WeatherEntity> GetWeatherEntityByCityAsync(string city)
         {
-            FillInputData(city);
+            Url = GenerateApiEndpoint(city, string.Empty);
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
             WeatherEntity entity = await GetEntityFromJsonAsync(message);
 
             return entity;
         }
 
-        private void FillInputData(string city)
-        {
-            _apiId = DataAccessConfig.OpenWeatherMapApiId;
-            _apiUrl = DataAccessConfig.OpenWeatherMapApiUrl;
-            _city = city;
-
-            ValidateInput();
-
-            _url = $"{_apiUrl}/weather?q={_city}&appId={_apiId}";
-        }
-
         protected override void ValidateInput()
         {
             base.ValidateInput();
             if (string.IsNullOrWhiteSpace(_city)) { throw new ArgumentNullException("A home city has to be provided"); }
+        }
+
+        protected override string GenerateApiEndpoint(string start, string destination)
+        {
+            ApiId = DataAccessConfig.OpenWeatherMapApiId;
+            ApiUrl = DataAccessConfig.OpenWeatherMapApiUrl;
+            _city = start;
+
+            ValidateInput();
+
+            return $"{ApiUrl}/weather?q={_city}&appId={ApiId}";
         }
     }
 }

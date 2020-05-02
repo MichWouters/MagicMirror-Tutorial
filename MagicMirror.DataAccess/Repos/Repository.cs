@@ -8,21 +8,21 @@ namespace MagicMirror.DataAccess.Repos
 {
     public abstract class Repository<T> where T : Entity
     {
-        protected string _apiId;
-        protected string _apiUrl;
-        protected string _url;
+        protected string ApiId;
+        protected string ApiUrl;
+        protected string Url;
 
         protected virtual void ValidateInput()
         {
-            if (string.IsNullOrWhiteSpace(_apiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
-            if (string.IsNullOrWhiteSpace(_apiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
+            if (string.IsNullOrWhiteSpace(ApiId)) { throw new ArgumentNullException("An apiKey has to be provided"); }
+            if (string.IsNullOrWhiteSpace(ApiUrl)) { throw new ArgumentNullException("An apiUrl has to be provided"); }
         }
 
         protected async Task<HttpResponseMessage> GetHttpResponseMessageAsync()
         {
             var client = new HttpClient();
 
-            HttpResponseMessage message = await client.GetAsync(_url);
+            HttpResponseMessage message = await client.GetAsync(Url);
 
             if (!message.IsSuccessStatusCode)
             {
@@ -46,5 +46,7 @@ namespace MagicMirror.DataAccess.Repos
                 throw new JsonSerializationException("Cannot convert from entity", e);
             }
         }
+
+        protected abstract string GenerateApiEndpoint(string start, string destination);
     }
 }
