@@ -18,7 +18,8 @@ namespace MagicMirror.ConsoleApp.Converters
             destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
             destination.TravelTime = DateTimeHelper.SecondsToHoursAndMinutes(source.Duration);
 
-            if (source.DistanceUom == DistanceUom.Metric)
+            // TODO: Replace false by global setting.
+            if (source.DistanceUom == DistanceUom.Metric && false)
             {
                 destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
             }
