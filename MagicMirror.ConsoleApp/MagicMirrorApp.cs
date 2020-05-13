@@ -101,31 +101,25 @@ namespace MagicMirror.ConsoleApp
 
         private UserInformation GetInformation()
         {
+            UserInformation user = UserInformation.GetUserInformation();
+
             Console.WriteLine("Please enter your name:");
-            string name = Console.ReadLine();
+            user.Name = Console.ReadLine();
 
             Console.WriteLine("Please enter your street and number:");
-            string address = Console.ReadLine();
+            user.Address = Console.ReadLine();
 
             Console.WriteLine("Please enter your zipcode:");
-            string zipcode = Console.ReadLine();
+            user.Zipcode = Console.ReadLine();
 
             Console.WriteLine("Please enter your town:");
-            string town = Console.ReadLine();
+            user.Town = Console.ReadLine();
 
             Console.WriteLine("Please enter your work address:");
-            string workAddress = Console.ReadLine();
-
-            var result = new UserInformation
-            {
-                Name = name,
-                Address = address,
-                Zipcode = zipcode,
-                Town = town,
-                WorkAddress = workAddress
-            };
-
-            return result;
+            user.WorkAddress = Console.ReadLine();
+            
+            Console.WriteLine();
+            return user;
         }
 
         private void GenerateOutput(MainViewModel model)
@@ -157,7 +151,7 @@ namespace MagicMirror.ConsoleApp
             return new TrafficModel
             {
                 Duration = 35 * 60,
-                Distance = 27500,
+                Distance = 27.500,
                 DistanceUom = DistanceUom.Metric,
                 Destination = "2 St Margaret St, London",
                 TimeOfArrival = DateTime.Now.AddMinutes(35),

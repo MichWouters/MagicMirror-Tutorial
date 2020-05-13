@@ -11,20 +11,29 @@ namespace MagicMirror.ConsoleApp.Converters
         public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
         {
             // Converter classes cannot automap properties...
-            destination.Distance = source.Distance;
+            destination.Distance = ConvertDistance(source.Distance, source.DistanceUom);
 
             // But they do allow calculations to be performed at map-time.
             destination.DistanceUom = GetDistanceUomToString(source.DistanceUom);
             destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
             destination.TravelTime = DateTimeHelper.SecondsToHoursAndMinutes(source.Duration);
 
-            // TODO: Replace false by global setting.
-            if (source.DistanceUom == DistanceUom.Metric && false)
-            {
-                destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
-            }
+            
             
             return destination;
+        }
+
+        ///
+        private double ConvertDistance(double distance, DistanceUom distanceUom)
+        {
+            double convertedDistance = distance;
+
+            if (distanceUom == DistanceUom.Metric && UserInformation.GetUserInformation().TrafficProvider == TrafficProvider.GoogleMaps)
+            {
+                convertedDistance = DistanceHelper.MetersToKilometers(distance);
+            }
+
+            return convertedDistance;
         }
 
         private string GetDistanceUomToString(DistanceUom distanceUom)

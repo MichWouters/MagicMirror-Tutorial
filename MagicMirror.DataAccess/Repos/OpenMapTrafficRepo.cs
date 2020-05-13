@@ -17,6 +17,11 @@ namespace MagicMirror.DataAccess.Repos
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
             OpenMapTrafficEntity entity = await GetEntityFromJsonAsync(message);
 
+            if (entity.Info.Statuscode != 0)
+            {
+                throw new HttpRequestException("Unable to retrieve traffic information");
+            }
+
             return entity;
         }
 

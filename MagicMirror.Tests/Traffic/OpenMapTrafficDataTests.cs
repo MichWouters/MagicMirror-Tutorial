@@ -1,4 +1,4 @@
-﻿using MagicMirror.DataAccess.Entities.Traffic;
+﻿using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Net.Http;
@@ -7,32 +7,17 @@ using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
-    public class GoogleMapsTrafficDataTests
+    public class OpenMapTrafficDataTests
     {
-        private readonly IGoogleMapsRepo _repo;
+        private IOpenMapTrafficRepo _repo;
 
-        public GoogleMapsTrafficDataTests()
+        public OpenMapTrafficDataTests()
         {
-            _repo = new GoogleMapsRepo();
+            _repo = new OpenMapTrafficRepo();
         }
 
-        [Fact(Skip = "No longer using Google Maps")]
+        [Fact]
         public async Task Can_Retrieve_Traffic_Data()
-        {
-            // Arrange
-            string start = "London, UK";
-            string destination = "Brighton, UK";
-
-            // Act
-            GoogleMapsTrafficEntity entity = await _repo.GetTrafficInfoAsync(start, destination);
-
-            // Assert
-            Assert.NotNull(entity);
-            Assert.Equal("OK", entity.Status);
-        }
-
-        [Fact(Skip = "No longer using Google Maps")]
-        public async Task Return_Type_Should_Be_TrafficEntity()
         {
             // Arrange
             string start = "London, UK";
@@ -42,10 +27,25 @@ namespace MagicMirror.Tests.Traffic
             var entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
-            Assert.IsType<GoogleMapsTrafficEntity>(entity);
+            Assert.NotNull(entity);
+            Assert.Equal(0, entity.Info.Statuscode);
         }
 
-        [Fact(Skip = "No longer using Google Maps")]
+        [Fact]
+        public async Task Return_Type_Should_Be_OpenMapTrafficEntity()
+        {
+            // Arrange
+            string start = "London, UK";
+            string destination = "Brighton, UK";
+
+            // Act
+            var entity = await _repo.GetTrafficInfoAsync(start, destination);
+
+            // Assert
+            Assert.IsType<OpenMapTrafficEntity>(entity);
+        }
+
+        [Fact]
         public async Task Empty_Input_Should_Throw_ArgumentNull()
         {
             // Arrange
@@ -57,12 +57,13 @@ namespace MagicMirror.Tests.Traffic
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
 
-        [Fact(Skip = "No longer using Google Maps")]
+        [Fact]
+        [Trait("Category", "Slow")]
         public async Task No_Traffic_Found_Should_Throw_HttpRequest()
         {
             // Arrange
-            string start = "FEIFJIEFUESFYU";
-            string destination = "FOOBAR";
+            string start = "-1";
+            string destination = "-2";
 
             // Act & Assert
             await Assert.ThrowsAsync<HttpRequestException>

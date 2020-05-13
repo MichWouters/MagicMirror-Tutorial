@@ -39,12 +39,12 @@ namespace MagicMirror.Tests.Console
         public async Task Business_Methods_Called_Once()
         {
             // Arrange
-            var information = GetMockUserInformation();
+            var information = UserInformation.GetUserInformation();
             mockWeatherService.Setup(x => x.GetWeatherModelAsync(It.IsAny<string>())).ReturnsAsync(GetMockWeatherModel());
             mockTrafficService.Setup(x => x.GetTrafficModelAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(GetMockTrafficModel());
 
             // Act
-            var result = await app.GenerateViewModel(information);
+            await app.GenerateViewModel(information);
 
             mockWeatherService.Verify(x => x.GetWeatherModelAsync(It.IsAny<string>()), Times.Once);
             mockTrafficService.Verify(x => x.GetTrafficModelAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
@@ -57,27 +57,11 @@ namespace MagicMirror.Tests.Console
             mockTrafficService.Setup(x => x.GetTrafficModelAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(GetMockTrafficModel());
 
-            var expectedSunrise = new DateTime(2019, 10, 10, 6, 4, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
-            var expectedSunset = new DateTime(2019, 10, 10, 18, 36, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
-            var expectedTimeOfArrival = DateTime.Now.AddMinutes(35).ToShortTimeString();
-
             // Act
             var result = await app.GenerateViewModel(null);
 
             // Assert
-            Assert.Equal("35 minutes", result.TravelTime);
-            Assert.Equal(27.5, result.Distance);
-            Assert.Equal("kilometers", result.DistanceUom);
-            Assert.Equal(17, result.Temperature);
-            Assert.Equal("Celsius", result.TemperatureUom);
-            Assert.Equal("Sunny", result.WeatherType);
-
-            Assert.True(result.IsOfflineData);
-            Assert.Equal("Anonymous", result.UserName);
-
-            Assert.Equal(expectedSunrise, result.Sunrise);
-            Assert.Equal(expectedSunset, result.Sunset);
-            Assert.Equal(expectedTimeOfArrival, result.TimeOfArrival);
+            AssertOfflineData(result);
         }
 
         [Fact]
@@ -87,34 +71,18 @@ namespace MagicMirror.Tests.Console
             mockWeatherService.Setup(x => x.GetWeatherModelAsync(It.IsAny<string>()))
                 .ReturnsAsync(GetMockWeatherModel());
 
-            var expectedSunrise = new DateTime(2019, 10, 10, 6, 4, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
-            var expectedSunset = new DateTime(2019, 10, 10, 18, 36, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
-            var expectedTimeOfArrival = DateTime.Now.AddMinutes(35).ToShortTimeString();
-
             // Act
             var result = await app.GenerateViewModel(null);
 
             // Assert
-            Assert.Equal("35 minutes", result.TravelTime);
-            Assert.Equal(27.5, result.Distance);
-            Assert.Equal("kilometers", result.DistanceUom);
-            Assert.Equal(17, result.Temperature);
-            Assert.Equal("Celsius", result.TemperatureUom);
-            Assert.Equal("Sunny", result.WeatherType);
-
-            Assert.True(result.IsOfflineData);
-            Assert.Equal("Anonymous", result.UserName);
-
-            Assert.Equal(expectedSunrise, result.Sunrise);
-            Assert.Equal(expectedSunset, result.Sunset);
-            Assert.Equal(expectedTimeOfArrival, result.TimeOfArrival);
+            AssertOfflineData(result);
         }
 
         [Fact]
         public async Task Presentation_Profile_Is_Mapped_Correctly()
         {
             // Arrange
-            var information = GetMockUserInformation();
+            var information = UserInformation.GetUserInformation();
             mockWeatherService.Setup(x => x.GetWeatherModelAsync(It.IsAny<string>())).ReturnsAsync(GetMockWeatherModel());
             mockTrafficService.Setup(x => x.GetTrafficModelAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(GetMockTrafficModel());
 
@@ -167,16 +135,25 @@ namespace MagicMirror.Tests.Console
             };
         }
 
-        private UserInformation GetMockUserInformation()
+        private void AssertOfflineData(MainViewModel result)
         {
-            return new UserInformation
-            {
-                Address = "1 Paris Garden",
-                Name = "Michiel",
-                Town = "London",
-                Zipcode = "SE1 8NU",
-                WorkAddress = "Tower Of London"
-            };
+            var expectedSunrise = new DateTime(2019, 10, 10, 6, 4, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
+            var expectedSunset = new DateTime(2019, 10, 10, 18, 36, 0, DateTimeKind.Utc).ToLocalTime().ToString("HH:mm");
+            var expectedTimeOfArrival = DateTime.Now.AddMinutes(35).ToShortTimeString();
+
+            Assert.Equal("35 minutes", result.TravelTime);
+            Assert.Equal(27.5, result.Distance);
+            Assert.Equal("kilometers", result.DistanceUom);
+            Assert.Equal(17, result.Temperature);
+            Assert.Equal("Celsius", result.TemperatureUom);
+            Assert.Equal("Sunny", result.WeatherType);
+
+            Assert.True(result.IsOfflineData);
+            Assert.Equal("Anonymous", result.UserName);
+
+            Assert.Equal(expectedSunrise, result.Sunrise);
+            Assert.Equal(expectedSunset, result.Sunset);
+            Assert.Equal(expectedTimeOfArrival, result.TimeOfArrival);
         }
     }
 }
