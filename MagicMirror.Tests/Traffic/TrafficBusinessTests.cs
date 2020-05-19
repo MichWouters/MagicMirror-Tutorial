@@ -23,11 +23,11 @@ namespace MagicMirror.Tests.Traffic
         private const string Destination = "Leeds, Uk";
 
         // Mock objects
-        private Mock<ITrafficRepo> mockRepo;
+        private Mock<IGoogleMapsTrafficRepo> mockRepo;
 
         public TrafficBusinessTests()
         {
-            mockRepo = new Mock<ITrafficRepo>();
+            mockRepo = new Mock<IGoogleMapsTrafficRepo>();
 
             // Initialize AutoMapper for Unit Tests
             var config = new MapperConfiguration(cfg =>

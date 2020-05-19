@@ -1,4 +1,5 @@
-﻿using MagicMirror.DataAccess.Entities.Traffic;
+﻿using MagicMirror.DataAccess.Entities.Entities;
+using MagicMirror.DataAccess.Entities.Traffic;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Net.Http;
@@ -7,29 +8,28 @@ using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
-    public class TrafficDataTests
+    public class MapQuestTrafficDataTests
     {
-        private ITrafficRepo _repo;
+        private IMapQuestTrafficRepo _repo;
 
-        public TrafficDataTests()
+        public MapQuestTrafficDataTests()
         {
-            _repo = new GoogleMapsTrafficRepo();
+            _repo = new MapQuestTrafficRepo();
         }
 
         [Fact]
         public async Task Can_Retrieve_Traffic_Data()
         {
             // Arrange
-            GoogleMapsTrafficEntity entity = null;
             string start = "London, UK";
             string destination = "Brighton, UK";
 
             // Act
-            entity = await _repo.GetTrafficInfoAsync(start, destination);
+            var entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
             Assert.NotNull(entity);
-            Assert.Equal("OK", entity.Status);
+            Assert.Equal(0, entity.Info.Statuscode);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace MagicMirror.Tests.Traffic
             var entity = await _repo.GetTrafficInfoAsync(start, destination);
 
             // Assert
-            Assert.IsType<GoogleMapsTrafficEntity>(entity);
+            Assert.IsType<MapQuestTrafficEntity>(entity);
         }
 
         [Fact]
@@ -62,8 +62,8 @@ namespace MagicMirror.Tests.Traffic
         public async Task No_Traffic_Found_Should_Throw_HttpRequest()
         {
             // Arrange
-            string start = "FEIFJIEFUESFYU";
-            string destination = "FOOBAR";
+            string start = "-1";
+            string destination = "-2";
 
             // Act & Assert
             var ex = await Assert.ThrowsAsync<HttpRequestException>
