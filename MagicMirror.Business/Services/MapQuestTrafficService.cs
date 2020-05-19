@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Traffic;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : MappableService<TrafficEntity, TrafficModel>, ITrafficService
+    public class MapQuestTrafficService : MappableService<MapQuestTrafficEntity, TrafficModel>, ITrafficService
     {
-        private readonly ITrafficRepo _repo;
+        private readonly IMapQuestTrafficRepo _repo;
 
-        public TrafficService(ITrafficRepo repo, IMapper mapper)
+        public MapQuestTrafficService(IMapQuestTrafficRepo repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -18,9 +18,12 @@ namespace MagicMirror.Business.Services
 
         public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
-            TrafficEntity entity = await _repo.GetTrafficInfoAsync(origin, destination);
+            MapQuestTrafficEntity entity = await _repo.GetTrafficInfoAsync(origin, destination);
             TrafficModel model = MapFromEntity(entity);
+
             model.InitializeModel();
+            model.Origin = origin;
+            model.Destination = destination;
 
             return model;
         }

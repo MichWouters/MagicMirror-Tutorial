@@ -25,7 +25,7 @@ namespace MagicMirror.ConsoleApp
 
         public async Task RunAsync()
         {
-            UserInformation information = GetInformation();
+            UserSettings information = GetInformation();
 
             try
             {
@@ -43,7 +43,7 @@ namespace MagicMirror.ConsoleApp
             }
         }
 
-        public async Task<MainViewModel> GenerateViewModel(UserInformation information)
+        public async Task<MainViewModel> GenerateViewModel(UserSettings information)
         {
             var model = new MainViewModel();
             WeatherModel weatherModel;
@@ -99,33 +99,26 @@ namespace MagicMirror.ConsoleApp
             return model;
         }
 
-        private UserInformation GetInformation()
+        private UserSettings GetInformation()
         {
+            var user = UserSettings.GetUserSettings();
+
             Console.WriteLine("Please enter your name:");
-            string name = Console.ReadLine();
+            user.Name = Console.ReadLine();
 
             Console.WriteLine("Please enter your street and number:");
-            string address = Console.ReadLine();
+            user.Address = Console.ReadLine();
 
             Console.WriteLine("Please enter your zipcode:");
-            string zipcode = Console.ReadLine();
+            user.Zipcode = Console.ReadLine();
 
             Console.WriteLine("Please enter your town:");
-            string town = Console.ReadLine();
+            user.Town = Console.ReadLine();
 
             Console.WriteLine("Please enter your work address:");
-            string workAddress = Console.ReadLine();
+            user.WorkAddress = Console.ReadLine();
 
-            var result = new UserInformation
-            {
-                Name = name,
-                Address = address,
-                Zipcode = zipcode,
-                Town = town,
-                WorkAddress = workAddress
-            };
-
-            return result;
+            return user;
         }
 
         private void GenerateOutput(MainViewModel model)

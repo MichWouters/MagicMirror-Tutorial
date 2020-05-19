@@ -12,7 +12,7 @@ using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
-    public class TrafficBusinessTests
+    public class GoogleMapsTrafficBusinessTests
     {
         private ITrafficService _service;
 
@@ -23,11 +23,11 @@ namespace MagicMirror.Tests.Traffic
         private const string Destination = "Leeds, Uk";
 
         // Mock objects
-        private Mock<ITrafficRepo> mockRepo;
+        private Mock<IGoogleMapsTrafficRepo> mockRepo;
 
-        public TrafficBusinessTests()
+        public GoogleMapsTrafficBusinessTests()
         {
-            mockRepo = new Mock<ITrafficRepo>();
+            mockRepo = new Mock<IGoogleMapsTrafficRepo>();
 
             // Initialize AutoMapper for Unit Tests
             var config = new MapperConfiguration(cfg =>
@@ -38,7 +38,7 @@ namespace MagicMirror.Tests.Traffic
             IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _service = new TrafficService(mockRepo.Object, mapper);
+            _service = new GoogleMapsTrafficService(mockRepo.Object, mapper);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace MagicMirror.Tests.Traffic
             mockRepo.Verify(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
-        private TrafficEntity GetMockEntity()
+        private GoogleMapsTrafficEntity GetMockEntity()
         {
             var element = new Element
             {
@@ -84,7 +84,7 @@ namespace MagicMirror.Tests.Traffic
                 Duration = new Duration { Value = Duration },
             };
 
-            var entity = new TrafficEntity
+            var entity = new GoogleMapsTrafficEntity
             {
                 Origin_addresses = new[] { Origin },
                 Destination_addresses = new[] { Destination },
