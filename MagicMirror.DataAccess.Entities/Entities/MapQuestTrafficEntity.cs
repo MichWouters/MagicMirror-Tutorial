@@ -4,7 +4,8 @@ namespace MagicMirror.DataAccess.Entities.Entities
 {
     public class MapQuestTrafficEntity : TrafficEntity
     {
-        public Route route { get; set; }
-        public Info info { get; set; }
+        public Route Route { get; set; }
+
+        public Info Info { get; set; }
     }
 }

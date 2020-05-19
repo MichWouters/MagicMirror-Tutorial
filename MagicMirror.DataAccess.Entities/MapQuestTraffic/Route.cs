@@ -2,23 +2,40 @@
 {
     public class Route
     {
+        public object[] ComputedWaypoints { get; set; }
+
+        public float Distance { get; set; }
+
+        public string FormattedTime { get; set; }
+
+        public float FuelUsed { get; set; }
+
+        public bool HasAccessRestriction { get; set; }
+
+        public bool HasBridge { get; set; }
+
+        public bool HasCountryCross { get; set; }
+
+        public bool HasFerry { get; set; }
+
+        public bool HasHighway { get; set; }
+
+        public bool HasSeasonalClosure { get; set; }
+
+        public bool HasTimedRestriction { get; set; }
+
         public bool hasTollRoad { get; set; }
-        public bool hasBridge { get; set; }
-        public float distance { get; set; }
-        public bool hasTimedRestriction { get; set; }
-        public bool hasTunnel { get; set; }
-        public bool hasHighway { get; set; }
-        public object[] computedWaypoints { get; set; }
-        public string formattedTime { get; set; }
-        public string sessionId { get; set; }
-        public bool hasAccessRestriction { get; set; }
-        public int realTime { get; set; }
-        public bool hasSeasonalClosure { get; set; }
-        public bool hasCountryCross { get; set; }
-        public float fuelUsed { get; set; }
-        public int time { get; set; }
-        public bool hasUnpaved { get; set; }
-        public int[] locationSequence { get; set; }
-        public bool hasFerry { get; set; }
+
+        public bool HasTunnel { get; set; }
+
+        public bool HasUnpaved { get; set; }
+
+        public int[] LocationSequence { get; set; }
+
+        public int RealTime { get; set; }
+
+        public string SessionId { get; set; }
+        
+        public int Time { get; set; }
     }
 }

@@ -2,7 +2,8 @@
 {
     public class Info
     {
-        public int statuscode { get; set; }
-        public object[] messages { get; set; }
+        public int Statuscode { get; set; }
+
+        public object[] Messages { get; set; }
     }
 }
