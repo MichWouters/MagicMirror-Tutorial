@@ -18,7 +18,7 @@ namespace MagicMirror.ConsoleApp.Converters
             destination.TimeOfArrival = source.TimeOfArrival.ToLocalTime().ToShortTimeString();
             destination.TravelTime = DateTimeHelper.SecondsToHoursAndMinutes(source.Duration);
 
-            if (source.DistanceUom == DistanceUom.Metric)
+            if (source.DistanceUom == DistanceUom.Metric && UserSettings.GetUserSettings().TrafficApiProvider == TrafficApiProvider.GoogleMaps)
             {
                 destination.Distance = DistanceHelper.MetersToKilometers(source.Distance);
             }

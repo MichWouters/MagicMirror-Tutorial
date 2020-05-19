@@ -167,16 +167,9 @@ namespace MagicMirror.Tests.Console
             };
         }
 
-        private UserInformation GetMockUserInformation()
+        private UserSettings GetMockUserInformation()
         {
-            return new UserInformation
-            {
-                Address = "1 Paris Garden",
-                Name = "Michiel",
-                Town = "London",
-                Zipcode = "SE1 8NU",
-                WorkAddress = "Tower Of London"
-            };
+            return UserSettings.GetUserSettings();
         }
     }
 }
