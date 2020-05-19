@@ -59,6 +59,7 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
+        [Trait("Category", "Slow")]
         public async Task No_Traffic_Found_Should_Throw_HttpRequest()
         {
             // Arrange
@@ -66,7 +67,7 @@ namespace MagicMirror.Tests.Traffic
             string destination = "-2";
 
             // Act & Assert
-            var ex = await Assert.ThrowsAsync<HttpRequestException>
+            await Assert.ThrowsAsync<HttpRequestException>
                 (async () => await _repo.GetTrafficInfoAsync(start, destination));
         }
     }
