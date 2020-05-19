@@ -11,5 +11,13 @@ namespace MagicMirror.ConsoleApp.Models
         public string Town { get; set; }
 
         public string WorkAddress { get; set; }
+
+        public TrafficApiProvider TrafficApiProvider { get; set; }
+    }
+
+    public enum TrafficApiProvider
+    {
+        MapQuest = 0,
+        GoogleMaps = 1
     }
 }
