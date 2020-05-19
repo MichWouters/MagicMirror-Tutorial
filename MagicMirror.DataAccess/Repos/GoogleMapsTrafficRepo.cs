@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class TrafficRepo : Repository<GoogleMapsTrafficEntity>, ITrafficRepo
+    public class GoogleMapsTrafficRepo : Repository<GoogleMapsTrafficEntity>, IGoogleMapsTrafficRepo
     {
         private string _start;
         private string _destination;
 
         public async Task<GoogleMapsTrafficEntity> GetTrafficInfoAsync(string start, string destination)
         {
-            FillInputData(start, destination);
+            _url = GenerateApiEndpoint(start, destination);
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
             GoogleMapsTrafficEntity entity = await GetEntityFromJsonAsync(message);
+
+            if (entity.Status == "REQUEST_DENIED")
+            {
+                throw new HttpRequestException("No subscription set up for current user");
+            }
 
             if (entity.Rows[0].Elements[0].Distance == null)
             {
@@ -25,7 +30,7 @@ namespace MagicMirror.DataAccess.Repos
             return entity;
         }
 
-        private void FillInputData(string start, string destination)
+        private string GenerateApiEndpoint(string start, string destination)
         {
             _apiId = DataAccessConfig.GoogleMapsTrafficApiId;
             _apiUrl = DataAccessConfig.GoogleMapsTrafficApiUrl;
@@ -34,7 +39,7 @@ namespace MagicMirror.DataAccess.Repos
 
             ValidateInput();
 
-            _url = $"{_apiUrl}?origins={start}&destinations={destination}&key={_apiId}";
+            return $"{_apiUrl}?origins={start}&destinations={destination}&key={_apiId}";
         }
 
         protected override void ValidateInput()

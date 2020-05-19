@@ -13,7 +13,7 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficDataTests()
         {
-            _repo = new TrafficRepo();
+            _repo = new GoogleMapsTrafficRepo();
         }
 
         [Fact]
