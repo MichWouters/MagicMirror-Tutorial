@@ -23,8 +23,9 @@ namespace MagicMirror.ConsoleApp
         private static void RegisterServices(ServiceCollection services)
         {
             // Add Services using Dependency Injection
-            services.AddTransient<ITrafficService, GoogleMapsTrafficService>();
+            services.AddTransient<ITrafficService, MapQuestTrafficService>();
             services.AddTransient<IGoogleMapsTrafficRepo, GoogleMapsTrafficRepo>();
+            services.AddTransient<IMapQuestTrafficRepo, MapQuestTrafficRepo>();
 
             services.AddTransient<IWeatherService, WeatherService>();
             services.AddTransient<IWeatherRepo, WeatherRepo>();

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
-    public class TrafficBusinessTests
+    public class GoogleMapsTrafficBusinessTests
     {
         private ITrafficService _service;
 
@@ -25,7 +25,7 @@ namespace MagicMirror.Tests.Traffic
         // Mock objects
         private Mock<IGoogleMapsTrafficRepo> mockRepo;
 
-        public TrafficBusinessTests()
+        public GoogleMapsTrafficBusinessTests()
         {
             mockRepo = new Mock<IGoogleMapsTrafficRepo>();
 
