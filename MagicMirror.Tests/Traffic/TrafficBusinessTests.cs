@@ -38,7 +38,7 @@ namespace MagicMirror.Tests.Traffic
             IMapper mapper = config.CreateMapper();
 
             // Initialize Service with Dependencies
-            _service = new TrafficService(mockRepo.Object, mapper);
+            _service = new GoogleMapsTrafficService(mockRepo.Object, mapper);
         }
 
         [Fact]
