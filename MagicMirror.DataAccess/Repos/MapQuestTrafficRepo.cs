@@ -1,23 +1,28 @@
 ﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.DataAccess.Entities.Entities;
+using MagicMirror.DataAccess.Entities.Traffic;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class MapQuestTrafficRepo : Repository<MapQuestTrafficEntity>, IMapQuestTrafficRepo
+    public class GoogleMapsTrafficRepo : Repository<GoogleMapsTrafficEntity>, IGoogleMapsTrafficRepo
     {
         private string _start;
         private string _destination;
 
-        public async Task<MapQuestTrafficEntity> GetTrafficInfoAsync(string start, string destination)
+        public async Task<GoogleMapsTrafficEntity> GetTrafficInfoAsync(string start, string destination)
         {
             _url = GenerateApiEndpoint(start, destination);
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
-            MapQuestTrafficEntity entity = await GetEntityFromJsonAsync(message);
+            GoogleMapsTrafficEntity entity = await GetEntityFromJsonAsync(message);
 
-            if (entity.Info.Statuscode != 0)
+            if (entity.Status == "REQUEST_DENIED")
+            {
+                throw new HttpRequestException("No subscription set up for current user");
+            }
+
+            if (entity.Rows[0].Elements[0].Distance == null)
             {
                 throw new HttpRequestException("Unable to retrieve traffic information");
             }
@@ -27,14 +32,14 @@ namespace MagicMirror.DataAccess.Repos
 
         private string GenerateApiEndpoint(string start, string destination)
         {
-            _apiId = DataAccessConfig.MapQuestApiId;
-            _apiUrl = DataAccessConfig.MapQuestApiUrl;
+            _apiId = DataAccessConfig.GoogleMapsTrafficApiId;
+            _apiUrl = DataAccessConfig.GoogleMapsTrafficApiUrl;
             _start = start;
             _destination = destination;
 
             ValidateInput();
 
-            return $"{_apiUrl}?from={start}&to={destination}&key={_apiId}";
+            return $"{_apiUrl}?origins={start}&destinations={destination}&key={_apiId}";
         }
 
         protected override void ValidateInput()
