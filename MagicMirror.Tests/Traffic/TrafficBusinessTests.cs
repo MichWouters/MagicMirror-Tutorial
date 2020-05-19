@@ -76,7 +76,7 @@ namespace MagicMirror.Tests.Traffic
             mockRepo.Verify(x => x.GetTrafficInfoAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
-        private TrafficEntity GetMockEntity()
+        private GoogleMapsTrafficEntity GetMockEntity()
         {
             var element = new Element
             {
@@ -84,7 +84,7 @@ namespace MagicMirror.Tests.Traffic
                 Duration = new Duration { Value = Duration },
             };
 
-            var entity = new TrafficEntity
+            var entity = new GoogleMapsTrafficEntity
             {
                 Origin_addresses = new[] { Origin },
                 Destination_addresses = new[] { Destination },

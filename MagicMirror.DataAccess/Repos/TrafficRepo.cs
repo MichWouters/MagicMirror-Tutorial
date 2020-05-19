@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class TrafficRepo : Repository<TrafficEntity>, ITrafficRepo
+    public class TrafficRepo : Repository<GoogleMapsTrafficEntity>, ITrafficRepo
     {
         private string _start;
         private string _destination;
 
-        public async Task<TrafficEntity> GetTrafficInfoAsync(string start, string destination)
+        public async Task<GoogleMapsTrafficEntity> GetTrafficInfoAsync(string start, string destination)
         {
             FillInputData(start, destination);
             HttpResponseMessage message = await GetHttpResponseMessageAsync();
-            TrafficEntity entity = await GetEntityFromJsonAsync(message);
+            GoogleMapsTrafficEntity entity = await GetEntityFromJsonAsync(message);
 
             if (entity.Rows[0].Elements[0].Distance == null)
             {

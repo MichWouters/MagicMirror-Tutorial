@@ -18,7 +18,7 @@ namespace MagicMirror.Business.Configuration
                 .ForMember(x => x.WeatherType, y => y.MapFrom(z => z.Weather[0].Main))
                 .ForMember(x => x.Icon, y => y.MapFrom(z => z.Weather[0].Icon));
 
-            CreateMap<TrafficEntity, TrafficModel>()
+            CreateMap<GoogleMapsTrafficEntity, TrafficModel>()
                 .ForMember(x => x.Destination, y => y.MapFrom(z => z.Destination_addresses[0]))
                 .ForMember(x => x.Origin, y => y.MapFrom(z => z.Origin_addresses[0]))
                 .ForMember(x => x.Distance, y => y.MapFrom(z => z.Rows[0].Elements[0].Distance.Value))
