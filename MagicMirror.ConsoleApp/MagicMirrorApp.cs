@@ -150,7 +150,7 @@ namespace MagicMirror.ConsoleApp
             return new TrafficModel
             {
                 Duration = 35 * 60,
-                Distance = 27500,
+                Distance = 27.5,
                 DistanceUom = DistanceUom.Metric,
                 Destination = "2 St Margaret St, London",
                 TimeOfArrival = DateTime.Now.AddMinutes(35),
