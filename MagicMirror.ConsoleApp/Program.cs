@@ -39,7 +39,7 @@ namespace MagicMirror.ConsoleApp
 
         private static void RegisterAutoMapper()
         {
-            Mapper.Initialize(cfg =>
+            new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<AutoMapperBusinessProfile>();
                 cfg.AddProfile<AutoMapperPresentationProfile>();
