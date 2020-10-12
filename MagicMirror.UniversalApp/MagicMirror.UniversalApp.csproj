@@ -158,6 +158,12 @@
       <Version>6.2.10</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj">
+      <Project>{b18ff7a4-bcbe-41c3-901a-a4c9f84d26d3}</Project>
+      <Name>MagicMirror.Business</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
