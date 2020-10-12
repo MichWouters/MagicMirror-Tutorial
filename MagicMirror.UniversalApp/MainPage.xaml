@@ -5,10 +5,46 @@
     xmlns:local="using:MagicMirror.UniversalApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:MagicMirror.UniversalApp.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--Top Row-->
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.Temperature, Mode=OneWay, FallbackValue=-1}" FontSize="48"/>
+                <TextBlock Text="C"/>
+            </StackPanel>
+            <TextBlock Text="{x:Bind ViewModel.Weather, FallbackValue=FOO}" FontSize="36" HorizontalAlignment="Left"/>
+            <TextBlock Text="{x:Bind ViewModel.Location}" FontSize="24" HorizontalAlignment="Left" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <TextBlock Text="{x:Bind ViewModel.Time}" HorizontalAlignment="Center" FontSize="48"/>
+            <TextBlock Text="{x:Bind ViewModel.Date}" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!--Center-->
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Compliment}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" TextWrapping="WrapWholeWords" />
+
+        <!--Bottom row-->
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <TextBlock Text="Travel time" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind ViewModel.TravelTime}" FontSize="24" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
 
     </Grid>
+
 </Page>
