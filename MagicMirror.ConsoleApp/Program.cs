@@ -27,7 +27,6 @@ namespace MagicMirror.ConsoleApp
             services.AddTransient<IGoogleMapsTrafficRepo, GoogleMapsTrafficRepo>();
             services.AddTransient<IMapQuestTrafficRepo, MapQuestTrafficRepo>();
 
-
             services.AddTransient<IWeatherService, WeatherService>();
             services.AddTransient<IWeatherRepo, WeatherRepo>();
 
