@@ -7,9 +7,10 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.Extensions.DependencyInjection;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess.Repos;
-using AutoMapper;
 using MagicMirror.Business.Configuration;
 using MagicMirror.UniversalApp.Configuration;
+using AutoMapper;
+using System.Reflection;
 
 namespace MagicMirror.UniversalApp
 {
@@ -18,6 +19,8 @@ namespace MagicMirror.UniversalApp
     /// </summary>
     sealed partial class App : Application
     {
+        public IServiceProvider Container { get; private set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -55,8 +58,10 @@ namespace MagicMirror.UniversalApp
                 Window.Current.Content = rootFrame;
             }
 
-            RegisterServices();
+            var services = RegisterServices();
             RegisterAutoMapper();
+
+            Container = services.BuildServiceProvider(); ;
 
             if (e.PrelaunchActivated == false)
             {
@@ -72,7 +77,7 @@ namespace MagicMirror.UniversalApp
             }
         }
 
-        private void RegisterServices()
+        private IServiceCollection RegisterServices()
         {
             ServiceCollection services = new ServiceCollection();
 
@@ -84,8 +89,15 @@ namespace MagicMirror.UniversalApp
             services.AddTransient<IWeatherService, WeatherService>();
             services.AddTransient<IWeatherRepo, WeatherRepo>();
 
+            services.AddTransient<IMirrorService, MirrorService>();
+
             // Register App
-            services.AddSingleton<MagicMirror.UniversalApp.App>();
+            services.AddSingleton<App>();
+
+            // Register AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            return services;
         }
 
         private static void RegisterAutoMapper()
