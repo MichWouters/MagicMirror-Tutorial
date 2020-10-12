@@ -5,6 +5,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Extensions.DependencyInjection;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess.Repos;
+using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.UniversalApp.Configuration;
 
 namespace MagicMirror.UniversalApp
 {
@@ -50,6 +55,9 @@ namespace MagicMirror.UniversalApp
                 Window.Current.Content = rootFrame;
             }
 
+            RegisterServices();
+            RegisterAutoMapper();
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -62,6 +70,31 @@ namespace MagicMirror.UniversalApp
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void RegisterServices()
+        {
+            ServiceCollection services = new ServiceCollection();
+
+            // Add Services using Dependency Injection
+            services.AddTransient<ITrafficService, MapQuestTrafficService>();
+            services.AddTransient<IGoogleMapsTrafficRepo, GoogleMapsTrafficRepo>();
+            services.AddTransient<IMapQuestTrafficRepo, MapQuestTrafficRepo>();
+
+            services.AddTransient<IWeatherService, WeatherService>();
+            services.AddTransient<IWeatherRepo, WeatherRepo>();
+
+            // Register App
+            services.AddSingleton<MagicMirror.UniversalApp.App>();
+        }
+
+        private static void RegisterAutoMapper()
+        {
+            new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperBusinessProfile>();
+                cfg.AddProfile<AutoMapperPresentationProfile>();
+            });
         }
 
         /// <summary>
