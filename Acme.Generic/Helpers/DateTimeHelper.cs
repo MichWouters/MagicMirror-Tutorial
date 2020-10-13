@@ -90,5 +90,15 @@ namespace Acme.Generic.Helpers
                 return $"{remainingMinutes} minutes";
             }
         }
+
+        public static string GetCurrentTime()
+        {
+            return DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        public static string GetCurrentDate()
+        {
+            return DateTime.Now.ToString("ddddd, MMMM d");
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace MagicMirror.UniversalApp
         private async void PopulateModel()
         {
             UserSettings settings = UserSettings.GetUserSettings();
-            var result = await _service.GenerateViewModel(settings);
+            MainViewModel result = await _service.GenerateViewModel(settings);
 
             DataContext = result;
         }
