@@ -29,11 +29,11 @@ namespace MagicMirror.UniversalApp.Models
 
         private UserSettings()
         {
-            Address = "1 Paris Garden";
+            Address = "Steenweg 33 ";
             Name = "Michiel";
-            Town = "London";
-            Zipcode = "SE1 8NU";
-            WorkAddress = "Tower Of London";
+            Town = "Hasselt";
+            Zipcode = "";
+            WorkAddress = "Hasselt";
             TrafficApiProvider = TrafficApiProvider.MapQuest;
         }
     }

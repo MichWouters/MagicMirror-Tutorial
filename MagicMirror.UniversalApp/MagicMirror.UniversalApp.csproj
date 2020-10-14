@@ -121,6 +121,9 @@
     </Compile>
     <Compile Include="Configuration\AutoMapperPresentationProfile.cs" />
     <Compile Include="Converters\TrafficModelToMainViewModel.cs" />
+    <Compile Include="Resources\ComplimentRepo.cs" />
+    <Compile Include="Services\ComplimentService.cs" />
+    <Compile Include="Services\IComplimentService.cs" />
     <Compile Include="Services\IMirrorService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

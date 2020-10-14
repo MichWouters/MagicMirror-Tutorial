@@ -1,7 +1,8 @@
 ﻿using MagicMirror.UniversalApp.Models;
+using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.ViewModels;
-using Windows.UI.Xaml.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp
 {

@@ -2,7 +2,7 @@
 using MagicMirror.UniversalApp.ViewModels;
 using System.Threading.Tasks;
 
-namespace MagicMirror.UniversalApp
+namespace MagicMirror.UniversalApp.Services
 {
     public interface IMirrorService
     {

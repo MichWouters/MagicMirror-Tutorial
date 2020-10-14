@@ -1,16 +1,16 @@
-﻿using System;
+﻿using AutoMapper;
+using MagicMirror.Business.Configuration;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess.Repos;
+using MagicMirror.UniversalApp.Configuration;
+using MagicMirror.UniversalApp.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Extensions.DependencyInjection;
-using MagicMirror.Business.Services;
-using MagicMirror.DataAccess.Repos;
-using MagicMirror.Business.Configuration;
-using MagicMirror.UniversalApp.Configuration;
-using AutoMapper;
-using System.Reflection;
 
 namespace MagicMirror.UniversalApp
 {

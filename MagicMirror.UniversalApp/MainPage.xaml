@@ -25,27 +25,29 @@
         </Grid.ColumnDefinitions>
 
         <!--Top Row-->
-        <StackPanel Grid.Row="0" Grid.Column="0">
+            <!--Top Left-->
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Temperature}" FontSize="48"/>
-                <TextBlock Text="C"/>
+                <TextBlock Text="{Binding Temperature}" Style="{StaticResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="{Binding TemperatureUom}" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,0,0,0"/>
             </StackPanel>
-            <TextBlock Text="{Binding Weather, FallbackValue=FOO}" FontSize="36" HorizontalAlignment="Left"/>
-            <TextBlock Text="{Binding Location}" FontSize="24" HorizontalAlignment="Left" />
+            <TextBlock Text="{Binding Weather}" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Location}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Left" />
         </StackPanel>
 
+            <!--Top Right-->
         <StackPanel Grid.Row="0" Grid.Column="2">
-            <TextBlock Text="{Binding Time}" HorizontalAlignment="Center" FontSize="48"/>
-            <TextBlock Text="{Binding Date}" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Time}" HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"/>
+            <TextBlock Text="{Binding Date}" TextWrapping="WrapWholeWords" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
 
         <!--Center-->
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Compliment}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" TextWrapping="WrapWholeWords" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Compliment}" TextAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWholeWords" MaxLines="0" />
 
         <!--Bottom row-->
         <StackPanel Grid.Row="2" Grid.Column="0">
-            <TextBlock Text="Travel time" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding TravelTime}" FontSize="24" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Travel time" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TravelTime}" Style="{StaticResource SubheaderTextBlockStyle}" TextAlignment ="Center"  TextWrapping="WrapWholeWords" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
 
     </Grid>

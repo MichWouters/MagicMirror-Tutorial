@@ -1,4 +1,6 @@
 ﻿using Acme.Generic.Helpers;
+using MagicMirror.UniversalApp.Models;
+using MagicMirror.UniversalApp.Services;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,9 +13,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         // Timers
         private DispatcherTimer _dateTimer;
         private DispatcherTimer _timeTimer;
+        private DispatcherTimer _complimentTimer;
 
         // Properties
-        private string _compliment = "Hello Josh!";
+        private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
         private string _date = "March 16";
         private double _distance = 42.0;
         private string _distanceUom = "kilometers";
@@ -189,43 +192,37 @@ namespace MagicMirror.UniversalApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
-        private void GetDate(object sender, object e)
+        private void GetDate(object sender = null, object e = null)
         {
-            try
-            {
-                Date = DateTimeHelper.GetCurrentDate();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Date = DateTimeHelper.GetCurrentDate();
         }
 
-        private void GetTime(object sender, object e)
+        private void GetTime(object sender = null, object e = null)
         {
-            try
-            {
-                Time = DateTimeHelper.GetCurrentTime();
-            }
-            catch (Exception ex)
-            {
-                //DisplayErrorMessage("Cannot set Time", ex.Message);
-            }
+            Time = DateTimeHelper.GetCurrentTime();
+        }
+
+        private void GetCompliment(object sender = null, object e = null)
+        {
+            Compliment = new ComplimentService().GenerateCompliment();
         }
 
         private void RefreshAllData()
         {
-            GetTime(null, null);
-            GetDate(null, null);
+            GetTime();
+            GetDate();
+            GetCompliment();
         }
 
         private void SetUpRefreshTimers()
         {
             _dateTimer = new DispatcherTimer();
             _timeTimer = new DispatcherTimer();
+            _complimentTimer = new DispatcherTimer();
 
             SetupTimer(_dateTimer, new TimeSpan(1, 0, 0), GetDate);
             SetupTimer(_timeTimer, new TimeSpan(0, 0, 1), GetTime);
+            SetupTimer(_complimentTimer, new TimeSpan(0, 0, 10), GetCompliment);
         }
 
         private void SetupTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
