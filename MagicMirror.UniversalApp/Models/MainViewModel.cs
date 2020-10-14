@@ -10,11 +10,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        // Timers
-        private DispatcherTimer _dateTimer;
-        private DispatcherTimer _timeTimer;
-        private DispatcherTimer _complimentTimer;
-
         // Properties
         private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
         private string _date = "March 16";
@@ -31,17 +26,130 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string _travelTime = "28 minutes including heavy traffic";
         private string _userName = "John Doe";
         private string _weather = "Clear sky";
+        private string _weatherIcon = "01d.png";
         private string _weatherType = "Sunny";
 
         public MainViewModel()
         {
-            RefreshAllData();
+            Refresh();
             SetUpRefreshTimers();
+
+            WeatherIcon = SetUpImagePath(_weatherIcon);
+        }
+
+        private string SetUpImagePath(string icon)
+        {
+            string theme = "Dark";
+            string result;
+            switch (icon)
+            {
+                case "01d":
+                    result = "01d.png";
+                    break;
+
+                case "01n":
+                    result = "01n.png";
+                    break;
+
+                case "02d":
+                    result = "02d.png";
+                    break;
+
+                case "02n":
+                    result = "02n.png";
+                    break;
+
+                case "03d":
+                case "03n":
+                case "04d":
+                case "04n":
+                    result = "03or4.png";
+                    break;
+
+                case "09n":
+                case "09d":
+                    result = "09.png";
+                    break;
+
+                case "10d":
+                case "10n":
+                    result = "010.png";
+                    break;
+
+                case "11d":
+                    result = "11d.png";
+                    break;
+
+                case "11n":
+                    result = "11n.png";
+                    break;
+
+                case "13d":
+                case "13n":
+                    result = "13.png";
+                    break;
+
+                case "50n":
+                case "50d":
+                default:
+                    result = "050.png";
+                    break;
+            }
+            
+            return $"/Assets/Weather/{theme}/{result}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void NotifyPropertyChanged([CallerMemberName] string property = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        private void GetDate(object sender = null, object e = null)
+        {
+            Date = DateTimeHelper.GetCurrentDate();
+        }
+
+        private void GetTime(object sender = null, object e = null)
+        {
+            Time = DateTimeHelper.GetCurrentTime();
+        }
+
+        private void GetCompliment(object sender = null, object e = null)
+        {
+            Compliment = new ComplimentService().GenerateCompliment();
+        }
+
+        private void Refresh()
+        {
+            GetTime();
+            GetDate();
+            GetCompliment();
+        }
+
+        private void SetUpRefreshTimers()
+        {
+            InitializeTimer(GetDate, new TimeSpan(1, 0, 0));
+            InitializeTimer(GetTime, new TimeSpan(0, 0, 1));
+            InitializeTimer(GetCompliment, new TimeSpan(0, 10, 0));
+        }
+
+        private void InitializeTimer(EventHandler<object> methodToRepeatOnTick, TimeSpan timeSpan)
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+
+            timer.Tick += methodToRepeatOnTick;
+            timer.Interval = timeSpan;
+
+            if (!timer.IsEnabled)
+            {
+                timer.Start();
+            }
+        }
+
         #region Properties
+
         public string Compliment
         {
             get => _compliment; set
@@ -177,6 +285,15 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public string WeatherIcon
+        {
+            get => _weatherIcon; set
+            {
+                _weatherIcon = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public string WeatherType
         {
             get => _weatherType; set
@@ -185,55 +302,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        #endregion
 
-        public void NotifyPropertyChanged([CallerMemberName] string property = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-
-        private void GetDate(object sender = null, object e = null)
-        {
-            Date = DateTimeHelper.GetCurrentDate();
-        }
-
-        private void GetTime(object sender = null, object e = null)
-        {
-            Time = DateTimeHelper.GetCurrentTime();
-        }
-
-        private void GetCompliment(object sender = null, object e = null)
-        {
-            Compliment = new ComplimentService().GenerateCompliment();
-        }
-
-        private void RefreshAllData()
-        {
-            GetTime();
-            GetDate();
-            GetCompliment();
-        }
-
-        private void SetUpRefreshTimers()
-        {
-            _dateTimer = new DispatcherTimer();
-            _timeTimer = new DispatcherTimer();
-            _complimentTimer = new DispatcherTimer();
-
-            SetupTimer(_dateTimer, new TimeSpan(1, 0, 0), GetDate);
-            SetupTimer(_timeTimer, new TimeSpan(0, 0, 1), GetTime);
-            SetupTimer(_complimentTimer, new TimeSpan(0, 0, 10), GetCompliment);
-        }
-
-        private void SetupTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
-        {
-            timer.Tick += method;
-            timer.Interval = timeSpan;
-
-            if (!timer.IsEnabled)
-            {
-                timer.Start();
-            }
-        }
+        #endregion Properties
     }
 }

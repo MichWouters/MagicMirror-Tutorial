@@ -140,6 +140,39 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Other\Dark\car.png" />
+    <Content Include="Assets\Other\Dark\news.png" />
+    <Content Include="Assets\Other\Light\news.png" />
+    <Content Include="Assets\Weather\Alternative\cloudy.png" />
+    <Content Include="Assets\Weather\Alternative\cloudyInverse.png" />
+    <Content Include="Assets\Weather\Alternative\Weather-Partly-Cloudy-Day-icon.png" />
+    <Content Include="Assets\Weather\Alternative\Weather-Partly-Cloudy-Day-icon2.png" />
+    <Content Include="Assets\Weather\Dark\010.png" />
+    <Content Include="Assets\Weather\Dark\011d.png" />
+    <Content Include="Assets\Weather\Dark\011n.png" />
+    <Content Include="Assets\Weather\Dark\013.png" />
+    <Content Include="Assets\Weather\Dark\01d.png" />
+    <Content Include="Assets\Weather\Dark\01n.png" />
+    <Content Include="Assets\Weather\Dark\02d.png" />
+    <Content Include="Assets\Weather\Dark\02n.png" />
+    <Content Include="Assets\Weather\Dark\03or4.png" />
+    <Content Include="Assets\Weather\Dark\050.png" />
+    <Content Include="Assets\Weather\Dark\09.png" />
+    <Content Include="Assets\Weather\Dark\noun_90839_cc.png" />
+    <Content Include="Assets\Weather\Dark\sunrise.png" />
+    <Content Include="Assets\Weather\Dark\sunset.png" />
+    <Content Include="Assets\Weather\Light\010.png" />
+    <Content Include="Assets\Weather\Light\011d.png" />
+    <Content Include="Assets\Weather\Light\011n.png" />
+    <Content Include="Assets\Weather\Light\013.png" />
+    <Content Include="Assets\Weather\Light\01d.png" />
+    <Content Include="Assets\Weather\Light\01n.png" />
+    <Content Include="Assets\Weather\Light\02d.png" />
+    <Content Include="Assets\Weather\Light\02n.png" />
+    <Content Include="Assets\Weather\Light\03or4.png" />
+    <Content Include="Assets\Weather\Light\050.png" />
+    <Content Include="Assets\Weather\Light\09.png" />
+    <Content Include="Assets\Weather\Light\noun_90839_cc.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

@@ -29,12 +29,12 @@ namespace MagicMirror.UniversalApp.Models
 
         private UserSettings()
         {
-            Address = "Steenweg 33 ";
+            Address = "Heikant 51";
             Name = "Michiel";
-            Town = "Hasselt";
-            Zipcode = "";
+            Town = "Houwaart";
+            Zipcode = "3390";
             WorkAddress = "Hasselt";
-            TrafficApiProvider = TrafficApiProvider.MapQuest;
+            TrafficApiProvider = TrafficApiProvider.GoogleMaps;
         }
     }
 }
