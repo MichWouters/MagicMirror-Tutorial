@@ -158,7 +158,7 @@
     <Content Include="Assets\Weather\Dark\03or4.png" />
     <Content Include="Assets\Weather\Dark\050.png" />
     <Content Include="Assets\Weather\Dark\09.png" />
-    <Content Include="Assets\Weather\Dark\noun_90839_cc.png" />
+    <Content Include="Assets\Weather\Dark\51.png" />
     <Content Include="Assets\Weather\Dark\sunrise.png" />
     <Content Include="Assets\Weather\Dark\sunset.png" />
     <Content Include="Assets\Weather\Light\010.png" />
@@ -172,7 +172,7 @@
     <Content Include="Assets\Weather\Light\03or4.png" />
     <Content Include="Assets\Weather\Light\050.png" />
     <Content Include="Assets\Weather\Light\09.png" />
-    <Content Include="Assets\Weather\Light\noun_90839_cc.png" />
+    <Content Include="Assets\Weather\Light\51.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

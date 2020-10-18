@@ -12,6 +12,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Properties
         private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
+
         private string _date = "March 16";
         private double _distance = 42.0;
         private string _distanceUom = "kilometers";
@@ -26,7 +27,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string _travelTime = "28 minutes including heavy traffic";
         private string _userName = "John Doe";
         private string _weather = "Clear sky";
-        private string _weatherIcon = "01d.png";
+        private string _weatherIcon = "01d";
         private string _weatherType = "Sunny";
 
         public MainViewModel()
@@ -44,19 +45,18 @@ namespace MagicMirror.UniversalApp.ViewModels
             switch (icon)
             {
                 case "01d":
-                    result = "01d.png";
-                    break;
-
                 case "01n":
-                    result = "01n.png";
-                    break;
-
-                case "02d":
-                    result = "02d.png";
-                    break;
-
-                case "02n":
-                    result = "02n.png";
+                case "09n":
+                case "09d":
+                case "10d":
+                case "10n":
+                case "11d":
+                case "11n":
+                case "13d":
+                case "13n":
+                case "50n":
+                case "50d":
+                    result = $"{icon}.png";
                     break;
 
                 case "03d":
@@ -66,36 +66,11 @@ namespace MagicMirror.UniversalApp.ViewModels
                     result = "03or4.png";
                     break;
 
-                case "09n":
-                case "09d":
-                    result = "09.png";
-                    break;
-
-                case "10d":
-                case "10n":
-                    result = "010.png";
-                    break;
-
-                case "11d":
-                    result = "11d.png";
-                    break;
-
-                case "11n":
-                    result = "11n.png";
-                    break;
-
-                case "13d":
-                case "13n":
-                    result = "13.png";
-                    break;
-
-                case "50n":
-                case "50d":
                 default:
-                    result = "050.png";
+                    result = "051.png";
                     break;
             }
-            
+
             return $"/Assets/Weather/{theme}/{result}";
         }
 
