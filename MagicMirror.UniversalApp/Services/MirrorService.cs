@@ -33,6 +33,7 @@ namespace MagicMirror.UniversalApp.Services
             {
                 weatherModel = await GetWeatherModelAsync(information.Town);
                 trafficModel = await GetTrafficModelAsync($"{information.Address}, {information.Town}", information.WorkAddress);
+                model.IsOfflineData = false;
             }
             catch (Exception ex)
             {
@@ -52,7 +53,7 @@ namespace MagicMirror.UniversalApp.Services
             return model;
         }
 
-        private async Task<WeatherModel> GetWeatherModelAsync(string city)
+        public async Task<WeatherModel> GetWeatherModelAsync(string city)
         {
             if (string.IsNullOrEmpty(city))
             {
@@ -63,7 +64,7 @@ namespace MagicMirror.UniversalApp.Services
             return model;
         }
 
-        private async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
+        public async Task<TrafficModel> GetTrafficModelAsync(string origin, string destination)
         {
             if (string.IsNullOrEmpty(origin))
             {
@@ -79,7 +80,7 @@ namespace MagicMirror.UniversalApp.Services
             return model;
         }
 
-        private WeatherModel GetOfflineWeatherData()
+        public WeatherModel GetOfflineWeatherData()
         {
             return new WeatherModel
             {
@@ -92,7 +93,7 @@ namespace MagicMirror.UniversalApp.Services
             };
         }
 
-        private TrafficModel GetOfflineTrafficData()
+        public TrafficModel GetOfflineTrafficData()
         {
             return new TrafficModel
             {

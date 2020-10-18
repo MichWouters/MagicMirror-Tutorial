@@ -2,13 +2,11 @@
 using MagicMirror.UniversalApp.Models;
 using MagicMirror.UniversalApp.Services;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
         // Properties
         private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
@@ -72,13 +70,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
 
             return $"/Assets/Weather/{theme}/{result}";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName] string property = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         private void GetDate(object sender = null, object e = null)

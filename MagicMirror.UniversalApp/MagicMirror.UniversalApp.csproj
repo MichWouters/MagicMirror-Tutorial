@@ -124,15 +124,16 @@
     <Compile Include="Resources\ComplimentRepo.cs" />
     <Compile Include="Services\ComplimentService.cs" />
     <Compile Include="Services\IComplimentService.cs" />
-    <Compile Include="Services\IMirrorService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\IMirrorService.cs" />
     <Compile Include="Services\MirrorService.cs" />
     <Compile Include="Models\TrafficApiProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Models\UserSettings.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
