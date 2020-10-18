@@ -16,7 +16,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string _date = "March 16";
         private double _distance = 42.0;
         private string _distanceUom = "kilometers";
-        private bool _isOfflineData = false;
+        private bool _isOfflineData = true;
         private string _location = "San Francisco";
         private string _sunrise = "7:03";
         private string _sunset = "19:22";

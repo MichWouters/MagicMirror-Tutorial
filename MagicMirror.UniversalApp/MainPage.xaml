@@ -64,5 +64,9 @@
             </StackPanel>
             <TextBlock Text="{Binding TravelTime}" Style="{StaticResource TitleTextBlockStyle}" TextAlignment ="Center" TextWrapping="WrapWholeWords"/>
         </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="! Offline Data !" Style="{StaticResource TitleTextBlockStyle}" Visibility="{Binding IsOfflineData}" Foreground="Red" />
+        </StackPanel>
     </Grid>
 </Page>

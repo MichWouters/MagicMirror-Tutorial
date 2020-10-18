@@ -131,7 +131,7 @@
     <Compile Include="Services\MirrorService.cs" />
     <Compile Include="Models\TrafficApiProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Models\UserSettings.cs" />
   </ItemGroup>
   <ItemGroup>

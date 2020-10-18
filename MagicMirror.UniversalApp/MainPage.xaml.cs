@@ -12,7 +12,7 @@ namespace MagicMirror.UniversalApp
 
         public MainPage()
         {
-            PopulateModel();
+            //PopulateModel();
             this.InitializeComponent();
         }
 

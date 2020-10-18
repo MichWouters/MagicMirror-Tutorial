@@ -4,6 +4,16 @@ namespace MagicMirror.UniversalApp.Models
     {
         private static UserSettings _instance;
 
+        private UserSettings()
+        {
+            Address = "Steenweg 33";
+            Name = "Michiel";
+            Town = "Hasselt";
+            Zipcode = "";
+            WorkAddress = "Hasselt";
+            TrafficApiProvider = TrafficApiProvider.MapQuest;
+        }
+
         public string Address { get; set; }
 
         public string Name { get; set; }
@@ -25,16 +35,6 @@ namespace MagicMirror.UniversalApp.Models
             }
 
             return _instance;
-        }
-
-        private UserSettings()
-        {
-            Address = "Heikant 51";
-            Name = "Michiel";
-            Town = "Houwaart";
-            Zipcode = "3390";
-            WorkAddress = "Hasselt";
-            TrafficApiProvider = TrafficApiProvider.GoogleMaps;
         }
     }
 }
