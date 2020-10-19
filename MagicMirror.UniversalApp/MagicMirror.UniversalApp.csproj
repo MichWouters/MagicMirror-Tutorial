@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Configuration\AutoMapperPresentationProfile.cs" />
     <Compile Include="Converters\TrafficModelToMainViewModel.cs" />
+    <Compile Include="Models\OnlineDataModel.cs" />
     <Compile Include="Resources\ComplimentRepo.cs" />
     <Compile Include="Services\ComplimentService.cs" />
     <Compile Include="Services\IComplimentService.cs" />

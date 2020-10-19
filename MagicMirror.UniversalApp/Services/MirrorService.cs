@@ -23,9 +23,9 @@ namespace MagicMirror.UniversalApp.Services
             _mapper = mapper;
         }
 
-        public async Task<MainViewModel> GenerateViewModel(UserSettings information)
+        public async Task<OnlineDataModel> FetchOnlineData(UserSettings information)
         {
-            var model = new MainViewModel();
+            var model = new OnlineDataModel();
             WeatherModel weatherModel;
             TrafficModel trafficModel;
 
@@ -48,7 +48,6 @@ namespace MagicMirror.UniversalApp.Services
             // Map models to ViewModel
             model = _mapper.Map(weatherModel, model);
             model = _mapper.Map(trafficModel, model);
-            model.UserName = information?.Name ?? "Anonymous";
 
             return model;
         }

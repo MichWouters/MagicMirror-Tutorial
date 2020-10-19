@@ -7,9 +7,9 @@ using MagicMirror.UniversalApp.ViewModels;
 
 namespace MagicMirror.UniversalApp.Converters
 {
-    public class TrafficModelToMainViewModelConverter : ITypeConverter<TrafficModel, MainViewModel>
+    public class TrafficModelToMainViewModelConverter : ITypeConverter<TrafficModel, OnlineDataModel>
     {
-        public MainViewModel Convert(TrafficModel source, MainViewModel destination, ResolutionContext context)
+        public OnlineDataModel Convert(TrafficModel source, OnlineDataModel destination, ResolutionContext context)
         {
             // Converter classes cannot automap properties...
             destination.Distance = source.Distance;

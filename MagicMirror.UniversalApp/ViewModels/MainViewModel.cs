@@ -1,6 +1,7 @@
 ﻿using Acme.Generic.Helpers;
 using MagicMirror.UniversalApp.Models;
 using MagicMirror.UniversalApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using Windows.UI.Xaml;
 
@@ -12,28 +13,70 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
 
         private string _date = "March 16";
-        private double _distance = 42.0;
-        private string _distanceUom = "kilometers";
-        private bool _isOfflineData = true;
-        private string _location = "San Francisco";
-        private string _sunrise = "7:03";
-        private string _sunset = "19:22";
-        private double _temperature = 18;
-        private string _temperatureUom = "celsius";
+        private OnlineDataModel _onlineDataModel;
         private string _time = "9:59";
-        private string _timeOfArrival;
-        private string _travelTime = "28 minutes including heavy traffic";
         private string _userName = "John Doe";
-        private string _weather = "Clear sky";
         private string _weatherIcon = "01d";
-        private string _weatherType = "Sunny";
+
+        // Services
+        private IMirrorService _service = (Application.Current as App).Container.GetRequiredService<IMirrorService>();
 
         public MainViewModel()
         {
+            GetOnlineDataModel();
             Refresh();
-            SetUpRefreshTimers();
+            InitializeRefreshTimers();
 
             WeatherIcon = SetUpImagePath(_weatherIcon);
+        }
+
+        private void GetCompliment(object sender = null, object e = null)
+        {
+            Compliment = new ComplimentService().GenerateCompliment();
+        }
+
+        private void GetDate(object sender = null, object e = null)
+        {
+            Date = DateTimeHelper.GetCurrentDate();
+        }
+
+        private async void GetOnlineDataModel(object sender = null, object e = null)
+        {
+            OnlineDataModel = await _service.FetchOnlineData(UserSettings.GetUserSettings());
+        }
+
+        private void GetTime(object sender = null, object e = null)
+        {
+            Time = DateTimeHelper.GetCurrentTime();
+        }
+
+        private void SetTimeIntervalBetweenCalls(EventHandler<object> methodToRepeatOnTick, TimeSpan timeSpan)
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+
+            timer.Tick += methodToRepeatOnTick;
+            timer.Interval = timeSpan;
+
+            if (!timer.IsEnabled)
+            {
+                timer.Start();
+            }
+        }
+
+        private void Refresh()
+        {
+            GetTime();
+            GetDate();
+            GetCompliment();
+            GetOnlineDataModel();
+        }
+
+        private void InitializeRefreshTimers()
+        {
+            SetTimeIntervalBetweenCalls(GetDate, new TimeSpan(1, 0, 0));
+            SetTimeIntervalBetweenCalls(GetTime, new TimeSpan(0, 0, 1));
+            SetTimeIntervalBetweenCalls(GetCompliment, new TimeSpan(0, 10, 0));
+            SetTimeIntervalBetweenCalls(GetOnlineDataModel, new TimeSpan(0, 15, 0));
         }
 
         private string SetUpImagePath(string icon)
@@ -72,48 +115,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             return $"/Assets/Weather/{theme}/{result}";
         }
 
-        private void GetDate(object sender = null, object e = null)
-        {
-            Date = DateTimeHelper.GetCurrentDate();
-        }
-
-        private void GetTime(object sender = null, object e = null)
-        {
-            Time = DateTimeHelper.GetCurrentTime();
-        }
-
-        private void GetCompliment(object sender = null, object e = null)
-        {
-            Compliment = new ComplimentService().GenerateCompliment();
-        }
-
-        private void Refresh()
-        {
-            GetTime();
-            GetDate();
-            GetCompliment();
-        }
-
-        private void SetUpRefreshTimers()
-        {
-            InitializeTimer(GetDate, new TimeSpan(1, 0, 0));
-            InitializeTimer(GetTime, new TimeSpan(0, 0, 1));
-            InitializeTimer(GetCompliment, new TimeSpan(0, 10, 0));
-        }
-
-        private void InitializeTimer(EventHandler<object> methodToRepeatOnTick, TimeSpan timeSpan)
-        {
-            DispatcherTimer timer = new DispatcherTimer();
-
-            timer.Tick += methodToRepeatOnTick;
-            timer.Interval = timeSpan;
-
-            if (!timer.IsEnabled)
-            {
-                timer.Start();
-            }
-        }
-
         #region Properties
 
         public string Compliment
@@ -134,74 +135,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public double Distance
+        public OnlineDataModel OnlineDataModel
         {
-            get => _distance; set
+            get => _onlineDataModel; set
             {
-                _distance = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string DistanceUom
-        {
-            get => _distanceUom; set
-            {
-                _distanceUom = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public bool IsOfflineData
-        {
-            get => _isOfflineData; set
-            {
-                _isOfflineData = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Location
-        {
-            get => _location; set
-            {
-                _location = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Sunrise
-        {
-            get => _sunrise; set
-            {
-                _sunrise = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Sunset
-        {
-            get => _sunset; set
-            {
-                _sunset = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public double Temperature
-        {
-            get => _temperature; set
-            {
-                _temperature = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string TemperatureUom
-        {
-            get => _temperatureUom; set
-            {
-                _temperatureUom = value;
+                _onlineDataModel = value;
                 NotifyPropertyChanged();
             }
         }
@@ -215,38 +153,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public string TimeOfArrival
-        {
-            get => _timeOfArrival; set
-            {
-                _timeOfArrival = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string TravelTime
-        {
-            get => _travelTime; set
-            {
-                _travelTime = value;
-                NotifyPropertyChanged();
-            }
-        }
-
         public string UserName
         {
             get => _userName; set
             {
-                _userName = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Weather
-        {
-            get => _weather; set
-            {
-                _weather = value;
+                _userName = value ?? "Anonymous";
                 NotifyPropertyChanged();
             }
         }
@@ -256,15 +167,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             get => _weatherIcon; set
             {
                 _weatherIcon = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string WeatherType
-        {
-            get => _weatherType; set
-            {
-                _weatherType = value;
                 NotifyPropertyChanged();
             }
         }

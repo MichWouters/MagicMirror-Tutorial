@@ -27,22 +27,22 @@
         <!--Top Left-->
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Temperature}" Style="{StaticResource HeaderTextBlockStyle}" />
+                <TextBlock Text="{Binding OnlineDataModel.Temperature}" Style="{StaticResource HeaderTextBlockStyle}" />
                 <TextBlock Text="°" Style="{StaticResource HeaderTextBlockStyle}" />
                 <Image Source="{Binding WeatherIcon}" Width="48" Margin="10,10,10,0" />
             </StackPanel>
-            <TextBlock Text="{Binding Weather}" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" />
-            <TextBlock Text="{Binding Location}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Left" />
+            <TextBlock Text="{Binding OnlineDataModel.Weather}" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" />
+            <TextBlock Text="{Binding OnlineDataModel.Location}" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Left" />
 
             <!--Sunrise & Sunset-->
             <StackPanel Padding="0,20">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Assets/Weather/Dark/sunrise.png" Width="36" />
-                    <TextBlock Text="{Binding Sunrise}" Margin="10,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="{Binding OnlineDataModel.Sunrise}" Margin="10,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Assets/Weather/Dark/sunset.png" Width="36" />
-                    <TextBlock Text="{Binding Sunset}"  Margin="10,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="{Binding OnlineDataModel.Sunset}"  Margin="10,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -62,11 +62,11 @@
                 <Image Source="/Assets/Other/Dark/car.png" Width="48" Margin="10,10,10,0" />
                 <TextBlock Text="Travel time" Style="{StaticResource TitleTextBlockStyle}" />
             </StackPanel>
-            <TextBlock Text="{Binding TravelTime}" Style="{StaticResource TitleTextBlockStyle}" TextAlignment ="Center" TextWrapping="WrapWholeWords"/>
+            <TextBlock Text="{Binding OnlineDataModel.TravelTime}" Style="{StaticResource TitleTextBlockStyle}" TextAlignment ="Center" TextWrapping="WrapWholeWords"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="! Offline Data !" Style="{StaticResource TitleTextBlockStyle}" Visibility="{Binding IsOfflineData}" Foreground="Red" />
+            <TextBlock Text="! Offline Data !" Style="{StaticResource TitleTextBlockStyle}" Visibility="{Binding OnlineDataModel.IsOfflineData}" Foreground="Red" />
         </StackPanel>
     </Grid>
 </Page>
