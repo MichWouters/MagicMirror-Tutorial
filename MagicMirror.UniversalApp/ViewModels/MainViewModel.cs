@@ -14,7 +14,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private string _date = "March 16";
         private OnlineDataModel _onlineDataModel;
-        private string _time = "9:59";
+        private static string _time = "9:59";
         private string _userName = "John Doe";
         private string _weatherIcon = "01d";
 

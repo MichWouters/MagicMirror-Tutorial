@@ -27,6 +27,7 @@ namespace MagicMirror.UniversalApp
         /// </summary>
         public App()
         {
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "nl-NL";
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

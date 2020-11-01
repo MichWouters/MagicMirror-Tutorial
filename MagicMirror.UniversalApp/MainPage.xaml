@@ -5,12 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:MagicMirror="using:MagicMirror.UniversalApp.ViewModels"
     mc:Ignorable="d"
+    xmlns:vm="using:MagicMirror.UniversalApp.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Dark">
 
     <Page.DataContext>
-        <MagicMirror:MainViewModel />
+        <vm:MainViewModel/>
     </Page.DataContext>
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -49,7 +50,7 @@
 
         <!--Top Right-->
         <StackPanel Grid.Row="0" Grid.Column="2">
-            <TextBlock Text="{Binding Time}" HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}" />
+            <!--<TextBlock Text="{x:Bind vm:MainViewModel.Time, FallbackValue=FOO}" HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}" />-->
             <TextBlock Text="{Binding Date}" TextWrapping="WrapWholeWords" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
@@ -60,7 +61,7 @@
         <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/Other/Dark/car.png" Width="48" Margin="10,10,10,0" />
-                <TextBlock Text="Travel time" Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock x:Uid="TravelTime" Text="Travel time" Style="{StaticResource TitleTextBlockStyle}" />
             </StackPanel>
             <TextBlock Text="{Binding OnlineDataModel.TravelTime}" Style="{StaticResource TitleTextBlockStyle}" TextAlignment ="Center" TextWrapping="WrapWholeWords"/>
         </StackPanel>
