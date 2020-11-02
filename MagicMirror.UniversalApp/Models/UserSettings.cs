@@ -9,7 +9,7 @@ namespace MagicMirror.UniversalApp.Models
             Address = "Steenweg 33";
             Name = "Michiel";
             Town = "Hasselt";
-            Zipcode = "";
+            Zipcode = "3500";
             WorkAddress = "Hasselt";
             TrafficApiProvider = TrafficApiProvider.MapQuest;
         }
