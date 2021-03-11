@@ -5,21 +5,29 @@ namespace MagicMirror.UniversalApp.Models
 {
     public class OnlineDataModel : INotifyPropertyChanged
     {
-        private double _distance = 42.0;
-        private string _distanceUom = "kilometers";
+        private double _distance;
+        private string _distanceUom;
         private bool _isOfflineData = true;
-        private string _location = "San Francisco";
-        private string _sunrise = "7:03";
-        private string _sunset = "19:22";
-        private double _temperature = 18;
-        private string _temperatureUom = "celsius";
+        private string _location;
+        private string _sunrise;
+        private string _sunset;
+        private double _temperature;
+        private string _temperatureUom;
         private string _timeOfArrival;
-        private string _travelTime = "28 minutes including heavy traffic";
-        private string _weather = "Clear sky";
-        private string _weatherType = "Sunny";
-
+        private string _travelTime;
+        private string _weatherIcon;
+        private string _weatherType;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string WeatherIcon
+        {
+            get { return _weatherIcon; }
+            set
+            {
+                _weatherIcon = value;
+                NotifyPropertyChanged();
+            }
+        }
         public void NotifyPropertyChanged([CallerMemberName] string property = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
@@ -113,15 +121,6 @@ namespace MagicMirror.UniversalApp.Models
             get => _travelTime; set
             {
                 _travelTime = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Weather
-        {
-            get => _weather; set
-            {
-                _weather = value;
                 NotifyPropertyChanged();
             }
         }

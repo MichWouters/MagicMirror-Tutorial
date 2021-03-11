@@ -3,6 +3,7 @@ using MagicMirror.UniversalApp.Models;
 using MagicMirror.UniversalApp.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -10,13 +11,13 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class MainViewModel : ViewModelBase
     {
         // Properties
-        private string _compliment = $"Hello {UserSettings.GetUserSettings().Name}!";
-
-        private string _date = "March 16";
         private OnlineDataModel _onlineDataModel;
-        private static string _time = "9:59";
-        private string _userName = "John Doe";
-        private string _weatherIcon = "01d";
+
+        private string _compliment;
+        private string _date;
+        private static string _time;
+        private string _userName;
+        private string _weatherIcon;
 
         public string Compliment
         {
@@ -73,15 +74,17 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         // Services
-        private IMirrorService _service = (Application.Current as App).Container.GetRequiredService<IMirrorService>();
+        private IMirrorService _service = (Application.Current as App)?.Container.GetRequiredService<IMirrorService>();
 
-        public MainViewModel()
+        public async Task InitializeAsync()
         {
-            GetOnlineDataModel();
+            await RefreshOnlineData();
+            // TODO: Refresh data periodically
+
             Refresh();
             InitializeRefreshTimers();
 
-            WeatherIcon = SetUpImagePath(_weatherIcon);
+            WeatherIcon = SetUpImagePath(OnlineDataModel.WeatherIcon);
         }
 
         private void GetCompliment(object sender = null, object e = null)
@@ -94,9 +97,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             Date = DateTimeHelper.GetCurrentDate();
         }
 
-        private async void GetOnlineDataModel(object sender = null, object e = null)
+        private async Task<OnlineDataModel> GetOnlineDataModel(object sender = null, object e = null)
         {
-            OnlineDataModel = await _service.FetchOnlineData(UserSettings.GetUserSettings());
+            return await _service.FetchOnlineData(UserSettings.GetUserSettings());
         }
 
         private void GetTime(object sender = null, object e = null)
@@ -122,7 +125,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             GetTime();
             GetDate();
             GetCompliment();
-            GetOnlineDataModel();
+        }
+
+        private async Task RefreshOnlineData(object sender = null, object e = null)
+        {
+            OnlineDataModel = await GetOnlineDataModel();
         }
 
         private void InitializeRefreshTimers()
@@ -130,12 +137,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetTimeIntervalBetweenCalls(GetDate, new TimeSpan(1, 0, 0));
             SetTimeIntervalBetweenCalls(GetTime, new TimeSpan(0, 0, 1));
             SetTimeIntervalBetweenCalls(GetCompliment, new TimeSpan(0, 10, 0));
-            SetTimeIntervalBetweenCalls(GetOnlineDataModel, new TimeSpan(0, 15, 0));
+
+            //TODO: Refresh data periodically
+            //SetTimeIntervalBetweenCalls(RefreshOnlineData, new TimeSpan(0, 10, 0));
         }
 
-        private string SetUpImagePath(string icon)
+        // Todo: Place in reusable location.
+        private string SetUpImagePath(string icon, string theme = "Dark")
         {
-            string theme = "Dark";
             string result;
             switch (icon)
             {

@@ -1,5 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using MagicMirror.UniversalApp.ViewModels;
+﻿using MagicMirror.UniversalApp.ViewModels;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp
@@ -8,16 +9,19 @@ namespace MagicMirror.UniversalApp
     {
         public MainPage()
         {
-            PopulateModel();
+            _ = PopulateModel();
             this.InitializeComponent();
             UpcomingDaysList.ItemsSource = this.GetDays();
         }
 
-        private void PopulateModel()
+        private async Task PopulateModel()
         {
-            DataContext = new MainViewModel();
+            var vm = new MainViewModel();
+            await vm.InitializeAsync();
+            DataContext = vm;
         }
 
+        // TODO: Use actual data
         private ObservableCollection<UpcomingDay> GetDays()
         {
             return new ObservableCollection<UpcomingDay>

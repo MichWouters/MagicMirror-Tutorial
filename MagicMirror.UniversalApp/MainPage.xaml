@@ -54,7 +54,7 @@
                        Margin="10,10,10,0" />
             </StackPanel>
 
-            <TextBlock Text="{Binding OnlineDataModel.Weather, FallbackValue='Clear Sky'}" 
+            <TextBlock Text="{Binding OnlineDataModel.WeatherType, FallbackValue='Clear Sky'}" 
                        Style="{StaticResource SubheaderTextBlockStyle}" 
                        HorizontalAlignment="Left" />
 
@@ -127,7 +127,6 @@
 
             <TextBlock Text="{Binding OnlineDataModel.TravelTime, FallbackValue='28 minutes'}" 
                        Style="{StaticResource TitleTextBlockStyle}" 
-                       TextAlignment ="Center" 
                        TextWrapping="WrapWholeWords"/>
         </StackPanel>
 
