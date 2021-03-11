@@ -18,6 +18,60 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string _userName = "John Doe";
         private string _weatherIcon = "01d";
 
+        public string Compliment
+        {
+            get => _compliment; set
+            {
+                _compliment = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Date
+        {
+            get => _date; set
+            {
+                _date = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public OnlineDataModel OnlineDataModel
+        {
+            get => _onlineDataModel; set
+            {
+                _onlineDataModel = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Time
+        {
+            get => _time; set
+            {
+                _time = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string UserName
+        {
+            get => _userName; set
+            {
+                _userName = value ?? "Anonymous";
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string WeatherIcon
+        {
+            get => _weatherIcon; set
+            {
+                _weatherIcon = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         // Services
         private IMirrorService _service = (Application.Current as App).Container.GetRequiredService<IMirrorService>();
 
@@ -114,63 +168,5 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             return $"/Assets/Weather/{theme}/{result}";
         }
-
-        #region Properties
-
-        public string Compliment
-        {
-            get => _compliment; set
-            {
-                _compliment = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Date
-        {
-            get => _date; set
-            {
-                _date = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public OnlineDataModel OnlineDataModel
-        {
-            get => _onlineDataModel; set
-            {
-                _onlineDataModel = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string Time
-        {
-            get => _time; set
-            {
-                _time = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string UserName
-        {
-            get => _userName; set
-            {
-                _userName = value ?? "Anonymous";
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string WeatherIcon
-        {
-            get => _weatherIcon; set
-            {
-                _weatherIcon = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        #endregion Properties
     }
 }

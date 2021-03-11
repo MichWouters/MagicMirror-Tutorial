@@ -135,6 +135,7 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\UpcomingDay.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Models\UserSettings.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
